@@ -8,7 +8,7 @@ KEY="${SSH_KEY:-$HOME/Downloads/sports.pem}"
 HOST="${SSH_HOST:-ec2-user@app.restyart.com}"
 REMOTE="${REMOTE_GATEWAY:-/opt/resty-gateway/common}"
 
-RSYNC_OPTS=(-az --delete-after -e "ssh -i $KEY -o StrictHostKeyChecking=accept-new")
+RSYNC_OPTS=(-az -e "ssh -i $KEY -o StrictHostKeyChecking=accept-new")
 
 echo "[rsync] public/ -> $HOST:$REMOTE/public/"
 rsync "${RSYNC_OPTS[@]}" "$COMMON_DIR/public/" "$HOST:$REMOTE/public/"

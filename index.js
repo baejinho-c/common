@@ -7,7 +7,7 @@ const child_process = require('child_process')
 const authRoutes = require('./auth/routes')
 const userStore = require('./auth/user-store')
 const { syncTenantsFromWorkdir, listTenants, isReservedSlug } = require('./auth/tenant')
-const { rewriteAbsolutePaths, injectClientPrefixScript, handleTenantRequest } = require('./tenant-proxy')
+const { rewriteAbsolutePaths, injectClientPrefixScript, handleTenantRequest, tenantSlugFromHost } = require('./tenant-proxy')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -237,6 +237,24 @@ app.use((req, res, next) => {
   const m = referer.match(/:\/\/[^/]+\/([a-z0-9_-]+)(?:\/|$)/i)
   if (!m || !published.has(m[1])) return next()
   return res.redirect(302, `/${m[1]}${req.path}`)
+})
+
+// 서브도메인 라우팅: light.restyart.com → public/light/ (경로 prefix 없음)
+app.use((req, res, next) => {
+  const slug = tenantSlugFromHost(req.headers.host)
+  if (!slug) return next()
+  const staticDir = path.join(PUBLIC_DIR, slug)
+  const hasStatic = fs.existsSync(staticDir) && fs.statSync(staticDir).isDirectory()
+  const hasDev = ENABLE_DEV_PROXY && procMap[slug]
+  if (!hasStatic && !hasDev) return next()
+  req.params = { ...req.params, name: slug }
+  return handleTenantRequest({
+    req, res, name: slug, prefixStyle: 'subdomain',
+    publicDir: PUBLIC_DIR,
+    copiesDir: COPIES_DIR,
+    procMap: ENABLE_DEV_PROXY ? procMap : {},
+    proxy,
+  })
 })
 
 // Path-based tenant router: /:tenant/*

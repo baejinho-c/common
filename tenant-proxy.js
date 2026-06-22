@@ -6,6 +6,35 @@ function tenantPathPrefix(name) {
   return `/${encodeURIComponent(name)}`
 }
 
+const SUBDOMAIN_HOST_SKIP = new Set(['app', 'www', 'dashboard'])
+
+/** light.restyart.com → light */
+function tenantSlugFromHost(host) {
+  const h = (host || '').split(':')[0].toLowerCase()
+  const m = h.match(/^([a-z0-9_-]+)\.restyart\.com$/)
+  if (!m) return null
+  const slug = m[1]
+  if (SUBDOMAIN_HOST_SKIP.has(slug)) return null
+  return slug
+}
+
+/** 서브도메인(light.restyart.com) 배포 HTML의 /{tenant}/ 경로를 루트(/)로 변환 */
+function stripPathPrefixForSubdomain(html, name) {
+  if (!html || !name) return html
+  const p = `/${name}`
+  const esc = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  html = html.replace(new RegExp(`(["'(])${esc}/`, 'g'), '$1/')
+  html = html.replace(new RegExp(`"assetPrefix":"${esc}"`, 'g'), '"assetPrefix":""')
+  html = html.replace(new RegExp(`'assetPrefix':'${esc}'`, 'g'), "'assetPrefix':''")
+  return html
+}
+
+function resolvePrefix(name, prefixStyle) {
+  if (prefixStyle === 'subdomain') return '/'
+  if (prefixStyle === 'legacy') return `/r/${encodeURIComponent(name)}`
+  return tenantPathPrefix(name)
+}
+
 function shouldPrefixUrl(url, prefix) {
   if (!url || typeof url !== 'string') return false
   if (url.indexOf(prefix) === 0) return false
@@ -44,6 +73,17 @@ function injectClientPrefixScript(html, name, prefixStyle) {
 }
 
 function prepareHtml(html, name, prefixStyle) {
+  if (prefixStyle === 'subdomain') {
+    html = stripPathPrefixForSubdomain(html, name)
+    if (/<base[^>]*href=/i.test(html)) {
+      html = html.replace(/<base[^>]*>/i, '<base href="/">')
+    } else {
+      html = html.replace(/<head([^>]*)>/i, `<head$1>\n<base href="/">`)
+    }
+    html = injectLegalHtml(html)
+    return html
+  }
+
   const prefix = prefixStyle === 'legacy'
     ? `/r/${encodeURIComponent(name)}`
     : tenantPathPrefix(name)
@@ -211,6 +251,9 @@ function handleTenantRequest(opts) {
 
 module.exports = {
   tenantPathPrefix,
+  tenantSlugFromHost,
+  stripPathPrefixForSubdomain,
+  resolvePrefix,
   rewriteAbsolutePaths,
   injectClientPrefixScript,
   prepareHtml,

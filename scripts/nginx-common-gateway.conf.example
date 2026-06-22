@@ -4,8 +4,8 @@
 #
 # 적용: sudo nginx -t && sudo systemctl reload nginx
 
-# --- 테넌트 서브도메인 → 경로 프록시 (템플릿: light) ---
-# 다른 테넌트는 server_name / proxy_pass 경로만 복제
+# 테넌트 서브도메인 → 게이트웨이 (Host 기반 라우팅, URL에 /{tenant}/ 붙이지 않음)
+# nginx는 proxy_pass 끝에 경로를 붙이지 말 것 — tenant-proxy가 Host로 테넌트 판별
 server {
     listen 443 ssl;
     server_name light.restyart.com;
@@ -16,7 +16,7 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     location / {
-        proxy_pass http://127.0.0.1:4000/light/;
+        proxy_pass http://127.0.0.1:4000;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -42,7 +42,7 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     location / {
-        proxy_pass http://127.0.0.1:4000/arc/;
+        proxy_pass http://127.0.0.1:4000;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
