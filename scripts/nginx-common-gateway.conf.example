@@ -1,0 +1,58 @@
+# /etc/nginx/conf.d/resty-gateway.conf
+# common 게이트웨이(:4000) 연동 — 테넌트 *.restyart.com 만 전환
+# app.restyart.com 은 기존 nginx 설정 유지 (치킨모임 정적) — 이 파일에 포함하지 않음
+#
+# 적용: sudo nginx -t && sudo systemctl reload nginx
+
+# --- 테넌트 서브도메인 → 경로 프록시 (템플릿: light) ---
+# 다른 테넌트는 server_name / proxy_pass 경로만 복제
+server {
+    listen 443 ssl;
+    server_name light.restyart.com;
+
+    ssl_certificate /etc/letsencrypt/live/light.restyart.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/light.restyart.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:4000/light/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name light.restyart.com;
+    return 301 https://light.restyart.com$request_uri;
+}
+
+# arc 예시
+server {
+    listen 443 ssl;
+    server_name arc.restyart.com;
+
+    ssl_certificate /etc/letsencrypt/live/arc.restyart.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/arc.restyart.com/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:4000/arc/;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 80;
+    server_name arc.restyart.com;
+    return 301 https://arc.restyart.com$request_uri;
+}

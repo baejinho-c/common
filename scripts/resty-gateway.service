@@ -1,0 +1,23 @@
+[Unit]
+Description=Resty common gateway (multi-tenant :4000)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/opt/resty-gateway/common
+Environment=HOME=/home/ec2-user
+Environment=NVM_DIR=/home/ec2-user/.nvm
+Environment=PATH=/home/ec2-user/.nvm/versions/node/v16.20.2/bin:/usr/local/bin:/usr/bin:/bin
+Environment=PORT=4000
+Environment=WORKDIR=/opt/resty-gateway
+ExecStart=/home/ec2-user/.nvm/versions/node/v16.20.2/bin/node /opt/resty-gateway/common/index.js
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
