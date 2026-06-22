@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://smartgpt-guide.vercel.app/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /auth/
+
+# Allow important pages
+Allow: /library/
+Allow: /tutorials/
+Allow: /guides/
+Allow: /blog/

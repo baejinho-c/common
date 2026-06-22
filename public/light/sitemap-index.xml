@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>http://localhost:4000/light/sitemap-bible.xml</loc>
+    <lastmod>2026-06-22T04:45:22.231Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://localhost:4000/light/sitemap-bible-chapters.xml</loc>
+    <lastmod>2026-06-22T04:45:22.231Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://localhost:4000/light/sitemap-bible-verses.xml</loc>
+    <lastmod>2026-06-22T04:45:22.231Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://localhost:4000/light/sitemap-bible-all-verses.xml</loc>
+    <lastmod>2026-06-22T04:45:22.231Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://localhost:4000/light/sitemap-qt-recent.xml</loc>
+    <lastmod>2026-06-22T04:45:22.231Z</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>http://localhost:4000/light/sitemap-churches.xml</loc>
+    <lastmod>2026-06-22T04:45:22.231Z</lastmod>
+  </sitemap>
+</sitemapindex>

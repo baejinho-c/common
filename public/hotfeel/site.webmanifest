@@ -1,0 +1,29 @@
+{
+  "name": "요즘나봐 - 모든 콘텐츠의 찐후기",
+  "short_name": "요즘나봐",
+  "description": "드라마, 웹툰, 영화, 예능까지 모든 콘텐츠의 찐후기를 한 곳에서!",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f23",
+  "theme_color": "#0f0f23",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["entertainment", "social", "lifestyle"],
+  "lang": "ko",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

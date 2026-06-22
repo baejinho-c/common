@@ -1,0 +1,16 @@
+(()=>{var e={};e.id=3988,e.ids=[3988],e.modules={3295:e=>{"use strict";e.exports=require("next/dist/server/app-render/after-task-async-storage.external.js")},10846:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},29294:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-async-storage.external.js")},44870:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},63033:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},78335:()=>{},79769:(e,t,s)=>{"use strict";s.r(t),s.d(t,{patchFetch:()=>g,routeModule:()=>c,serverHooks:()=>d,workAsyncStorage:()=>p,workUnitAsyncStorage:()=>A});var o={};s.r(o),s.d(o,{POST:()=>l});var r=s(96559),n=s(48088),i=s(37719),a=s(32190),u=s(57932);async function l(e){console.log("\uD83D\uDE80 [Outline API] 개요 생성 요청 시작");try{let{topic:t,keywords:s,targetAudience:o}=await e.json();if(console.log("\uD83D\uDCDD [Outline API] 요청 데이터:",{topic:t,keywords:s,targetAudience:o,keywordsCount:s?.length||0}),!process.env.OPENAI_API_KEY)return console.error("❌ [Outline API] OpenAI API 키가 설정되지 않음"),a.NextResponse.json({success:!1,message:"OpenAI API 키가 설정되지 않았습니다."},{status:500});console.log("✅ [Outline API] OpenAI API 키 확인 완료");let r=new u.Ay({apiKey:process.env.OPENAI_API_KEY,dangerouslyAllowBrowser:!1,baseURL:"https://api.openai.com/v1"}),n=`
+다음 주제에 대한 블로그 포스트 개요를 작성해주세요:
+
+주제: ${t}
+키워드: ${s?.join(", ")||"없음"}
+대상 독자: ${o||"일반"}
+
+다음 형식으로 작성해주세요:
+1. 제목 (SEO 최적화된)
+2. 서론 (독자의 관심을 끄는)
+3. 본문 구조 (3-5개의 주요 섹션)
+4. 결론
+5. 추천 태그
+
+한국어로 작성하고, 네이버 블로그에 적합하도록 해주세요.
+`;console.log("\uD83E\uDD16 [Outline API] OpenAI API 호출 시작..."),console.log("\uD83D\uDCC4 [Outline API] 프롬프트 길이:",n.length);let i=await r.chat.completions.create({model:"gpt-4o",messages:[{role:"user",content:n}],max_tokens:1e3}),l=i.choices[0]?.message?.content||"";return console.log("✨ [Outline API] OpenAI API 호출 성공"),console.log("\uD83D\uDCCA [Outline API] 생성된 개요 길이:",l.length),console.log("\uD83D\uDCDD [Outline API] 생성된 개요 미리보기:",l.substring(0,100)+"..."),a.NextResponse.json({success:!0,outline:l})}catch(e){return console.error("\uD83D\uDCA5 [Outline API] 개요 생성 오류:",e),console.error("\uD83D\uDD0D [Outline API] 에러 상세:",{message:e instanceof Error?e.message:"알 수 없는 오류",stack:e instanceof Error?e.stack:void 0}),a.NextResponse.json({success:!1,message:"개요 생성에 실패했습니다."},{status:500})}}let c=new r.AppRouteRouteModule({definition:{kind:n.RouteKind.APP_ROUTE,page:"/api/outline/route",pathname:"/api/outline",filename:"route",bundlePath:"app/api/outline/route"},resolvedPagePath:"/Users/baejinho/Documents/resty/blog/app/api/outline/route.ts",nextConfigOutput:"",userland:o}),{workAsyncStorage:p,workUnitAsyncStorage:A,serverHooks:d}=c;function g(){return(0,i.patchFetch)({workAsyncStorage:p,workUnitAsyncStorage:A})}},96487:()=>{}};var t=require("../../../webpack-runtime.js");t.C(e);var s=e=>t(t.s=e),o=t.X(0,[4447,580,7932],()=>s(79769));module.exports=o})();

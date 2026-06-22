@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# 주요 페이지
+Allow: /generate
+Allow: /solve
+Allow: /problem-sets
+Allow: /wrong-answers
+Allow: /analytics
+Allow: /contact
+
+# API 경로 차단
+Disallow: /api/
+
+# 인증 관련 페이지
+Disallow: /auth/callback
+
+# 사이트맵 위치
+Sitemap: https://qbank.restyart.com/sitemap.xml
+
+# 크롤링 속도 제한 (1초 간격)
+Crawl-delay: 1

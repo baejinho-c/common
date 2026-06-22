@@ -1,0 +1,23 @@
+{
+  "name": "LogoStage - AI로 만드는 완벽한 로고",
+  "short_name": "LogoStage",
+  "description": "AI 기술로 브랜드에 맞는 완벽한 로고를 생성하세요",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "portrait-primary"
+}

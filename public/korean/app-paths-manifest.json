@@ -1,0 +1,23 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/auth/signup/page": "app/auth/signup/page.js",
+  "/chat/page": "app/chat/page.js",
+  "/community/posts/[id]/page": "app/community/posts/[id]/page.js",
+  "/auth/signin/page": "app/auth/signin/page.js",
+  "/community/page": "app/community/page.js",
+  "/dramas/page": "app/dramas/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/guest/page": "app/guest/page.js",
+  "/kpop/[id]/page": "app/kpop/[id]/page.js",
+  "/language-setup/page": "app/language-setup/page.js",
+  "/page": "app/page.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/progress/page": "app/progress/page.js",
+  "/lessons/[id]/page": "app/lessons/[id]/page.js",
+  "/kpop/page": "app/kpop/page.js",
+  "/learn-korean/page": "app/learn-korean/page.js",
+  "/bts-korean-lyrics/page": "app/bts-korean-lyrics/page.js",
+  "/kpop-korean/page": "app/kpop-korean/page.js",
+  "/lessons/page": "app/lessons/page.js"
+}

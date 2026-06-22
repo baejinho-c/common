@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>요즘 나봐 - 한국 콘텐츠 감상 SNS</title>
+    <description>드라마, 영화, 웹툰, 책 등 한국 콘텐츠에 대한 생생한 감상과 리뷰를 공유하는 소셜 플랫폼</description>
+    <link>https://hotfeel.restyart.com</link>
+    <language>ko-KR</language>
+    <lastBuildDate>Thu, 18 Jun 2026 08:39:32 GMT</lastBuildDate>
+    <pubDate>Thu, 18 Jun 2026 08:39:32 GMT</pubDate>
+    <ttl>30</ttl>
+    <atom:link href="https://hotfeel.restyart.com/api/rss" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://hotfeel.restyart.com/placeholder-logo.png</url>
+      <title>요즘 나봐</title>
+      <link>https://hotfeel.restyart.com</link>
+      <width>144</width>
+      <height>144</height>
+    </image>
+    
+    
+    <item>
+      <title>눈물의 여왕 - 익명의 콘텐츠 감상</title>
+      <description></description>
+      <content:encoded><![CDATA[
+        <div>
+          <h3>눈물의 여왕 (콘텐츠)</h3>
+          <p><strong>작성자:</strong> 익명</p>
+          <p><strong>평가:</strong> 감상중</p>
+          
+          <div style="margin-top: 15px; line-height: 1.6;">
+            
+          </div>
+          <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+            <p><strong>반응:</strong> 🔥 124 · ❤️ 3</p>
+            <p><strong>댓글:</strong> 28개</p>
+          </div>
+        </div>
+      ]]></content:encoded>
+      <link>https://hotfeel.restyart.com/post/1</link>
+      <guid isPermaLink="true">https://hotfeel.restyart.com/post/1</guid>
+      <pubDate>Mon, 15 Jan 2024 10:30:00 GMT</pubDate>
+      <author>anonymous@hotfeel.restyart.com (익명)</author>
+      <category>콘텐츠</category>
+      
+    </item>
+    <item>
+      <title>외모지상주의 - 익명의 콘텐츠 감상</title>
+      <description></description>
+      <content:encoded><![CDATA[
+        <div>
+          <h3>외모지상주의 (콘텐츠)</h3>
+          <p><strong>작성자:</strong> 익명</p>
+          <p><strong>평가:</strong> 감상중</p>
+          
+          <div style="margin-top: 15px; line-height: 1.6;">
+            
+          </div>
+          <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+            <p><strong>반응:</strong> 🔥 89 · ❤️ 7</p>
+            <p><strong>댓글:</strong> 15개</p>
+          </div>
+        </div>
+      ]]></content:encoded>
+      <link>https://hotfeel.restyart.com/post/2</link>
+      <guid isPermaLink="true">https://hotfeel.restyart.com/post/2</guid>
+      <pubDate>Sun, 14 Jan 2024 15:20:00 GMT</pubDate>
+      <author>anonymous@hotfeel.restyart.com (익명)</author>
+      <category>콘텐츠</category>
+      
+    </item>
+    <item>
+      <title>기생충 - 익명의 콘텐츠 감상</title>
+      <description></description>
+      <content:encoded><![CDATA[
+        <div>
+          <h3>기생충 (콘텐츠)</h3>
+          <p><strong>작성자:</strong> 익명</p>
+          <p><strong>평가:</strong> 감상중</p>
+          
+          <div style="margin-top: 15px; line-height: 1.6;">
+            
+          </div>
+          <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+            <p><strong>반응:</strong> 🔥 256 · ❤️ 12</p>
+            <p><strong>댓글:</strong> 45개</p>
+          </div>
+        </div>
+      ]]></content:encoded>
+      <link>https://hotfeel.restyart.com/post/3</link>
+      <guid isPermaLink="true">https://hotfeel.restyart.com/post/3</guid>
+      <pubDate>Sat, 13 Jan 2024 20:45:00 GMT</pubDate>
+      <author>anonymous@hotfeel.restyart.com (익명)</author>
+      <category>콘텐츠</category>
+      
+    </item>
+  </channel>
+</rss>

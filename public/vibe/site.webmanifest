@@ -1,0 +1,22 @@
+{
+  "name": "AI 바이브 - AI 서비스 발견 플랫폼",
+  "short_name": "AI 바이브",
+  "description": "최신 AI 서비스를 발견하고 공유하는 바이브 플랫폼",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#8b5cf6",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "orientation": "portrait"
+}

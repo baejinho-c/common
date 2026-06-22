@@ -1,0 +1,31 @@
+{
+  "name": "Physics Lab - 인터랙티브 물리학 실험 플랫폼",
+  "short_name": "Physics Lab",
+  "description": "뉴턴의 법칙, 파동, 열역학, 전자기학 등 다양한 물리학 실험을 인터랙티브하게 체험할 수 있는 교육 플랫폼입니다.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.jpg",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "science", "physics"],
+  "lang": "ko",
+  "dir": "ltr"
+}

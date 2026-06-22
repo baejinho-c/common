@@ -1,0 +1,44 @@
+# ResumeCraft - AI 이력서 분석 플랫폼
+# https://resume.restyart.com
+
+User-agent: *
+Allow: /
+Allow: /upload
+Allow: /auth/register
+Allow: /auth/login
+Allow: /privacy
+Allow: /terms
+Allow: /sitemap.xml
+
+# 크롤링 제외 경로
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /analyze/
+Disallow: /credits/
+Disallow: /monitor/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /static/
+
+# 사이트맵 위치
+Sitemap: https://resume.restyart.com/sitemap.xml
+
+# 크롤링 속도 제한
+Crawl-delay: 1
+
+# 특정 봇 설정
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: NaverBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DaumBot
+Allow: /
+Crawl-delay: 1

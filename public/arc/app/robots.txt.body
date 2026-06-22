@@ -1,0 +1,18 @@
+User-Agent: *
+Allow: /
+Disallow: /monitor/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /static/
+
+User-Agent: Googlebot
+Allow: /
+Disallow: /monitor/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+Host: https://insight-arc.com
+Sitemap: https://insight-arc.com/sitemap.xml

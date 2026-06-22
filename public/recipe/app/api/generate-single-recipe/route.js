@@ -1,0 +1,17 @@
+(()=>{var e={};e.id=863,e.ids=[863],e.modules={846:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},1820:e=>{"use strict";e.exports=require("os")},3033:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},3295:e=>{"use strict";e.exports=require("next/dist/server/app-render/after-task-async-storage.external.js")},3873:e=>{"use strict";e.exports=require("path")},4870:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},4945:(e,r,t)=>{"use strict";t.r(r),t.d(r,{patchFetch:()=>f,routeModule:()=>g,serverHooks:()=>x,workAsyncStorage:()=>d,workUnitAsyncStorage:()=>m});var s={};t.r(s),t.d(s,{POST:()=>l});var o=t(6559),i=t(8088),n=t(7719),a=t(2190),c=t(9239),p=t(4873),u=t(8293);async function l(e){try{let r,t;let{prompt:s}=await e.json();console.log(`🤖 AI로 맞춤 레시피 생성 시작: "${s}"`);let o=`당신은 전문 요리사입니다. 다음 요청에 맞는 창의적이고 맛있는 레시피 1개를 생성해주세요:
+
+요청: ${s}
+
+다음 JSON 형식으로 작성해주세요:
+{
+  "title": "레시피 제목",
+  "description": "레시피 설명 (2-3문장)",
+  "ingredients": ["재료1", "재료2", "재료3"],
+  "instructions": ["조리법1", "조리법2", "조리법3"],
+  "cookingTime": "조리 시간",
+  "difficulty": "쉬움|보통|어려움",
+  "servings": "인분",
+  "tags": ["태그1", "태그2"]
+}
+
+실제로 만들 수 있고 맛있는 레시피를 만들어주세요.`,i="";if(process.env.GOOGLE_GENERATIVE_AI_API_KEY)try{console.log("\uD83D\uDD25 Gemini 1.5 Pro로 생성 중..."),r=await (0,c.Df)({model:(0,p.q7)("gemini-1.5-pro"),prompt:o,maxTokens:2e3}),i="Gemini 1.5 Pro (무료)",console.log("✅ Gemini 응답 성공!")}catch(e){console.log("❌ Gemini 실패, OpenAI로 전환...")}if(!r&&process.env.OPENAI_API_KEY)try{console.log("\uD83D\uDD04 GPT-3.5-turbo로 생성 중..."),r=await (0,c.Df)({model:(0,u.NJ)("gpt-3.5-turbo"),prompt:o,maxTokens:1e3}),i="GPT-3.5-turbo (저비용)",console.log("✅ OpenAI 응답 성공!")}catch(e){console.log("❌ OpenAI도 실패")}if(!r)throw Error("모든 AI 모델 사용 불가");try{let e=r.text.match(/\{[\s\S]*\}/);if(e)t=JSON.parse(e[0]);else throw Error("JSON 형식 불일치")}catch(e){console.log("❌ JSON 파싱 실패, 기본 레시피 반환"),t={title:`맞춤 요리`,description:`${i}가 "${s}" 요청으로 생성한 레시피입니다.`,ingredients:["주재료","부재료","양념"],instructions:["재료 준비","조리 과정","완성"],cookingTime:"30분",difficulty:"보통",servings:"2-3인분",tags:["맞춤요리","AI생성"]}}return console.log(`🎊 AI 맞춤 레시피 생성 완료! (${i})`),a.NextResponse.json({success:!0,recipe:t,modelUsed:i,message:`${i}로 맞춤 레시피를 생성했습니다!`})}catch(e){return console.error("❌ AI 맞춤 레시피 생성 실패:",e),a.NextResponse.json({success:!1,error:"AI 맞춤 레시피 생성에 실패했습니다.",details:e instanceof Error?e.message:"알 수 없는 오류"},{status:500})}}let g=new o.AppRouteRouteModule({definition:{kind:i.RouteKind.APP_ROUTE,page:"/api/generate-single-recipe/route",pathname:"/api/generate-single-recipe",filename:"route",bundlePath:"app/api/generate-single-recipe/route"},resolvedPagePath:"/Users/baejinho/Documents/resty/recipe/app/api/generate-single-recipe/route.ts",nextConfigOutput:"",userland:s}),{workAsyncStorage:d,workUnitAsyncStorage:m,serverHooks:x}=g;function f(){return(0,n.patchFetch)({workAsyncStorage:d,workUnitAsyncStorage:m})}},6487:()=>{},8335:()=>{},9021:e=>{"use strict";e.exports=require("fs")},9294:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-async-storage.external.js")}};var r=require("../../../webpack-runtime.js");r.C(e);var t=e=>r(r.s=e),s=r.X(0,[447,468],()=>t(4945));module.exports=s})();

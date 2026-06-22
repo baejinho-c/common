@@ -1,0 +1,25 @@
+{
+  "name": "익명의 맛집 리스트 - 익맛익리",
+  "short_name": "익맛익리",
+  "description": "익명으로 공유하는 진짜 맛집 리스트. AI가 추천하는 맛집부터 블로그 파싱까지!",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.jpg",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#f97316",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "categories": ["food", "lifestyle", "social"],
+  "lang": "ko-KR"
+}

@@ -1,0 +1,29 @@
+User-Agent: *
+Allow: /
+Disallow: /monitor/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /temp/
+Crawl-delay: 1
+
+User-Agent: Googlebot
+Allow: /
+Disallow: /monitor/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+User-Agent: Bingbot
+Allow: /
+Disallow: /monitor/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+Host: https://logostage.vercel.app
+Sitemap: https://logostage.vercel.app/sitemap.xml

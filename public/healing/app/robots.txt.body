@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://healing.restyart.com/sitemap.xml
+
+# 크롤링 최적화
+Crawl-delay: 1
+
+# 특정 경로 제외
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# 허용할 주요 경로
+Allow: /
+Allow: /share/
+Allow: /theme/

@@ -1,0 +1,27 @@
+{
+  "name": "AI 백과사전",
+  "short_name": "AI백과사전",
+  "description": "유치원부터 고등학교까지, 교과 과정에 맞춘 체계적인 학습 콘텐츠를 제공하는 AI 기반 백과사전",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ea580c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.jpg",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.jpg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["education", "reference", "productivity"],
+  "lang": "ko-KR",
+  "dir": "ltr"
+}

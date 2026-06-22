@@ -1,0 +1,24 @@
+# robots.txt for 익맛익리
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /monitor
+
+# Sitemap location
+Sitemap: https://yikmat-yikri.vercel.app/sitemap.xml
+
+# 검색 엔진 최적화
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /monitor
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /monitor
+
+User-agent: NaverBot
+Allow: /
+Disallow: /api/
+Disallow: /monitor

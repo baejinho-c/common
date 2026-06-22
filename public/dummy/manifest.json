@@ -1,0 +1,21 @@
+{
+  "name": "DummyGen - AI 기반 더미데이터 생성기",
+  "short_name": "DummyGen",
+  "description": "개인정보 보호와 SEO 최적화를 지원하는 스마트 더미데이터 생성 플랫폼",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "/placeholder-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/placeholder-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

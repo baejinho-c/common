@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://klocal.restyart.com/sitemap.xml
+
+# Block access to admin areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+
+# Allow access to important files
+Allow: /favicon.ico
+Allow: /apple-touch-icon.png
+Allow: /manifest.json

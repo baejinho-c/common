@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://search.restyart.com/sitemap.xml
+Sitemap: https://search.restyart.com/dynamic-sitemap.xml

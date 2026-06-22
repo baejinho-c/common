@@ -1,0 +1,42 @@
+User-agent: *
+Allow: /
+
+# 주요 페이지들
+Allow: /library
+Allow: /recommendations
+Allow: /progress
+Allow: /community
+Allow: /achievements
+Allow: /schedule
+
+# API 경로는 크롤링 제외
+Disallow: /api/
+Disallow: /auth/
+
+# 관리자 페이지 제외
+Disallow: /admin/
+
+# 사이트맵 위치
+Sitemap: https://reading-explorer.vercel.app/sitemap.xml
+
+# 크롤링 지연 (밀리초)
+Crawl-delay: 1
+
+# 특정 봇에 대한 설정
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# 소셜 미디어 봇들
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /

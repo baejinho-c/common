@@ -1,0 +1,39 @@
+{
+  "name": "오늘의 한 줄 - 매일 새로운 명언",
+  "short_name": "오늘의 한 줄",
+  "description": "바쁜 현대인을 위한 매일 한 줄 명언 서비스. AI가 생성하는 맞춤 명언을 친구들과 공유하세요.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon-16x16.jpg",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.jpg",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.jpg",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "productivity", "social"],
+  "lang": "ko",
+  "dir": "ltr",
+  "prefer_related_applications": false
+}

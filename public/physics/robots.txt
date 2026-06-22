@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://physics-lab.vercel.app/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin areas (if any)
+# Disallow: /admin/
+# Disallow: /api/
+
+# Allow all content for educational purposes
+Allow: /newton-first-law
+Allow: /newton-second-law
+Allow: /wave-refraction
+Allow: /thermodynamics-first
+Allow: /electromagnetic
+Allow: /optics
+Allow: /kinetic-energy
+Allow: /gravity

@@ -1,0 +1,22 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+User-Agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+Host: http://localhost:4000/light
+Sitemap: http://localhost:4000/light/sitemap.xml
+Sitemap: http://localhost:4000/light/sitemap-index.xml
+Sitemap: http://localhost:4000/light/sitemap-bible.xml
+Sitemap: http://localhost:4000/light/sitemap-bible-chapters.xml
+Sitemap: http://localhost:4000/light/sitemap-bible-verses.xml
+Sitemap: http://localhost:4000/light/sitemap-qt-recent.xml
+Sitemap: http://localhost:4000/light/sitemap-churches.xml

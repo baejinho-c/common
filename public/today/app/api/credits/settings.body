@@ -1,0 +1,1 @@
+{"success":true,"settings":{"notifications":{"low_balance":true,"daily_bonus":true,"purchase_confirmation":true},"auto_recharge":{"enabled":false,"threshold":100,"package_id":"basic"},"spending_limits":{"daily_limit":500,"monthly_limit":10000}},"timestamp":"2026-06-18T10:39:13.098Z"}

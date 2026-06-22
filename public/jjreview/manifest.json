@@ -1,0 +1,86 @@
+{
+  "name": "찐리뷰 - AI가 만드는 진짜 후기 플랫폼",
+  "short_name": "찐리뷰",
+  "description": "웹툰, 드라마, 예능, 유튜브 콘텐츠의 솔직한 감상을 AI가 찐리뷰로 변환해드립니다.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ef4444",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ko-KR",
+  "categories": ["entertainment", "social", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon-16x16.jpg",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.jpg",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-96x96.jpg",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon-152x152.jpg",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.jpg",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-192x192.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.jpg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "찐후기 쓰기",
+      "short_name": "글쓰기",
+      "description": "새로운 찐리뷰 작성하기",
+      "url": "/write",
+      "icons": [
+        {
+          "src": "/favicon-96x96.jpg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "커뮤니티",
+      "short_name": "모임",
+      "description": "찐러들과 소통하기",
+      "url": "/community",
+      "icons": [
+        {
+          "src": "/favicon-96x96.jpg",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "찐리뷰 메인 화면"
+    }
+  ]
+}

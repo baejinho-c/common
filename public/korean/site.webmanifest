@@ -1,0 +1,27 @@
+{
+  "name": "Hello Hangul - Korean Learning",
+  "short_name": "Hello Hangul",
+  "description": "Learn Korean through K-Pop and Korean culture",
+  "icons": [
+    {
+      "src": "/favicon-16x16.jpg",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.jpg",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.jpg",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ec4899",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
+}

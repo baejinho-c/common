@@ -1,0 +1,7 @@
+data/
+node_modules/
+assembled_copies/
+*.log
+publish-batch.log
+dashboard.log
+dashboard-4100.log

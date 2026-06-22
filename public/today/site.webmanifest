@@ -1,0 +1,37 @@
+{
+  "name": "오늘 뭐먹지? - AI 맛집 추천 서비스",
+  "short_name": "오늘 뭐먹지?",
+  "description": "AI가 추천하는 맞춤형 맛집 찾기 서비스",
+  "icons": [
+    {
+      "src": "/favicon-16x16.jpg",
+      "sizes": "16x16",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/favicon-32x32.jpg",
+      "sizes": "32x32",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/apple-touch-icon.jpg",
+      "sizes": "180x180",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#ff6b35",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
+  "scope": "/",
+  "categories": ["food", "lifestyle", "utilities"],
+  "lang": "ko",
+  "dir": "ltr"
+}

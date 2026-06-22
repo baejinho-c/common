@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://linker.restyart.com/sitemap.xml
+Sitemap: https://linker.restyart.com/sitemap-main.xml
+Sitemap: https://linker.restyart.com/sitemap-companies.xml
+Sitemap: https://linker.restyart.com/sitemap-industries.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow important pages
+Allow: /search
+Allow: /company/
+Allow: /industry/
+Allow: /explore
+Allow: /network
+Allow: /analytics
+Allow: /crm
+Allow: /contact
