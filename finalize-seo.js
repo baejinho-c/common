@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /**
- * Promote Next.js metadata route .body files and rewrite SEO URLs for tenant path.
+ * Promote Next.js metadata route .body files and rewrite SEO URLs for tenant subdomain.
  * Usage: node finalize-seo.js <publicDir> <tenant>
+ *
+ * PUBLISH_SITE_URL — override production base (default: https://{tenant}.restyart.com)
  */
 const fs = require('fs')
 const path = require('path')
@@ -13,8 +15,7 @@ if (!publicDir || !tenant) {
   process.exit(1)
 }
 
-const prefix = `/${tenant}`
-const localBase = `http://localhost:4000${prefix}`
+const siteBase = process.env.PUBLISH_SITE_URL || `https://${tenant}.restyart.com`
 
 function promoteBodyFiles(dir) {
   let count = 0
@@ -42,31 +43,49 @@ function promoteBodyFiles(dir) {
 function rewriteSeoFile(filePath) {
   if (!fs.existsSync(filePath)) return false
   let text = fs.readFileSync(filePath, 'utf8')
-  const hostPatterns = [
+
+  // Legacy publish output: localhost gateway paths -> subdomain
+  const localhostTenant = new RegExp(
+    `https?:\\/\\/localhost:4000\\/${tenant}(?=\\/|<|"|'|\\s|$)`,
+    'gi'
+  )
+  text = text.replace(localhostTenant, siteBase)
+
+  // Wrong hosts from source fallbacks or old deploys
+  const wrongHosts = [
     /https?:\/\/daily-prayer\.vercel\.app/gi,
-    /https?:\/\/light\.restyart\.com/gi,
-    /https?:\/\/[a-z0-9-]+\.restyart\.com/gi,
-    /Host: https?:\/\/[^\s]+/gi,
+    /https?:\/\/ai-qbox\.vercel\.app/gi,
+    /https?:\/\/[a-z0-9-]+\.vercel\.app/gi,
   ]
-  for (const re of hostPatterns) {
-    text = text.replace(re, (m) => {
-      if (m.toLowerCase().startsWith('host:')) return `Host: ${localBase}`
-      return localBase
-    })
+  for (const re of wrongHosts) {
+    text = text.replace(re, siteBase)
   }
-  // path-only sitemap entries: <loc>/foo</loc> -> <loc>http://localhost:4000/tenant/foo</loc>
+
+  // Subdomain URLs must not repeat tenant path prefix (/light/ on light.restyart.com)
+  const duplicatePrefix = new RegExp(
+    `(https?:\\/\\/${tenant}\\.restyart\\.com)\\/${tenant}(\\/|"|'|\\s|$)`,
+    'gi'
+  )
+  text = text.replace(duplicatePrefix, `$1$2`)
+
+  // path-only sitemap entries: <loc>/foo</loc> -> <loc>https://tenant.restyart.com/foo</loc>
   text = text.replace(/<loc>\/(?!\/)([^<]*)<\/loc>/g, (_, p) => {
-    return `<loc>${localBase}/${p}</loc>`
+    return `<loc>${siteBase}/${p}</loc>`
   })
-  text = text.replace(/<loc>\/<\/loc>/g, `<loc>${localBase}/</loc>`)
-  // robots Sitemap: lines without full URL
-  text = text.replace(/^Sitemap: \/(.+)$/gm, `Sitemap: ${localBase}/$1`)
+  text = text.replace(/<loc>\/<\/loc>/g, `<loc>${siteBase}/</loc>`)
+
+  // robots.txt Sitemap lines
+  text = text.replace(/^Sitemap: \/(.+)$/gm, `Sitemap: ${siteBase}/$1`)
+  text = text.replace(
+    new RegExp(`^Sitemap: https?:\\/\\/localhost:4000\\/${tenant}(.+)$`, 'gm'),
+    `Sitemap: ${siteBase}$1`
+  )
+
   fs.writeFileSync(filePath, text, 'utf8')
   return true
 }
 
 const promoted = promoteBodyFiles(publicDir)
-const seoFiles = ['robots.txt', 'sitemap.xml', 'sitemap-index.xml']
 let rewritten = 0
 function walkSeo(dir) {
   if (!fs.existsSync(dir)) return
@@ -79,4 +98,4 @@ function walkSeo(dir) {
   }
 }
 walkSeo(publicDir)
-console.log(`[finalize-seo] ${tenant}: promoted ${promoted} .body files, rewrote ${rewritten} seo files`)
+console.log(`[finalize-seo] ${tenant}: promoted ${promoted} .body files, rewrote ${rewritten} seo files -> ${siteBase}`)

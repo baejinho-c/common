@@ -43,26 +43,6 @@ export default function LoginPage() {
     window.location.href = "/api/naver/login"
   }
 
-  const handleTestLogin = async () => {
-    console.log("[v0] 테스트 로그인 시작")
-    setEmail("test@example.com")
-    setPassword("password123")
-    setIsLoading(true)
-    setError("")
-
-    try {
-      console.log("[v0] 로그인 함수 호출 중...")
-      await login("test@example.com", "password123")
-      console.log("[v0] 로그인 성공, 대시보드로 이동")
-      router.push("/dashboard")
-    } catch (err) {
-      console.error("[v0] 테스트 로그인 실패:", err)
-      setError(err instanceof Error ? err.message : "테스트 로그인에 실패했습니다.")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -86,37 +66,6 @@ export default function LoginPage() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-
-            <div className="mb-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
-              <p className="text-sm text-purple-700 mb-3 text-center font-medium">🚀 빠른 테스트를 위한 데모 계정</p>
-              <Button
-                onClick={handleTestLogin}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-lg"
-                size="lg"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                    로그인 중...
-                  </>
-                ) : (
-                  <>
-                    <User className="mr-2 h-4 w-4" />
-                    테스트 계정으로 로그인 (test@example.com)
-                  </>
-                )}
-              </Button>
-            </div>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <Separator className="w-full" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">또는</span>
-              </div>
-            </div>
 
             {/* 네이버 로그인 */}
             <Button
@@ -222,7 +171,6 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center text-sm text-gray-500">
           <p>© 2024 AutoBlogger. All rights reserved.</p>
-          <p className="mt-2 text-xs">테스트용: test@example.com / password123</p>
         </div>
       </div>
     </div>

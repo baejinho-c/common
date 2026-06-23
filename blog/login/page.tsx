@@ -43,22 +43,6 @@ export default function LoginPage() {
     window.location.href = "/api/naver/login"
   }
 
-  const handleTestLogin = async () => {
-    setEmail("test@example.com")
-    setPassword("password123")
-    setIsLoading(true)
-    setError("")
-
-    try {
-      await login("test@example.com", "password123")
-      router.push("/dashboard")
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "테스트 로그인에 실패했습니다.")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -82,21 +66,6 @@ export default function LoginPage() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-
-            {/* 테스트 로그인 버튼 */}
-            <Button onClick={handleTestLogin} className="w-full bg-purple-600 hover:bg-purple-700 text-white" size="lg">
-              <User className="mr-2 h-4 w-4" />
-              테스트 계정으로 로그인
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <Separator className="w-full" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500">또는</span>
-              </div>
-            </div>
 
             {/* 네이버 로그인 */}
             <Button onClick={handleNaverLogin} className="w-full bg-green-500 hover:bg-green-600 text-white" size="lg">
@@ -197,7 +166,6 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center text-sm text-gray-500">
           <p>© 2024 AutoBlogger. All rights reserved.</p>
-          <p className="mt-2 text-xs">테스트용: test@example.com / password123</p>
         </div>
       </div>
     </div>
