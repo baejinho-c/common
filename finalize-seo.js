@@ -33,6 +33,10 @@ function promoteBodyFiles(dir) {
       ? path.join(relDir === 'app' ? '' : relDir.slice(4), routeName)
       : path.join(relDir, routeName)
     const dest = path.join(publicDir, routePath)
+    if (fs.existsSync(dest)) {
+      const st = fs.statSync(dest)
+      if (st.isDirectory()) continue
+    }
     fs.mkdirSync(path.dirname(dest), { recursive: true })
     fs.copyFileSync(full, dest)
     count += 1
@@ -43,7 +47,12 @@ function promoteBodyFiles(dir) {
 function rewriteSeoFile(filePath) {
   if (!fs.existsSync(filePath)) return false
   let text = fs.readFileSync(filePath, 'utf8')
+  text = rewriteSeoText(text)
+  fs.writeFileSync(filePath, text, 'utf8')
+  return true
+}
 
+function rewriteSeoText(text) {
   // Legacy publish output: localhost gateway paths -> subdomain
   const localhostTenant = new RegExp(
     `https?:\\/\\/localhost:4000\\/${tenant}(?=\\/|<|"|'|\\s|$)`,
@@ -81,12 +90,40 @@ function rewriteSeoFile(filePath) {
     `Sitemap: ${siteBase}$1`
   )
 
+  return text
+}
+
+function rewriteHtmlOg(filePath) {
+  if (!fs.existsSync(filePath)) return false
+  let text = fs.readFileSync(filePath, 'utf8')
+  const before = text
+  text = rewriteSeoText(text)
+
+  // Next.js build may embed localhost:3000 as metadataBase fallback
+  text = text.replace(/https?:\/\/localhost:3000/gi, siteBase)
+
+  // Relative og:url in meta tags (content="/path")
+  text = text.replace(
+    /(property="og:url"\s+content=")\/(?!\/)([^"]*)(")/gi,
+    (_, pre, path, post) => `${pre}${siteBase}/${path}${post}`
+  )
+  text = text.replace(
+    /(property="og:image"\s+content=")\/(?!\/)([^"]*)(")/gi,
+    (_, pre, path, post) => `${pre}${siteBase}/${path}${post}`
+  )
+  text = text.replace(
+    /(name="twitter:image"\s+content=")\/(?!\/)([^"]*)(")/gi,
+    (_, pre, path, post) => `${pre}${siteBase}/${path}${post}`
+  )
+
+  if (text === before) return false
   fs.writeFileSync(filePath, text, 'utf8')
   return true
 }
 
 const promoted = promoteBodyFiles(publicDir)
 let rewritten = 0
+let htmlRewritten = 0
 function walkSeo(dir) {
   if (!fs.existsSync(dir)) return
   for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -94,8 +131,10 @@ function walkSeo(dir) {
     if (ent.isDirectory()) walkSeo(full)
     else if (/\.(xml|txt)$/.test(ent.name) && (ent.name.includes('sitemap') || ent.name === 'robots.txt')) {
       if (rewriteSeoFile(full)) rewritten += 1
+    } else if (ent.name.endsWith('.html')) {
+      if (rewriteHtmlOg(full)) htmlRewritten += 1
     }
   }
 }
 walkSeo(publicDir)
-console.log(`[finalize-seo] ${tenant}: promoted ${promoted} .body files, rewrote ${rewritten} seo files -> ${siteBase}`)
+console.log(`[finalize-seo] ${tenant}: promoted ${promoted} .body files, rewrote ${rewritten} seo files, ${htmlRewritten} html files -> ${siteBase}`)
