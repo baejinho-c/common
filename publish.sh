@@ -107,6 +107,8 @@ publish_one() {
   echo "[PREFIX] rewrite paths -> /${name}/"
   node "$COMMON_DIR/prefix-static.js" "$dest" "$name"
   node "$COMMON_DIR/finalize-seo.js" "$dest" "$name"
+  node "$COMMON_DIR/scripts/build-tenant-sitemaps.js" "$dest" "$name"
+  node "$COMMON_DIR/scripts/apply-tenant-branding.js" --slug="$name" --force
   if [ "$name" = "wookwang" ] || [ "$name" = "portfolio" ] || [ "$name" = "goodprice" ]; then
     node "$COMMON_DIR/strip-legal.js" "$dest"
   else

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="스포츠 커뮤니티">
+  <defs><linearGradient id="mark-bg" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#16A34A"/>
+    <stop offset="1" stop-color="#15803D"/>
+  </linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#mark-bg)"/>
+  <rect x="1.5" y="1.5" width="45" height="45" rx="10.5" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
+  
+      <circle cx="24" cy="25.5" r="11.25" fill="#fff"/>
+      <path d="M24 14.25l3.3000000000000003 4.800000000000001 6.300000000000001 .2-2.7 4.800000000000001-4.800000000000001-2.2-6.300000000000001 .2z" fill="#15803D" opacity="0.85"/>
+      <path d="M16.5 25.5l3.75-1.5 3.75 1.5-1.5 4.199999999999999v-4.5z" fill="#15803D" opacity="0.55"/>
+      <path d="M13.5 39h21" stroke="#BBF7D0" stroke-width="2.7" stroke-linecap="round"/>
+      <path d="M19.5 33h9l1.5 6h-12z" fill="#FEF3C7"/>
+      <path d="M21 33h6v3h-6z" fill="#FCD34D"/>
+    
+</svg>
