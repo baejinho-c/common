@@ -3,5 +3,7 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /mypage/
+Disallow: /monitor/
+Disallow: /auth/
 
 Sitemap: https://calli.restyart.com/sitemap.xml
