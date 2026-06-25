@@ -2,11 +2,24 @@ const fs = require('fs')
 const path = require('path')
 const { injectLegalHtml } = require('./legal-info')
 
+/** 독립 사이트(교회 등) — 리스티아트 사업자 푸터 미주입 */
+const LEGAL_SKIP_TENANTS = new Set(['wookwang', 'portfolio', 'goodprice'])
+
+function maybeInjectLegal(html, name) {
+  if (LEGAL_SKIP_TENANTS.has(name)) return html
+  return injectLegalHtml(html, name)
+}
+
 function tenantPathPrefix(name) {
   return `/${encodeURIComponent(name)}`
 }
 
 const SUBDOMAIN_HOST_SKIP = new Set(['app', 'www', 'dashboard'])
+
+function isDashboardHost(host) {
+  const h = (host || '').split(':')[0].toLowerCase()
+  return h === 'dashboard.restyart.com'
+}
 
 /** light.restyart.com → light */
 function tenantSlugFromHost(host) {
@@ -80,7 +93,7 @@ function prepareHtml(html, name, prefixStyle) {
     } else {
       html = html.replace(/<head([^>]*)>/i, `<head$1>\n<base href="/">`)
     }
-    html = injectLegalHtml(html)
+    html = maybeInjectLegal(html, name)
     return html
   }
 
@@ -102,7 +115,7 @@ function prepareHtml(html, name, prefixStyle) {
   }
 
   html = injectClientPrefixScript(html, name, prefixStyle)
-  html = injectLegalHtml(html)
+  html = maybeInjectLegal(html, name)
   return html
 }
 
@@ -111,24 +124,154 @@ function sendHtml(res, html) {
   res.send(html)
 }
 
+/** 서브도메인에서 /{tenant}/bible/... 중복 prefix 제거 */
+function normalizeTenantReqPath(reqPath, name, prefixStyle) {
+  let clean = (reqPath || '/').split('?')[0]
+  if (prefixStyle === 'subdomain' && name) {
+    const tenantPrefix = `/${name}`
+    if (clean === tenantPrefix || clean === `${tenantPrefix}/`) {
+      clean = '/'
+    } else if (clean.startsWith(`${tenantPrefix}/`)) {
+      clean = clean.slice(tenantPrefix.length) || '/'
+    }
+  }
+  return clean
+}
+
+function findBibleVerseShell(staticRoot, book, chapter) {
+  const verseDir = path.join(staticRoot, 'bible', book, chapter)
+  if (fs.existsSync(verseDir) && fs.statSync(verseDir).isDirectory()) {
+    const shells = fs.readdirSync(verseDir).filter((f) => /^\d+\.html$/.test(f))
+    if (shells.length > 0) {
+      return path.join(verseDir, shells[0])
+    }
+  }
+  const fallback = path.join(staticRoot, 'bible', 'john', '3', '16.html')
+  if (fs.existsSync(fallback) && fs.statSync(fallback).isFile()) {
+    return fallback
+  }
+  return null
+}
+
 /** Resolve Next.js flat export: /store -> store.html */
 function resolveStaticPath(staticRoot, reqPath) {
   const clean = (reqPath || '/').split('?')[0]
   if (!clean || clean === '/') return { file: path.join(staticRoot, 'index.html'), isHtml: true }
 
-  const direct = path.join(staticRoot, clean)
+  const rel = clean.replace(/^\//, '').replace(/\/$/, '')
+
+  const direct = path.join(staticRoot, rel)
   if (fs.existsSync(direct) && fs.statSync(direct).isFile()) {
     return { file: direct, isHtml: /\.html?$/i.test(clean) }
   }
 
-  const asHtml = path.join(staticRoot, clean.replace(/\/$/, '') + '.html')
+  const asHtml = path.join(staticRoot, `${rel}.html`)
   if (fs.existsSync(asHtml) && fs.statSync(asHtml).isFile()) {
     return { file: asHtml, isHtml: true }
   }
 
-  const indexInDir = path.join(staticRoot, clean, 'index.html')
+  const indexInDir = path.join(staticRoot, rel, 'index.html')
   if (fs.existsSync(indexInDir) && fs.statSync(indexInDir).isFile()) {
     return { file: indexInDir, isHtml: true }
+  }
+
+  // /bible/john/3/16 — 구절 HTML 또는 셸
+  const bibleVerseMatch = clean.match(/^\/bible\/([^/]+)\/(\d+)\/(\d+)$/)
+  if (bibleVerseMatch) {
+    const [, book, chapter, verse] = bibleVerseMatch
+    const specific = path.join(staticRoot, 'bible', book, chapter, `${verse}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const shell = findBibleVerseShell(staticRoot, book, chapter)
+    if (shell) return { file: shell, isHtml: true }
+    const chapterHtml = path.join(staticRoot, 'bible', book, `${chapter}.html`)
+    if (fs.existsSync(chapterHtml) && fs.statSync(chapterHtml).isFile()) {
+      return { file: chapterHtml, isHtml: true }
+    }
+  }
+
+  // /post/420 — 게시글 상세 (hotfeel 등). 목록 HTML 폴백 방지
+  const postMatch = clean.match(/^\/post\/(\d+)$/)
+  if (postMatch) {
+    const specific = path.join(staticRoot, `post/${postMatch[1]}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const postDir = path.join(staticRoot, 'post')
+    if (fs.existsSync(postDir) && fs.statSync(postDir).isDirectory()) {
+      const shells = fs.readdirSync(postDir)
+        .filter((f) => /^\d+\.html$/.test(f))
+        .sort((a, b) => Number(b.replace('.html', '')) - Number(a.replace('.html', '')))
+      if (shells.length > 0) {
+        return { file: path.join(postDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /content/slug — 콘텐츠 상세 (mind 등). content.html 목록 폴백 방지
+  const contentSlugMatch = clean.match(/^\/content\/([^/]+)$/)
+  if (contentSlugMatch) {
+    const slug = contentSlugMatch[1]
+    const specific = path.join(staticRoot, 'content', `${slug}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const contentDir = path.join(staticRoot, 'content')
+    if (fs.existsSync(contentDir) && fs.statSync(contentDir).isDirectory()) {
+      const shells = fs.readdirSync(contentDir)
+        .filter((f) => f.endsWith('.html') && f !== 'page.html')
+      if (shells.length > 0) {
+        return { file: path.join(contentDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /question/q_1 — 질문 상세 (qbox 등). questions.html 목록 폴백 방지
+  const questionMatch = clean.match(/^\/question\/([^/]+)$/)
+  if (questionMatch) {
+    const questionId = questionMatch[1]
+    const specific = path.join(staticRoot, 'question', `${questionId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const questionDir = path.join(staticRoot, 'question')
+    if (fs.existsSync(questionDir) && fs.statSync(questionDir).isDirectory()) {
+      const shells = fs.readdirSync(questionDir)
+        .filter((f) => f.endsWith('.html') && f !== 'page.html')
+      if (shells.length > 0) {
+        return { file: path.join(questionDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /article/241 등 — 개별 HTML 없을 때 article/*.html 셸 사용 (index.html 홈 폴백 방지)
+  const articleMatch = clean.match(/^\/article\/(\d+)$/)
+  if (articleMatch) {
+    const specific = path.join(staticRoot, `article/${articleMatch[1]}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const articleDir = path.join(staticRoot, 'article')
+    if (fs.existsSync(articleDir) && fs.statSync(articleDir).isDirectory()) {
+      const shells = fs.readdirSync(articleDir)
+        .filter((f) => /^\d+\.html$/.test(f))
+        .sort((a, b) => Number(b.replace('.html', '')) - Number(a.replace('.html', '')))
+      if (shells.length > 0) {
+        return { file: path.join(articleDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
+  // 중첩 경로 — 상위 .html 탐색 (/foo/bar/baz -> foo/bar.html, foo/bar/baz.html)
+  if (rel.includes('/')) {
+    const parts = rel.split('/')
+    for (let i = parts.length; i >= 1; i--) {
+      const candidate = path.join(staticRoot, ...parts.slice(0, i)) + '.html'
+      if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+        return { file: candidate, isHtml: true }
+      }
+    }
   }
 
   // 동적 라우트(qt/[id] 등) — HTML 없을 때 SPA 셸로 클라이언트 라우팅
@@ -181,7 +324,8 @@ function handleTenantRequest(opts) {
     req, res, name, prefixStyle, publicDir, copiesDir, procMap, proxy,
   } = opts
 
-  const reqPath = decodeURIComponent((req.url || '/').split('?')[0])
+  const rawPath = decodeURIComponent((req.url || '/').split('?')[0])
+  const reqPath = normalizeTenantReqPath(rawPath, name, prefixStyle)
   const accepts = req.headers.accept || ''
 
   const staticRoot = path.join(publicDir, name)
@@ -252,7 +396,9 @@ function handleTenantRequest(opts) {
 module.exports = {
   tenantPathPrefix,
   tenantSlugFromHost,
+  isDashboardHost,
   stripPathPrefixForSubdomain,
+  normalizeTenantReqPath,
   resolvePrefix,
   rewriteAbsolutePaths,
   injectClientPrefixScript,
