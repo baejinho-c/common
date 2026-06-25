@@ -1,0 +1,81 @@
+{
+  "name": "CareerSim AI - AI 기반 커리어 시뮬레이션",
+  "short_name": "CareerSim AI",
+  "description": "AI가 예측하는 나의 미래 커리어. 3년, 5년, 10년 후 연봉, 직위, 스킬 갭까지 한눈에 확인하세요.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "education"],
+  "lang": "ko",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "CareerSim AI 데스크톱 화면"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "CareerSim AI 모바일 화면"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "커리어 시뮬레이션 시작",
+      "short_name": "시뮬레이션",
+      "description": "AI 커리어 시뮬레이션을 바로 시작합니다",
+      "url": "/simulation",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "사용량 모니터",
+      "short_name": "모니터",
+      "description": "AI 사용량을 확인합니다",
+      "url": "/admin",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

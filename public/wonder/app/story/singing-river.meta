@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/story/layout,_N_T_/story/[id]/layout,_N_T_/story/[id]/page,_N_T_/story/singing-river"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/story/$d$id/__PAGE__",
+    "/story/$d$id",
+    "/story",
+    "/_index",
+    "/_head"
+  ]
+}

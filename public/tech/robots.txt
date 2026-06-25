@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tech.restyart.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Block admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /_next/
+Disallow: /dashboard/
+
+# Allow important pages
+Allow: /articles/
+Allow: /community/
+Allow: /write/
+Allow: /privacy/
+Allow: /terms/

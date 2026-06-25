@@ -1,0 +1,83 @@
+{
+  "name": "HikeMate - 등산 코스 정보 플랫폼",
+  "short_name": "HikeMate",
+  "description": "전국 명산 등산 코스 정보를 제공하는 플랫폼",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "orientation": "portrait-primary",
+  "categories": ["sports", "travel", "lifestyle"],
+  "lang": "ko-KR",
+  "dir": "ltr",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.jpg",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/android-chrome-512x512.jpg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-touch-icon.jpg",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-16x16.jpg",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.jpg",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/images/screenshot-desktop.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/images/screenshot-mobile.jpg",
+      "sizes": "375x812",
+      "type": "image/jpeg",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "등산 코스 검색",
+      "short_name": "코스 검색",
+      "description": "등산 코스를 검색합니다",
+      "url": "/?search=",
+      "icons": [
+        {
+          "src": "/images/search-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "즐겨찾기",
+      "short_name": "즐겨찾기",
+      "description": "저장한 등산 코스를 확인합니다",
+      "url": "/favorites",
+      "icons": [
+        {
+          "src": "/images/heart-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+1:"$Sreact.fragment"
+2:I[9243,["928","static/chunks/928-df95e53c2ce9bb81.js","460","static/chunks/460-0acb27bde36a5738.js","34","static/chunks/34-20ad6632c26897c2.js","111","static/chunks/111-1327c9b43be3a542.js","177","static/chunks/app/layout-7156e52746ef8b00.js"],""]
+5:I[9304,["928","static/chunks/928-df95e53c2ce9bb81.js","460","static/chunks/460-0acb27bde36a5738.js","34","static/chunks/34-20ad6632c26897c2.js","111","static/chunks/111-1327c9b43be3a542.js","177","static/chunks/app/layout-7156e52746ef8b00.js"],"ThemeProvider"]
+6:I[7555,[],""]
+7:I[1295,[],""]
+8:I[9646,["928","static/chunks/928-df95e53c2ce9bb81.js","460","static/chunks/460-0acb27bde36a5738.js","34","static/chunks/34-20ad6632c26897c2.js","111","static/chunks/111-1327c9b43be3a542.js","177","static/chunks/app/layout-7156e52746ef8b00.js"],"FloatingChat"]
+9:I[5038,["928","static/chunks/928-df95e53c2ce9bb81.js","460","static/chunks/460-0acb27bde36a5738.js","34","static/chunks/34-20ad6632c26897c2.js","111","static/chunks/111-1327c9b43be3a542.js","177","static/chunks/app/layout-7156e52746ef8b00.js"],"Toaster"]
+a:I[9665,[],"OutletBoundary"]
+d:I[9665,[],"ViewportBoundary"]
+f:I[9665,[],"MetadataBoundary"]
+11:I[6614,[],""]
+:HL["/_next/static/media/e4af272ccee01ff0-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/css/93ca290c1b0dd0c0.css","style"]
+3:T64b,
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": "https://jjreview.restyart.com/#organization",
+              "name": "리스티아트",
+              "legalName": "리스티아트",
+              "url": "https://jjreview.restyart.com",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://jjreview.restyart.com/android-chrome-512x512.jpg",
+                "width": 512,
+                "height": 512
+              },
+              "image": "https://jjreview.restyart.com/og-image.jpg",
+              "description": "AI가 만드는 진짜 후기 플랫폼",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+82-2-1234-5678",
+                "contactType": "customer service",
+                "availableLanguage": ["Korean", "English"],
+                "areaServed": "KR"
+              },
+              "founder": {
+                "@type": "Person",
+                "name": "서미원",
+                "jobTitle": "대표이사"
+              },
+              "foundingDate": "2024",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "KR",
+                "addressLocality": "서울",
+                "addressRegion": "서울특별시"
+              },
+              "sameAs": [
+                "https://www.facebook.com/jjreview",
+                "https://twitter.com/jjreview_kr",
+                "https://www.instagram.com/jjreview_official"
+              ]
+            }
+          4:T4da,
+            {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://jjreview.restyart.com/#website",
+              "url": "https://jjreview.restyart.com",
+              "name": "찐리뷰",
+              "alternateName": "JJReview",
+              "description": "AI가 만드는 진짜 후기 플랫폼 - 웹툰, 드라마, 예능, 유튜브 콘텐츠 리뷰",
+              "inLanguage": "ko-KR",
+              "isPartOf": {
+                "@id": "https://jjreview.restyart.com/#organization"
+              },
+              "about": {
+                "@type": "Thing",
+                "name": "AI 리뷰 플랫폼"
+              },
+              "audience": {
+                "@type": "Audience",
+                "audienceType": "콘텐츠 소비자"
+              },
+              "potentialAction": [
+                {
+                  "@type": "SearchAction",
+                  "target": {
+                    "@type": "EntryPoint",
+                    "urlTemplate": "https://jjreview.restyart.com/search?q={search_term_string}"
+                  },
+                  "query-input": "required name=search_term_string"
+                }
+              ]
+            }
+          0:{"P":null,"b":"Af7ZVJI0dnykpVvkk-07j","p":"","c":["","privacy"],"i":false,"f":[[["",{"children":["privacy",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/93ca290c1b0dd0c0.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"ko","suppressHydrationWarning":true,"children":[["$","head",null,{"children":[["$","meta",null,{"name":"theme-color","content":"#ef4444"}],["$","meta",null,{"name":"msapplication-TileColor","content":"#ef4444"}],["$","meta",null,{"name":"msapplication-config","content":"/browserconfig.xml"}],["$","meta",null,{"name":"mobile-web-app-capable","content":"yes"}],["$","meta",null,{"name":"apple-mobile-web-app-capable","content":"yes"}],["$","meta",null,{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","meta",null,{"name":"apple-mobile-web-app-title","content":"찐리뷰"}],["$","link",null,{"rel":"icon","href":"/favicon.ico","sizes":"any"}],["$","link",null,{"rel":"icon","href":"/favicon-16x16.jpg","sizes":"16x16","type":"image/png"}],["$","link",null,{"rel":"icon","href":"/favicon-32x32.jpg","sizes":"32x32","type":"image/png"}],["$","link",null,{"rel":"icon","href":"/favicon-96x96.jpg","sizes":"96x96","type":"image/png"}],["$","link",null,{"rel":"apple-touch-icon","href":"/apple-touch-icon.jpg"}],["$","link",null,{"rel":"apple-touch-icon","href":"/apple-touch-icon-152x152.jpg","sizes":"152x152"}],["$","link",null,{"rel":"manifest","href":"/manifest.json"}],["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-YVK657S8Q4","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n            window.dataLayer = window.dataLayer || [];\n            function gtag(){dataLayer.push(arguments);}\n            gtag('js', new Date());\n            gtag('config', 'G-YVK657S8Q4', {\n              page_title: document.title,\n              page_location: window.location.href,\n              custom_map: {'custom_parameter_1': 'subdomain'},\n              send_page_view: true,\n              anonymize_ip: true,\n              allow_google_signals: true,\n              allow_ad_personalization_signals: false\n            });\n          "}],["$","$L2",null,{"id":"structured-data-organization","type":"application/ld+json","children":"$3"}],["$","$L2",null,{"id":"structured-data-website","type":"application/ld+json","children":"$4"}],["$","$L2",null,{"id":"structured-data-software","type":"application/ld+json","children":"\n            {\n              \"@context\": \"https://schema.org\",\n              \"@type\": \"SoftwareApplication\",\n              \"name\": \"찐리뷰\",\n              \"description\": \"AI가 만드는 진짜 후기 플랫폼\",\n              \"url\": \"https://jjreview.restyart.com\",\n              \"applicationCategory\": \"Entertainment\",\n              \"operatingSystem\": \"Web Browser\",\n              \"offers\": {\n                \"@type\": \"Offer\",\n                \"price\": \"0\",\n                \"priceCurrency\": \"KRW\",\n                \"availability\": \"https://schema.org/InStock\"\n              },\n              \"aggregateRating\": {\n                \"@type\": \"AggregateRating\",\n                \"ratingValue\": \"4.8\",\n                \"ratingCount\": \"892\",\n                \"bestRating\": \"5\",\n                \"worstRating\": \"1\"\n              },\n              \"author\": {\n                \"@id\": \"https://jjreview.restyart.com/#organization\"\n              }\n            }\n          "}],["$","meta",null,{"property":"fb:app_id","content":"your-facebook-app-id"}],["$","meta",null,{"name":"pinterest-rich-pin","content":"true"}],["$","meta",null,{"name":"application-name","content":"찐리뷰"}],["$","meta",null,{"name":"msapplication-tooltip","content":"AI가 만드는 진짜 후기 플랫폼"}],["$","meta",null,{"name":"msapplication-starturl","content":"/"}],["$","meta",null,{"name":"msapplication-navbutton-color","content":"#ef4444"}]]}],["$","body",null,{"className":"__className_f367f3","children":[["$","$L5",null,{"attribute":"class","defaultTheme":"light","enableSystem":true,"disableTransitionOnChange":true,"children":[["$","$L6",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L8",null,{}],["$","$L9",null,{}]]}],["$","div",null,{"data-resty-legal":"1","className":"mt-auto border-t border-gray-200 bg-gray-50 text-gray-600 text-xs leading-relaxed","children":["$","div",null,{"className":"container mx-auto px-4 py-4 max-w-6xl","children":[["$","p",null,{"className":"font-semibold text-gray-700 mb-2","children":"리스티아트"}],["$","p",null,{"className":"mb-1","children":["사업자등록번호 ","3961701077"," · 통신판매업신고 ","2022-성남분당C-0670"]}],["$","p",null,{"className":"mb-1","children":"경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호"}],["$","p",null,{"className":"mb-3","children":["문의:"," ",["$","a",null,{"href":"mailto:support@restyart.com","className":"text-blue-600 hover:underline","children":"support@restyart.com"}]]}],["$","p",null,{"className":"p-3 bg-white border border-gray-200 rounded-md text-gray-500","children":[["$","span",null,{"className":"font-semibold text-gray-700","children":"AI 이용 안내"}]," — ","본 서비스의 일부 콘텐츠·응답·추천·이미지 등은 인공지능(AI) 기술을 활용하여 생성될 수 있으며, AI 생성 결과는 참고용이며 정확성·완전성을 보장하지 않습니다."]}],["$","p",null,{"className":"mt-2 text-[11px] text-gray-400","children":["© ",2026," ","리스티아트",". All rights reserved."]}]]}]}]]}]]}]]}],{"children":["privacy",["$","$1","c",{"children":[null,["$","$L6",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":[["$","div",null,{"className":"container mx-auto px-4 py-8 max-w-3xl prose prose-sm sm:prose","children":[["$","h1",null,{"children":"개인정보처리방침"}],["$","p",null,{"className":"text-muted-foreground","children":["본 서비스"," · ","리스티아트"," · 시행일 ","2025년 1월 1일"]}],["$","h2",null,{"children":"1. 수집하는 개인정보"}],["$","ul",null,{"children":[["$","li",null,{"children":"필수: 이메일, 비밀번호(암호화 저장), 서비스 이용 기록"}],["$","li",null,{"children":"선택: 이름, 전화번호, 프로필 이미지"}],["$","li",null,{"children":"자동: 접속 IP, 쿠키, 기기 정보"}]]}],["$","h2",null,{"children":"2. 이용 목적"}],["$","ul",null,{"children":[["$","li",null,{"children":"회원 식별·가입·로그인 및 리스티아트 통합 계정 관리"}],["$","li",null,{"children":"서비스 제공, 고객 문의 응대, 부정 이용 방지"}]]}],["$","h2",null,{"children":"3. AI 이용 안내"}],["$","p",null,{"className":"text-sm bg-muted p-3 rounded-md","children":"본 서비스의 일부 콘텐츠·응답·추천·이미지 등은 인공지능(AI) 기술을 활용하여 생성될 수 있으며, AI 생성 결과는 참고용이며 정확성·완전성을 보장하지 않습니다."}],["$","h2",null,{"children":"4. 개인정보 보호책임자"}],["$","ul",null,{"children":[["$","li",null,{"children":["회사명: ","리스티아트"]}],["$","li",null,{"children":["연락처: ","support@restyart.com"]}],["$","li",null,{"children":["주소: ","경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호"]}]]}],["$","p",null,{"className":"text-xs text-muted-foreground mt-8","children":["© ",2026," ","리스티아트"]}]]}],"$undefined",null,["$","$La",null,{"children":["$Lb","$Lc",null]}]]}],{},null,false]},null,false]},[null,[],[]],false],["$","$1","h",{"children":[null,["$","$1","EvH2YYxhqNPJiiZqdSnkW",{"children":[["$","$Ld",null,{"children":"$Le"}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],["$","$Lf",null,{"children":"$L10"}]]}],false]],"m":"$undefined","G":["$11","$undefined"],"s":false,"S":true}
+e:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+b:null
+c:null
+10:[["$","title","0",{"children":"찐리뷰 - AI가 만드는 진짜 후기 플랫폼 | 웹툰, 드라마, 예능, 유튜브 리뷰"}],["$","meta","1",{"name":"description","content":"웹툰, 드라마, 예능, 유튜브 콘텐츠의 솔직한 감상을 AI가 찐리뷰로 변환해드립니다. 리스티아트가 만든 혁신적인 AI 리뷰 플랫폼에서 여러분의 감상을 더욱 매력적으로 표현하고 공유해보세요. 무료 크레딧으로 지금 시작하세요!"}],["$","link","2",{"rel":"author","href":"https://jjreview.restyart.com"}],["$","meta","3",{"name":"author","content":"리스티아트"}],["$","meta","4",{"name":"generator","content":"v0.app"}],["$","meta","5",{"name":"keywords","content":"찐리뷰,AI 리뷰,인공지능 후기,웹툰 리뷰,드라마 리뷰,예능 리뷰,유튜브 리뷰,콘텐츠 리뷰,감상평,후기 작성,리뷰 플랫폼,콘텐츠 추천,리스티아트,AI 글쓰기,자동 리뷰 생성,한국 콘텐츠,K-콘텐츠,엔터테인먼트,미디어 리뷰"}],["$","meta","6",{"name":"referrer","content":"origin-when-cross-origin"}],["$","meta","7",{"name":"creator","content":"리스티아트"}],["$","meta","8",{"name":"publisher","content":"리스티아트"}],["$","meta","9",{"name":"robots","content":"index, follow"}],["$","meta","10",{"name":"googlebot","content":"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"}],["$","meta","11",{"name":"category","content":"entertainment"}],["$","meta","12",{"name":"classification","content":"AI Review Platform"}],["$","link","13",{"rel":"canonical","href":"https://jjreview.restyart.com"}],["$","link","14",{"rel":"alternate","hrefLang":"ko-KR","href":"https://jjreview.restyart.com/ko"}],["$","link","15",{"rel":"alternate","hrefLang":"en-US","href":"https://jjreview.restyart.com/en"}],["$","meta","16",{"name":"format-detection","content":"telephone=no, address=no, email=no"}],["$","meta","17",{"name":"google-site-verification","content":"G-YVK657S8Q4"}],["$","meta","18",{"name":"y_key","content":"yahoo-verification-code"}],["$","meta","19",{"name":"yandex-verification","content":"yandex-verification-code"}],["$","meta","20",{"property":"og:title","content":"찐리뷰 - AI가 만드는 진짜 후기 플랫폼"}],["$","meta","21",{"property":"og:description","content":"웹툰, 드라마, 예능, 유튜브 콘텐츠의 솔직한 감상을 AI가 찐리뷰로 변환해드립니다. 무료로 시작하세요!"}],["$","meta","22",{"property":"og:url","content":"https://jjreview.restyart.com"}],["$","meta","23",{"property":"og:site_name","content":"찐리뷰"}],["$","meta","24",{"property":"og:locale","content":"ko_KR"}],["$","meta","25",{"property":"og:image","content":"https://jjreview.restyart.com/og-image.jpg"}],["$","meta","26",{"property":"og:image:width","content":"1200"}],["$","meta","27",{"property":"og:image:height","content":"630"}],["$","meta","28",{"property":"og:image:alt","content":"찐리뷰 - AI가 만드는 진짜 후기 플랫폼"}],["$","meta","29",{"property":"og:image:type","content":"image/jpeg"}],["$","meta","30",{"property":"og:image","content":"https://jjreview.restyart.com/og-image-square.jpg"}],["$","meta","31",{"property":"og:image:width","content":"1200"}],["$","meta","32",{"property":"og:image:height","content":"1200"}],["$","meta","33",{"property":"og:image:alt","content":"찐리뷰 로고"}],["$","meta","34",{"property":"og:image:type","content":"image/jpeg"}],["$","meta","35",{"property":"og:type","content":"website"}],["$","meta","36",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","37",{"name":"twitter:site","content":"@jjreview_kr"}],["$","meta","38",{"name":"twitter:creator","content":"@restyart"}],["$","meta","39",{"name":"twitter:title","content":"찐리뷰 - AI가 만드는 진짜 후기 플랫폼"}],["$","meta","40",{"name":"twitter:description","content":"웹툰, 드라마, 예능, 유튜브 콘텐츠의 솔직한 감상을 AI가 찐리뷰로 변환해드립니다."}],["$","meta","41",{"name":"twitter:image","content":"https://jjreview.restyart.com/twitter-image.jpg"}],["$","link","42",{"rel":"icon","href":"/favicon.ico","sizes":"any"}],["$","link","43",{"rel":"icon","href":"/favicon-16x16.jpg","sizes":"16x16","type":"image/png"}],["$","link","44",{"rel":"icon","href":"/favicon-32x32.jpg","sizes":"32x32","type":"image/png"}],["$","link","45",{"rel":"icon","href":"/favicon-96x96.jpg","sizes":"96x96","type":"image/png"}],["$","link","46",{"rel":"apple-touch-icon","href":"/apple-touch-icon.jpg","sizes":"180x180","type":"image/png"}],["$","link","47",{"rel":"apple-touch-icon","href":"/apple-touch-icon-152x152.jpg","sizes":"152x152","type":"image/png"}],["$","link","48",{"rel":"android-chrome-192x192","href":"/android-chrome-192x192.jpg","sizes":"192x192","type":"image/png"}],["$","link","49",{"rel":"android-chrome-512x512","href":"/android-chrome-512x512.jpg","sizes":"512x512","type":"image/png"}]]

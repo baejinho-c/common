@@ -1,0 +1,27 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /auth/
+Crawl-delay: 1
+
+User-Agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /auth/
+
+User-Agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /auth/
+Crawl-delay: 2
+
+Host: https://hike.restyart.com
+Sitemap: https://hike.restyart.com/sitemap.xml

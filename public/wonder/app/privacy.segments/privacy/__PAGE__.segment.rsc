@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/0tlrty9cdzw0b.js","/_next/static/chunks/15tbkfg39iovu.js","/_next/static/chunks/0bsjl-lur_xr..js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"mx-auto max-w-3xl px-4 py-12 prose prose-sm","children":[["$","h1",null,{"children":"개인정보처리방침"}],["$","p",null,{"className":"text-muted-foreground","children":"WonderTale · 리스티아트"}],["$","h2",null,{"children":"1. 수집하는 개인정보"}],["$","ul",null,{"children":[["$","li",null,{"children":"선택: 닉네임, 프로필(로컬 저장), 동화 창작·낭독 기록"}],["$","li",null,{"children":"자동: 접속 IP, 쿠키, 기기 정보"}]]}],["$","h2",null,{"children":"2. AI 이용 안내"}],["$","p",null,{"children":"동화 텍스트·삽화는 AI로 생성될 수 있으며, 참고용이며 정확성을 보장하지 않습니다. 아이가 사용할 때는 보호자의 확인을 권장합니다."}],["$","h2",null,{"children":"3. 문의"}],["$","p",null,{"children":["$","a",null,{"href":"mailto:support@restyart.com","children":"support@restyart.com"}]}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"_01l1e5fvyfvps4qzlUfT"}
+4:null

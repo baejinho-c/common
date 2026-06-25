@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /admin/
+
+Host: https://sim.restyart.com
+Sitemap: https://sim.restyart.com/sitemap.xml

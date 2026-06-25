@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+
+# 주요 페이지들
+Allow: /search
+Allow: /generate
+Allow: /sources
+Allow: /settings
+Allow: /article/*
+Allow: /subject/*
+Allow: /level/*
+
+# API 엔드포인트는 크롤링 제외
+Disallow: /api/
+
+# 사이트맵 위치
+Sitemap: https://library.restyart.com/sitemap.xml
+
+# 크롤링 속도 제한 (1초 간격)
+Crawl-delay: 1
+
+# 특정 검색엔진별 설정
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: NaverBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: DaumBot
+Allow: /
+Crawl-delay: 1
