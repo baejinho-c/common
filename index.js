@@ -1,30 +1,667 @@
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
+const http = require('http')
+const https = require('https')
 const httpProxy = require('http-proxy')
 const child_process = require('child_process')
 
 const authRoutes = require('./auth/routes')
 const userStore = require('./auth/user-store')
-const { syncTenantsFromWorkdir, listTenants, isReservedSlug } = require('./auth/tenant')
-const { rewriteAbsolutePaths, injectClientPrefixScript, handleTenantRequest, tenantSlugFromHost } = require('./tenant-proxy')
+const { syncTenantsFromWorkdir, syncTenantsFromPublic, listTenants, isReservedSlug } = require('./auth/tenant')
+const { rewriteAbsolutePaths, injectClientPrefixScript, handleTenantRequest, tenantSlugFromHost, isDashboardHost } = require('./tenant-proxy')
+const { buildOverview, listPublished } = require('./lib/dashboard-overview')
 
 const app = express()
 const PORT = process.env.PORT || 4000
 const WORKDIR = process.env.WORKDIR || path.resolve(__dirname, '..')
+const RESTY_API_BACKEND = (process.env.RESTY_API_BACKEND || 'http://127.0.0.1:5001').replace(/\/$/, '')
+const USE_RESTY_API_PROXY = process.env.USE_RESTY_API_PROXY !== '0'
 const COPIES_DIR = path.join(__dirname, 'assembled_copies')
 const PUBLIC_DIR = path.join(__dirname, 'public')
+const SERVICES_DASHBOARD_DIR = path.join(__dirname, 'services-dashboard')
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === '1' || process.env.ENABLE_DEV_PROXY === 'true'
 
 app.use(express.json())
 
-// Central multi-tenant auth API
-app.use('/api/resty', authRoutes)
+function proxyRestyApiPath(req, res, apiPath) {
+  let targetUrl
+  try {
+    const qIdx = req.originalUrl.indexOf('?')
+    const query = qIdx >= 0 ? req.originalUrl.slice(qIdx) : ''
+    targetUrl = new URL(`${apiPath}${query}`, RESTY_API_BACKEND)
+  } catch (e) {
+    return res.status(500).json({ message: '잘못된 API URL', success: false })
+  }
+  const lib = targetUrl.protocol === 'https:' ? https : http
+  const body =
+    req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+  const headers = { ...req.headers, host: targetUrl.host }
+  if (body) {
+    headers['content-type'] = 'application/json'
+    headers['content-length'] = Buffer.byteLength(body)
+  }
+  const proxyReq = lib.request(
+    {
+      hostname: targetUrl.hostname,
+      port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+      path: targetUrl.pathname + targetUrl.search,
+      method: req.method,
+      headers,
+    },
+    (proxyRes) => {
+      res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+      proxyRes.pipe(res)
+    },
+  )
+  proxyReq.on('error', (err) => {
+    console.error('resty api proxy error', err)
+    if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+  })
+  if (body) proxyReq.write(body)
+  proxyReq.end()
+}
+
+// Central multi-tenant auth API — MySQL(resty-api)로 프록시 (기본: :5001)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/resty', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('resty api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+} else {
+  app.use('/api/resty', authRoutes)
+}
+
+// resty-api — sim 테넌트 AI 시뮬레이션
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/sim', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('sim api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// WonderTale AI (동화·삽화 생성)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/wonder', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('wonder api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// AutoBlogger AI (아웃라인·본문·스타일 분석)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/blog', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('blog api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// AutoBlogger auth (네이버 OAuth, 사용량)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  for (const prefix of ['/api/naver', '/api/usage']) {
+    app.use(prefix, (req, res) => {
+      let targetUrl
+      try {
+        targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+      } catch (e) {
+        return res.status(500).json({ message: '잘못된 API URL', success: false })
+      }
+      const lib = targetUrl.protocol === 'https:' ? https : http
+      const body =
+        req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+      const headers = { ...req.headers, host: targetUrl.host }
+      if (body) {
+        headers['content-type'] = 'application/json'
+        headers['content-length'] = Buffer.byteLength(body)
+      }
+      const proxyReq = lib.request(
+        {
+          hostname: targetUrl.hostname,
+          port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+          path: targetUrl.pathname + targetUrl.search,
+          method: req.method,
+          headers,
+        },
+        (proxyRes) => {
+          res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+          proxyRes.pipe(res)
+        },
+      )
+      proxyReq.on('error', (err) => {
+        console.error(`${prefix} api proxy error`, err)
+        if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+      })
+      if (body) proxyReq.write(body)
+      proxyReq.end()
+    })
+  }
+}
+
+// 오늘의 한 줄 AI (healing.restyart.com)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/healing', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('healing api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// Research stock API (research.restyart.com)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  for (const prefix of ['/api/market', '/api/stock']) {
+    app.use(prefix, (req, res) => {
+      let targetUrl
+      try {
+        const apiPath = req.originalUrl
+          .replace(/^\/api\/market/, '/api/research/market')
+          .replace(/^\/api\/stock\//, '/api/research/stock/')
+        targetUrl = new URL(apiPath, RESTY_API_BACKEND)
+      } catch (e) {
+        return res.status(500).json({ message: '잘못된 API URL', success: false })
+      }
+      const lib = targetUrl.protocol === 'https:' ? https : http
+      const body =
+        req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+      const headers = { ...req.headers, host: targetUrl.host }
+      if (body) {
+        headers['content-type'] = 'application/json'
+        headers['content-length'] = Buffer.byteLength(body)
+      }
+      const proxyReq = lib.request(
+        {
+          hostname: targetUrl.hostname,
+          port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+          path: targetUrl.pathname + targetUrl.search,
+          method: req.method,
+          headers,
+        },
+        (proxyRes) => {
+          res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+          proxyRes.pipe(res)
+        },
+      )
+      proxyReq.on('error', (err) => {
+        console.error('research api proxy error', err)
+        if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+      })
+      if (body) proxyReq.write(body)
+      proxyReq.end()
+    })
+  }
+}
+
+// Form / Calli / Sight / Video — tenant subdomain API (정적 배포 → resty-api)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  const TENANT_API_PREFIXES = {
+    form: ['/api/generate-template', '/api/share', '/api/health', '/api/download', '/api/ask'],
+    calli: ['/api/auth', '/api/artists', '/api/calligraphy-styles', '/api/contact', '/api/system', '/api/monitor'],
+    sight: ['/api/analyze', '/api/analyze-screenshot', '/api/validate-key'],
+    video: ['/api/analyze-video', '/api/get-youtube-transcript', '/api/search-products', '/api/health', '/api/test-endpoints'],
+    'book-review': ['/api/search'],
+  }
+
+  // Posts / Comments / Likes — 모든 테넌트 공통 (x-subdomain = Host 서브도메인)
+  const SOCIAL_API_PREFIXES = ['/api/posts', '/api/comments', '/api/likes']
+  app.use((req, res, next) => {
+    if (!SOCIAL_API_PREFIXES.some((p) => req.originalUrl === p || req.originalUrl.startsWith(`${p}/`) || req.originalUrl.startsWith(`${p}?`))) {
+      return next()
+    }
+    const slug = tenantSlugFromHost(req.headers.host)
+    if (slug && !req.headers['x-subdomain']) {
+      req.headers['x-subdomain'] = slug
+    }
+    proxyRestyApiPath(req, res, req.originalUrl.split('?')[0])
+  })
+
+  app.use('/api/ask', (req, res) => {
+    proxyRestyApiPath(req, res, '/api/ask')
+  })
+
+  app.use((req, res, next) => {
+    if (!req.originalUrl.startsWith('/api/')) return next()
+    const slug = tenantSlugFromHost(req.headers.host)
+    if (!slug || !TENANT_API_PREFIXES[slug]) return next()
+    const prefixes = TENANT_API_PREFIXES[slug]
+    const matched = prefixes.some(
+      (p) => req.originalUrl === p || req.originalUrl.startsWith(`${p}/`) || req.originalUrl.startsWith(`${p}?`),
+    )
+    if (!matched) return next()
+    const suffix = req.originalUrl.replace(/^\/api/, '')
+    proxyRestyApiPath(req, res, `/api/${slug}${suffix}`)
+  })
+}
+
+// MyQBank AI (문제 생성)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/qbank', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('qbank api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// VTest 면접 AI
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/vtest', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('vtest api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// Portfolio 문의 (Resend)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/portfolio', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('portfolio api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// Brochure Maker AI (카피라이팅)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/brochure', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('brochure api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// LogoStage AI (브랜드 분석 + 로고 생성)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/logo', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('logo api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// 우광교회 사진·콘텐츠 API (resty-api data/church)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/church', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('church api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// Recipe CRUD (resty-api MySQL)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/recipes', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('recipes api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
 
 // Sync tenants from workdir on startup
 const db = userStore.getDb()
-const tenantCount = syncTenantsFromWorkdir(db, WORKDIR)
-console.log(`Synced ${tenantCount} tenants from ${WORKDIR}`)
+const tenantCount = syncTenantsFromWorkdir(db, WORKDIR) + syncTenantsFromPublic(db, PUBLIC_DIR)
+console.log(`Synced ${tenantCount} tenants from ${WORKDIR} + public/`)
 
 app.get('/api/tenants', (req, res) => {
   const tenants = listTenants(db).map((t) => ({
@@ -35,29 +672,77 @@ app.get('/api/tenants', (req, res) => {
 })
 
 app.get('/api/projects', (req, res) => {
+  const published = listPublished(PUBLIC_DIR)
+  if (published.length) {
+    return res.json({ projects: published, source: 'published' })
+  }
   fs.readdir(WORKDIR, { withFileTypes: true }, (err, entries) => {
     if (err) return res.status(500).json({ error: String(err) })
     const dirs = entries.filter(e => e.isDirectory()).map(d => d.name)
-    res.json({ projects: dirs })
+    res.json({ projects: dirs, source: 'workdir' })
   })
 })
 
 app.get('/api/published', (req, res) => {
   if (!fs.existsSync(PUBLIC_DIR)) return res.json({ published: [] })
-  const published = fs.readdirSync(PUBLIC_DIR, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && !e.name.startsWith('.'))
-    .map((e) => {
-      const slug = e.name
-      const indexPath = path.join(PUBLIC_DIR, slug, 'index.html')
-      return {
-        slug,
-        hasIndex: fs.existsSync(indexPath),
-        url: `/${encodeURIComponent(slug)}/`,
-      }
-    })
-    .filter((p) => p.hasIndex)
+  const published = listPublished(PUBLIC_DIR).map((slug) => ({
+    slug,
+    hasIndex: true,
+    url: `/${encodeURIComponent(slug)}/`,
+    siteUrl: `https://${slug}.restyart.com/`,
+  }))
   res.json({ published, devProxy: ENABLE_DEV_PROXY })
 })
+
+app.get('/api/dashboard/overview', async (req, res) => {
+  try {
+    const live = req.query.live !== '0'
+    const data = await buildOverview({ publicDir: PUBLIC_DIR, live })
+    res.json(data)
+  } catch (e) {
+    console.error('dashboard overview error', e)
+    res.status(500).json({ error: String(e.message || e) })
+  }
+})
+
+// Usage stats (resty-api MySQL)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/dashboard/usage', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('dashboard usage proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
 
 app.get('/api/config', (req, res) => {
   res.json({ devProxy: ENABLE_DEV_PROXY, port: PORT })
@@ -217,6 +902,7 @@ app.use('/r/:name', tenantHandler('legacy'))
 const NAKED_APP_SEGMENTS = new Set([
   'bible', 'qt', 'post', 'popular', 'churches', 'favorites', 'profile', 'credits', 'church',
   'store', 'library', 'login', 'register', 'create', 'authors', 'bundles', 'insights', 'monitor',
+  'simulation', 'results', 'admin',
 ])
 function listPublishedTenants() {
   if (!fs.existsSync(PUBLIC_DIR)) return new Set()
@@ -237,6 +923,37 @@ app.use((req, res, next) => {
   const m = referer.match(/:\/\/[^/]+\/([a-z0-9_-]+)(?:\/|$)/i)
   if (!m || !published.has(m[1])) return next()
   return res.redirect(302, `/${m[1]}${req.path}`)
+})
+
+function sendServicesDashboardFile(res, filename) {
+  const file = path.join(SERVICES_DASHBOARD_DIR, filename)
+  if (!fs.existsSync(file)) return false
+  res.sendFile(file)
+  return true
+}
+
+// dashboard.restyart.com → 서비스 대시보드 (tenant publish로 index.html이 덮이는 것 방지)
+app.use((req, res, next) => {
+  if (!isDashboardHost(req.headers.host)) return next()
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next()
+  const p = (req.path || '/').split('?')[0]
+  if (p.startsWith('/api/')) return next()
+  if (p === '/' || p === '/index.html') {
+    if (sendServicesDashboardFile(res, 'index.html')) return
+  }
+  if (p === '/app.js') {
+    if (sendServicesDashboardFile(res, 'app.js')) return
+  }
+  return next()
+})
+
+// 게이트웨이 루트(/) — 테넌트 서브도메인이 아닐 때 서비스 대시보드
+app.get(['/', '/index.html', '/app.js'], (req, res, next) => {
+  if (tenantSlugFromHost(req.headers.host)) return next()
+  const p = (req.path || '/').split('?')[0]
+  const file = p === '/app.js' ? 'app.js' : 'index.html'
+  if (sendServicesDashboardFile(res, file)) return
+  return next()
 })
 
 // 서브도메인 라우팅: light.restyart.com → public/light/ (경로 prefix 없음)
