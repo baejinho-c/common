@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="CalliMarket">
+  <defs>
+    <linearGradient id="cm-mark" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316"/>
+      <stop offset="1" stop-color="#EA580C"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#cm-mark)"/>
+  <path d="M12 32C14 18 20 16 28 22C32 25 34 18 36 14" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M10 34C18 28 24 36 34 30" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.9"/>
+</svg>

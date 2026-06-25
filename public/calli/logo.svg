@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="CalliMarket">
+  <defs>
+    <linearGradient id="cm-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316"/>
+      <stop offset="1" stop-color="#EA580C"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="4" width="40" height="40" rx="10" fill="url(#cm-grad)"/>
+  <path d="M10 30C12 18 18 16 24 20C28 23 30 18 32 14" stroke="#fff" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+  <path d="M8 32C14 28 20 34 28 30" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85"/>
+  <text x="50" y="33" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="#111827">Calli</text>
+  <text x="108" y="33" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="#EA580C">Market</text>
+</svg>
