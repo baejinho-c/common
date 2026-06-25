@@ -1,24 +1,6 @@
-User-agent: *
+User-Agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://qbox-platform.vercel.app/sitemap.xml
-Sitemap: https://qbox-platform.vercel.app/sitemap-index.xml
-
-# RSS Feed
-Sitemap: https://qbox-platform.vercel.app/feed/rss.xml
-
-# Disallow admin or private areas (if any)
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
-Disallow: /monitor/
 
-# Allow important pages
-Allow: /questions/
-Allow: /ask/
-Allow: /tags/
-Allow: /feed/
-
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
+Sitemap: https://qbox.restyart.com/sitemap.xml

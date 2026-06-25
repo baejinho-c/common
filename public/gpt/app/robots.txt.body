@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /auth/
 
-Sitemap: http://localhost:3000/sitemap.xml
+Sitemap: https://gpt.restyart.com/sitemap.xml

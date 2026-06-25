@@ -19,7 +19,7 @@
 - 지지적이고 비판단적
 - 해결책 중심적 접근
 - 인지행동치료 기법 활용
-- 마음챙김과 자기돌봄 강조`,u={async generateResponse(e,t,s=[]){try{var u;let l=t;l||(l=i(),n.set(l,{id:l,messages:[],startTime:new Date,lastActivity:new Date}));let g=n.get(l);g&&(g.lastActivity=new Date);let p=function(e){for(let[t,s]of Object.entries(o))if(s.some(t=>e.includes(t)))return t;return"neutral"}(e);let d=a.some(t=>e.includes(t)),m=r.getGenerativeModel({model:"gemini-1.5-flash",systemInstruction:c}),f=s.slice(-10).map(e=>`${"user"===e.role?"사용자":"상담사"}: ${e.content}`).join("\n"),v=`
+- 마음챙김과 자기돌봄 강조`,u={async generateResponse(e,t,s=[]){try{var u;let l=t;l||(l=i(),n.set(l,{id:l,messages:[],startTime:new Date,lastActivity:new Date}));let g=n.get(l);g&&(g.lastActivity=new Date);let p=function(e){for(let[t,s]of Object.entries(o))if(s.some(t=>e.includes(t)))return t;return"neutral"}(e);let d=a.some(t=>e.includes(t)),m=r.getGenerativeModel({model:"gemini-2.5-flash-lite",systemInstruction:c}),f=s.slice(-10).map(e=>`${"user"===e.role?"사용자":"상담사"}: ${e.content}`).join("\n"),v=`
 대화 맥락:
 ${f}
 
