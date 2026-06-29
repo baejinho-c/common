@@ -48,6 +48,7 @@ restyart
 rh
 save
 search
+seo-foundry
 special
 sports
 story

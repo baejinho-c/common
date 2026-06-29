@@ -1,7 +1,9 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /settings/
+Disallow: /login
+Disallow: /register
 
 Sitemap: https://foodsns.restyart.com/sitemap.xml

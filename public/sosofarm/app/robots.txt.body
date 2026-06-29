@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Host: https://sosofarm.restyart.com
+Sitemap: https://sosofarm.restyart.com/sitemap.xml

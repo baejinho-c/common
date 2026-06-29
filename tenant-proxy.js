@@ -1,5 +1,7 @@
 const fs = require('fs')
 const path = require('path')
+const http = require('http')
+const https = require('https')
 const { injectLegalHtml } = require('./legal-info')
 
 /** 독립 사이트(교회 등) — 리스티아트 사업자 푸터 미주입 */
@@ -81,8 +83,238 @@ function injectClientPrefixScript(html, name, prefixStyle) {
   const prefix = prefixStyle === 'legacy'
     ? `/r/${encodeURIComponent(name)}`
     : tenantPathPrefix(name)
-  const script = `\n<script data-dashboard-prefix-script>\n(function(){\n  try{\n    var prefix = '${prefix}';\n    function shouldPrefix(u){\n      try{ if(!u || typeof u !== 'string') return false; if(u.indexOf(prefix) === 0) return false; if(u.indexOf('http:') === 0 || u.indexOf('https:') === 0 || u.indexOf('//') === 0) return false; if(u.indexOf('/api/') === 0) return false; return u.charAt(0) === '/'; }catch(e){return false}\n    }\n    function withPrefix(u){ return prefix + (u.charAt(0) === '/' ? u : '/' + u); }\n    function rewriteAnchors(root){\n      try{ (root||document).querySelectorAll && Array.prototype.forEach.call((root||document).querySelectorAll('a[href]'), function(a){ try{ var h = a.getAttribute('href'); if(shouldPrefix(h)) a.setAttribute('href', withPrefix(h)); }catch(e){} }); }catch(e){}\n    }\n    function patchHistory(){\n      try{\n        var nativePush = history.pushState.bind(history);\n        var nativeReplace = history.replaceState.bind(history);\n        history.pushState = function(s,t,u){ try{ if(typeof u === 'string' && shouldPrefix(u)) u = withPrefix(u); }catch(e){} return nativePush(s,t,u); };\n        history.replaceState = function(s,t,u){ try{ if(typeof u === 'string' && shouldPrefix(u)) u = withPrefix(u); }catch(e){} return nativeReplace(s,t,u); };\n      }catch(e){}\n    }\n    function interceptClicks(e){\n      try{\n        var a = e.target && e.target.closest && e.target.closest('a[href]');\n        if(!a) return;\n        var h = a.getAttribute('href');\n        if(!shouldPrefix(h)) return;\n        e.preventDefault();\n        e.stopPropagation();\n        e.stopImmediatePropagation();\n        window.location.assign(withPrefix(h));\n        return false;\n      }catch(e){}\n    }\n    function boot(){\n      rewriteAnchors();\n      patchHistory();\n      document.addEventListener('click', interceptClicks, true);\n    }\n    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();\n    try{ var n=0,t=setInterval(function(){ patchHistory(); rewriteAnchors(); if(++n>100) clearInterval(t); }, 50); }catch(e){}\n    try{ var mo = new MutationObserver(function(recs){ for(var i=0;i<recs.length;i++){ var r = recs[i]; for(var j=0;j<r.addedNodes.length;j++){ var nd = r.addedNodes[j]; if(nd && nd.querySelectorAll) rewriteAnchors(nd); } } }); mo.observe(document, { childList:true, subtree:true }); }catch(e){}\n    window.addEventListener('popstate', function(){ try{ if(shouldPrefix(location.pathname)) location.replace(withPrefix(location.pathname)+location.search+location.hash); }catch(e){} });\n    try{ if(window.fetch){ const _fetch = window.fetch.bind(window); window.fetch = function(input, init){ try{ if(typeof input === 'string'){ if(shouldPrefix(input)) input = withPrefix(input) } else if(input && input.url && typeof input.url === 'string'){ if(shouldPrefix(input.url)) input = new Request(withPrefix(input.url), input) } }catch(e){} return _fetch(input, init); } } }catch(e){}\n    try{ var XH = window.XMLHttpRequest && window.XMLHttpRequest.prototype; if(XH && XH.open){ const _open = XH.open; XH.open = function(method, url){ try{ if(typeof url === 'string' && shouldPrefix(url)) arguments[1] = withPrefix(url) }catch(e){} return _open.apply(this, arguments); } } }catch(e){}\n  }catch(e){}\n})();\n</script>\n`
+  const script = `\n<script data-dashboard-prefix-script>\n(function(){\n  try{\n    var prefix = '${prefix}';\n    function shouldPrefix(u){\n      try{ if(!u || typeof u !== 'string') return false; if(u.indexOf(prefix) === 0) return false; if(u.indexOf('http:') === 0 || u.indexOf('https:') === 0 || u.indexOf('//') === 0) return false; if(u.indexOf('/api/') === 0) return false; return u.charAt(0) === '/'; }catch(e){return false}\n    }\n    function withPrefix(u){ return prefix + (u.charAt(0) === '/' ? u : '/' + u); }\n    function rewriteAnchors(root){\n      try{ (root||document).querySelectorAll && Array.prototype.forEach.call((root||document).querySelectorAll('a[href]'), function(a){ try{ var h = a.getAttribute('href'); if(shouldPrefix(h)) a.setAttribute('href', withPrefix(h)); }catch(e){} }); }catch(e){}\n    }\n    function patchHistory(){\n      try{\n        var nativePush = history.pushState.bind(history);\n        var nativeReplace = history.replaceState.bind(history);\n        history.pushState = function(s,t,u){ try{ if(typeof u === 'string' && shouldPrefix(u)) u = withPrefix(u); }catch(e){} return nativePush(s,t,u); };\n        history.replaceState = function(s,t,u){ try{ if(typeof u === 'string' && shouldPrefix(u)) u = withPrefix(u); }catch(e){} return nativeReplace(s,t,u); };\n      }catch(e){}\n    }\n    function interceptClicks(e){\n      try{\n        var a = e.target && e.target.closest && e.target.closest('a[href]');\n        if(!a) return;\n        var h = a.getAttribute('href');\n        if(!shouldPrefix(h)) return;\n        e.preventDefault();\n        e.stopPropagation();\n        e.stopImmediatePropagation();\n        window.location.assign(withPrefix(h));\n        return false;\n      }catch(e){}\n    }\n    function boot(){\n      rewriteAnchors();\n      patchHistory();\n      document.addEventListener('click', interceptClicks, true);\n    }\n    if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();\n    try{ var n=0,t=setInterval(function(){ patchHistory(); rewriteAnchors(); }, 250); window.addEventListener('beforeunload', function(){ try{ clearInterval(t); }catch(e){} }); }catch(e){}\n    try{ var mo = new MutationObserver(function(recs){ for(var i=0;i<recs.length;i++){ var r = recs[i]; for(var j=0;j<r.addedNodes.length;j++){ var nd = r.addedNodes[j]; if(nd && nd.querySelectorAll) rewriteAnchors(nd); } } }); mo.observe(document, { childList:true, subtree:true }); }catch(e){}\n    window.addEventListener('popstate', function(){ try{ if(shouldPrefix(location.pathname)) location.replace(withPrefix(location.pathname)+location.search+location.hash); }catch(e){} });\n    try{ if(window.fetch){ const _fetch = window.fetch.bind(window); window.fetch = function(input, init){ try{ if(typeof input === 'string'){ if(shouldPrefix(input)) input = withPrefix(input) } else if(input && input.url && typeof input.url === 'string'){ if(shouldPrefix(input.url)) input = new Request(withPrefix(input.url), input) } }catch(e){} return _fetch(input, init); } } }catch(e){}\n    try{ var XH = window.XMLHttpRequest && window.XMLHttpRequest.prototype; if(XH && XH.open){ const _open = XH.open; XH.open = function(method, url){ try{ if(typeof url === 'string' && shouldPrefix(url)) arguments[1] = withPrefix(url) }catch(e){} return _open.apply(this, arguments); } } }catch(e){}\n  }catch(e){}\n})();\n</script>\n`
   return html.replace(/<\/head>/i, script + '</head>')
+}
+
+/** qbox 등: /question/481 → 정적 셸(q_1)에도 URL의 질문 ID 주입 */
+function injectQuestionRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-qbox-question-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/question\/([^/]+)$/)
+  if (!match) return html
+  const questionId = match[1]
+  const script = `\n<script data-qbox-question-id>window.__QBOX_QUESTION_ID__=${JSON.stringify(questionId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
+/** arc: /insights/2 → 정적 셸에도 URL의 글 ID 주입 */
+function injectInsightRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-arc-insight-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/insights\/(\d+)$/)
+  if (!match) return html
+  const insightId = match[1]
+  const script = `\n<script data-arc-insight-id>window.__ARC_INSIGHT_ID__=${JSON.stringify(insightId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
+/** arc: /admin/books/10 → 정적 셸에도 URL의 도서 ID 주입 */
+function injectAdminBookRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-arc-admin-book-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/admin\/books\/(\d+)$/)
+  if (!match) return html
+  const bookId = match[1]
+  const script = `\n<script data-arc-admin-book-id>window.__ARC_ADMIN_BOOK_ID__=${JSON.stringify(bookId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
+/** arc: /book/10 → 정적 셸에도 URL의 도서 ID 주입 */
+function injectBookRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-arc-book-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/book\/(\d+)$/)
+  if (!match) return html
+  const bookId = match[1]
+  const script = `\n<script data-arc-book-id>window.__ARC_BOOK_ID__=${JSON.stringify(bookId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
+/** arc: /viewer/10 → 정적 셸에도 URL의 도서 ID 주입 */
+function injectViewerRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-arc-viewer-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/viewer\/(\d+)$/)
+  if (!match) return html
+  const bookId = match[1]
+  const script = `\n<script data-arc-viewer-id>window.__ARC_VIEWER_ID__=${JSON.stringify(bookId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
+function escapeHtmlAttr(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+}
+
+function arcSiteBase(name, prefixStyle) {
+  if (prefixStyle === 'subdomain') {
+    return (process.env.PUBLISH_SITE_URL || `https://${name}.restyart.com`).replace(/\/$/, '')
+  }
+  const gateway = (process.env.PUBLISH_GATEWAY_URL || 'https://app.restyart.com').replace(/\/$/, '')
+  return `${gateway}/${encodeURIComponent(name)}`
+}
+
+function absoluteArcAsset(siteBase, url) {
+  if (!url) return `${siteBase}/og-image.jpg`
+  if (/^https?:\/\//i.test(url)) return url
+  return `${siteBase}${url.startsWith('/') ? url : `/${url}`}`
+}
+
+function fetchArcBookMeta(bookId, tenantName) {
+  const backend = (process.env.RESTY_API_BACKEND || 'http://127.0.0.1:5001').replace(/\/$/, '')
+  let targetUrl
+  try {
+    targetUrl = new URL(`/api/arc/books/${bookId}`, backend)
+  } catch (_) {
+    return Promise.resolve(null)
+  }
+  const lib = targetUrl.protocol === 'https:' ? https : http
+  return new Promise((resolve) => {
+    const req = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname,
+        method: 'GET',
+        headers: { 'x-subdomain': tenantName },
+      },
+      (res) => {
+        let data = ''
+        res.on('data', (chunk) => { data += chunk })
+        res.on('end', () => {
+          try {
+            const json = JSON.parse(data)
+            resolve(json.book || null)
+          } catch (_) {
+            resolve(null)
+          }
+        })
+      },
+    )
+    req.on('error', () => resolve(null))
+    req.setTimeout(3000, () => {
+      req.destroy()
+      resolve(null)
+    })
+    req.end()
+  })
+}
+
+function injectViewerSeoMeta(html, book, bookId, name, prefixStyle) {
+  if (!html || !book || html.indexOf('data-arc-viewer-seo') !== -1) return html
+  const siteBase = arcSiteBase(name, prefixStyle)
+  const viewerUrl = `${siteBase}/viewer/${bookId}`
+  const pageTitle = `${book.title} | 인사이트 아크`
+  const description = (
+    book.subtitle ||
+    (book.description || '').replace(/\s+/g, ' ').trim() ||
+    `${book.title} — 인사이트 아크 전자책 웹 뷰어`
+  ).slice(0, 200)
+  const image = absoluteArcAsset(siteBase, book.coverUrl)
+
+  html = html.replace(/<title>[^<]*<\/title>/i, `<title>${escapeHtmlAttr(pageTitle)}</title>`)
+  html = html.replace(/<meta[^>]+name=["']description["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:title["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:description["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:url["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:image["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+name=["']twitter:title["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+name=["']twitter:description["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+name=["']twitter:image["'][^>]*>/gi, '')
+  html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*>/gi, '')
+
+  const metaBlock = `
+<meta data-arc-viewer-seo="1" />
+<meta name="description" content="${escapeHtmlAttr(description)}" />
+<meta property="og:title" content="${escapeHtmlAttr(book.title)}" />
+<meta property="og:description" content="${escapeHtmlAttr(description)}" />
+<meta property="og:url" content="${escapeHtmlAttr(viewerUrl)}" />
+<meta property="og:site_name" content="인사이트 아크" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="${escapeHtmlAttr(image)}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escapeHtmlAttr(book.title)}" />
+<meta name="twitter:description" content="${escapeHtmlAttr(description)}" />
+<meta name="twitter:image" content="${escapeHtmlAttr(image)}" />
+<link rel="canonical" href="${escapeHtmlAttr(viewerUrl)}" />
+`
+  return html.replace(/<\/head>/i, `${metaBlock}</head>`)
+}
+
+function injectBookSeoMeta(html, book, bookId, name, prefixStyle) {
+  if (!html || !book || html.indexOf('data-arc-book-seo') !== -1) return html
+  const siteBase = arcSiteBase(name, prefixStyle)
+  const bookUrl = `${siteBase}/book/${bookId}`
+  const pageTitle = `${book.title} | 인사이트 아크`
+  const description = (
+    book.subtitle ||
+    (book.description || '').replace(/\s+/g, ' ').trim() ||
+    `${book.title} — 인사이트 아크 전자책`
+  ).slice(0, 200)
+  const image = absoluteArcAsset(siteBase, book.coverUrl)
+
+  html = html.replace(/<title>[^<]*<\/title>/i, `<title>${escapeHtmlAttr(pageTitle)}</title>`)
+  html = html.replace(/<meta[^>]+name=["']description["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:title["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:description["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:url["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+property=["']og:image["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+name=["']twitter:title["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+name=["']twitter:description["'][^>]*>/gi, '')
+  html = html.replace(/<meta[^>]+name=["']twitter:image["'][^>]*>/gi, '')
+  html = html.replace(/<link[^>]+rel=["']canonical["'][^>]*>/gi, '')
+
+  const metaBlock = `
+<meta data-arc-book-seo="1" />
+<meta name="description" content="${escapeHtmlAttr(description)}" />
+<meta property="og:title" content="${escapeHtmlAttr(book.title)}" />
+<meta property="og:description" content="${escapeHtmlAttr(description)}" />
+<meta property="og:url" content="${escapeHtmlAttr(bookUrl)}" />
+<meta property="og:site_name" content="인사이트 아크" />
+<meta property="og:type" content="book" />
+<meta property="og:image" content="${escapeHtmlAttr(image)}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escapeHtmlAttr(book.title)}" />
+<meta name="twitter:description" content="${escapeHtmlAttr(description)}" />
+<meta name="twitter:image" content="${escapeHtmlAttr(image)}" />
+<link rel="canonical" href="${escapeHtmlAttr(bookUrl)}" />
+`
+  return html.replace(/<\/head>/i, `${metaBlock}</head>`)
+}
+
+function finalizeHtml(html, reqPath, name, prefixStyle) {
+  html = prepareHtml(html, name, prefixStyle)
+  html = injectQuestionRouteId(html, reqPath)
+  html = injectBookRouteId(html, reqPath)
+  html = injectInsightRouteId(html, reqPath)
+  html = injectAdminBookRouteId(html, reqPath)
+  html = injectViewerRouteId(html, reqPath)
+  return html
+}
+
+function serveArcViewerHtml(html, reqPath, res, name, prefixStyle, bookId) {
+  const base = finalizeHtml(html, reqPath, name, prefixStyle)
+  fetchArcBookMeta(bookId, name)
+    .then((book) => {
+      let out = base
+      if (book) out = injectViewerSeoMeta(out, book, bookId, name, prefixStyle)
+      sendHtml(res, out)
+    })
+    .catch(() => sendHtml(res, base))
+}
+
+function serveArcBookHtml(html, reqPath, res, name, prefixStyle, bookId) {
+  const base = finalizeHtml(html, reqPath, name, prefixStyle)
+  fetchArcBookMeta(bookId, name)
+    .then((book) => {
+      let out = base
+      if (book) out = injectBookSeoMeta(out, book, bookId, name, prefixStyle)
+      sendHtml(res, out)
+    })
+    .catch(() => sendHtml(res, base))
 }
 
 function prepareHtml(html, name, prefixStyle) {
@@ -153,10 +385,26 @@ function findBibleVerseShell(staticRoot, book, chapter) {
   return null
 }
 
+/** Next.js redirect-only index (static export) → dashboard.html 폴백 */
+function resolveBrokenIndexFallback(staticRoot, filePath) {
+  if (!filePath || !filePath.endsWith(`${path.sep}index.html`)) return filePath
+  try {
+    const html = fs.readFileSync(filePath, 'utf8')
+    if (html.includes('__next_error__') && html.includes('NEXT_REDIRECT')) {
+      const dash = path.join(staticRoot, 'dashboard.html')
+      if (fs.existsSync(dash) && fs.statSync(dash).isFile()) return dash
+    }
+  } catch (_) {}
+  return filePath
+}
+
 /** Resolve Next.js flat export: /store -> store.html */
 function resolveStaticPath(staticRoot, reqPath) {
   const clean = (reqPath || '/').split('?')[0]
-  if (!clean || clean === '/') return { file: path.join(staticRoot, 'index.html'), isHtml: true }
+  if (!clean || clean === '/') {
+    const file = resolveBrokenIndexFallback(staticRoot, path.join(staticRoot, 'index.html'))
+    return { file, isHtml: true }
+  }
 
   const rel = clean.replace(/^\//, '').replace(/\/$/, '')
 
@@ -188,6 +436,93 @@ function resolveStaticPath(staticRoot, reqPath) {
     const chapterHtml = path.join(staticRoot, 'bible', book, `${chapter}.html`)
     if (fs.existsSync(chapterHtml) && fs.statSync(chapterHtml).isFile()) {
       return { file: chapterHtml, isHtml: true }
+    }
+  }
+
+  // /manage/123 — 전자책 관리 (arc)
+  const manageMatch = clean.replace(/\/$/, '').match(/^\/manage\/(\d+)$/)
+  if (manageMatch) {
+    const manageId = manageMatch[1]
+    const specific = path.join(staticRoot, 'manage', `${manageId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const manageDir = path.join(staticRoot, 'manage')
+    if (fs.existsSync(manageDir) && fs.statSync(manageDir).isDirectory()) {
+      const shells = fs.readdirSync(manageDir).filter((f) => /^\d+\.html$/.test(f))
+      if (shells.length > 0) {
+        return { file: path.join(manageDir, shells.sort((a, b) => Number(b) - Number(a))[0]), isHtml: true }
+      }
+    }
+    const viewerShell = path.join(staticRoot, 'viewer', '1.html')
+    if (fs.existsSync(viewerShell)) {
+      return { file: viewerShell, isHtml: true }
+    }
+  }
+
+  // /viewer/123 — 전자책 웹 뷰어 (arc)
+  const viewerMatch = clean.replace(/\/$/, '').match(/^\/viewer\/(\d+)$/)
+  if (viewerMatch) {
+    const viewerId = viewerMatch[1]
+    const specific = path.join(staticRoot, 'viewer', `${viewerId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const viewerDir = path.join(staticRoot, 'viewer')
+    if (fs.existsSync(viewerDir) && fs.statSync(viewerDir).isDirectory()) {
+      const shells = fs.readdirSync(viewerDir).filter((f) => /^\d+\.html$/.test(f))
+      if (shells.length > 0) {
+        return { file: path.join(viewerDir, shells.sort((a, b) => Number(b) - Number(a))[0]), isHtml: true }
+      }
+    }
+    const createShell = path.join(staticRoot, 'create.html')
+    if (fs.existsSync(createShell)) {
+      return { file: createShell, isHtml: true }
+    }
+  }
+
+  // /insights/123 — 인사이트 상세 (arc)
+  const insightMatch = clean.replace(/\/$/, '').match(/^\/insights\/(\d+)$/)
+  if (insightMatch) {
+    const insightId = insightMatch[1]
+    const specific = path.join(staticRoot, 'insights', `${insightId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const insightsShell = path.join(staticRoot, 'insights.html')
+    if (fs.existsSync(insightsShell) && fs.statSync(insightsShell).isFile()) {
+      return { file: insightsShell, isHtml: true }
+    }
+  }
+
+  // /admin/books/123 — 관리자 도서 편집 (arc)
+  const adminBookMatch = clean.replace(/\/$/, '').match(/^\/admin\/books\/(\d+)$/)
+  if (adminBookMatch) {
+    const bookId = adminBookMatch[1]
+    const specific = path.join(staticRoot, 'admin', 'books', `${bookId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const adminBooksShell = path.join(staticRoot, 'admin', 'books.html')
+    if (fs.existsSync(adminBooksShell) && fs.statSync(adminBooksShell).isFile()) {
+      return { file: adminBooksShell, isHtml: true }
+    }
+  }
+
+  // /book/123 — 전자책 상세 (arc). 정적 HTML 없을 때 book/*.html 셸 사용
+  const bookMatch = clean.replace(/\/$/, '').match(/^\/book\/(\d+)$/)
+  if (bookMatch) {
+    const bookId = bookMatch[1]
+    const specific = path.join(staticRoot, 'book', `${bookId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const bookDir = path.join(staticRoot, 'book')
+    if (fs.existsSync(bookDir) && fs.statSync(bookDir).isDirectory()) {
+      const shells = fs.readdirSync(bookDir).filter((f) => /^\d+\.html$/.test(f))
+      if (shells.length > 0) {
+        return { file: path.join(bookDir, shells.sort((a, b) => Number(b) - Number(a))[0]), isHtml: true }
+      }
     }
   }
 
@@ -228,7 +563,7 @@ function resolveStaticPath(staticRoot, reqPath) {
   }
 
   // /question/q_1 — 질문 상세 (qbox 등). questions.html 목록 폴백 방지
-  const questionMatch = clean.match(/^\/question\/([^/]+)$/)
+  const questionMatch = clean.replace(/\/$/, '').match(/^\/question\/([^/]+)$/)
   if (questionMatch) {
     const questionId = questionMatch[1]
     const specific = path.join(staticRoot, 'question', `${questionId}.html`)
@@ -288,9 +623,18 @@ function tryServeStaticFile(staticRoot, reqPath, res, name, prefixStyle) {
   if (!resolved) return false
 
   if (resolved.isHtml) {
-    let html = fs.readFileSync(resolved.file, 'utf8')
-    html = prepareHtml(html, name, prefixStyle)
-    sendHtml(res, html)
+    const html = fs.readFileSync(resolved.file, 'utf8')
+    const viewerMatch = (reqPath || '').split('?')[0].replace(/\/$/, '').match(/^\/viewer\/(\d+)$/)
+    if (name === 'arc' && viewerMatch) {
+      serveArcViewerHtml(html, reqPath, res, name, prefixStyle, viewerMatch[1])
+      return true
+    }
+    const bookMatch = (reqPath || '').split('?')[0].replace(/\/$/, '').match(/^\/book\/(\d+)$/)
+    if (name === 'arc' && bookMatch) {
+      serveArcBookHtml(html, reqPath, res, name, prefixStyle, bookMatch[1])
+      return true
+    }
+    sendHtml(res, finalizeHtml(html, reqPath, name, prefixStyle))
     return true
   }
 
@@ -301,7 +645,7 @@ function tryServeStaticFile(staticRoot, reqPath, res, name, prefixStyle) {
 function tryServeIndexHtml(staticRoot, name, prefixStyle, res, reqPath, accepts) {
   const p = reqPath || '/'
   if (p !== '/' && p !== '') return false
-  const idx = path.join(staticRoot, 'index.html')
+  const idx = resolveBrokenIndexFallback(staticRoot, path.join(staticRoot, 'index.html'))
   if (!fs.existsSync(idx)) return false
   let html = fs.readFileSync(idx, 'utf8')
   html = prepareHtml(html, name, prefixStyle)

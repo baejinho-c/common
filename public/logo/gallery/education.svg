@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" rx="32" fill="#ECFDF5"/>
+  <path d="M200 110 L310 160 L200 210 L90 160 Z" fill="#10B981"/>
+  <path d="M130 185 L130 240 C130 255 165 275 200 275 C235 275 270 255 270 240 L270 185" fill="#059669"/>
+  <rect x="290" y="165" width="12" height="60" rx="4" fill="#34D399"/>
+  <circle cx="296" cy="155" r="8" fill="#FBBF24"/>
+  <path d="M170 210 L200 230 L230 210" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="200" y="330" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="700" fill="#065F46">LearnUp</text>
+  <text x="200" y="358" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#6EE7B7" letter-spacing="3">EDUCATION</text>
+</svg>

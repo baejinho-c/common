@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Host: https://idea.restyart.com
+Sitemap: https://idea.restyart.com/sitemap.xml

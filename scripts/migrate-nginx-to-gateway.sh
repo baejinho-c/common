@@ -23,7 +23,7 @@ try:
 except Exception as e:
     raise SystemExit(f"gateway /api/published failed: {e}")
 
-skip = {"app", "play", "mud", "tech", "dev", "trips", "hike"}
+skip = {"app", "dev"}
 target = published - skip
 
 with open(nginx_path) as f:

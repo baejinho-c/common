@@ -8,6 +8,9 @@ KEY="${SSH_KEY:-$HOME/Downloads/sports.pem}"
 HOST="${SSH_HOST:-ec2-user@app.restyart.com}"
 REMOTE="${REMOTE_GATEWAY:-/opt/resty-gateway/common}"
 
+echo "[manifest] build dashboard-manifest.json"
+node "$COMMON_DIR/scripts/build-dashboard-manifest.js"
+
 RSYNC_OPTS=(-az -e "ssh -i $KEY -o StrictHostKeyChecking=accept-new")
 
 echo "[rsync] public/ -> $HOST:$REMOTE/public/"
@@ -22,6 +25,6 @@ rsync "${RSYNC_OPTS[@]}" \
   "$COMMON_DIR/" "$HOST:$REMOTE/"
 
 echo "[rsync] restart gateway on server"
-ssh -i "$KEY" "$HOST" 'sudo systemctl restart resty-gateway 2>/dev/null || echo "install gateway first: bash scripts/install-gateway.sh"'
+ssh -i "$KEY" "$HOST" 'export PATH=/home/ec2-user/.nvm/versions/node/v16.20.2/bin:$PATH; sudo systemctl restart resty-gateway 2>/dev/null || (pm2 restart resty-gateway 2>/dev/null || echo "restart gateway manually")'
 
 echo "[rsync] done"

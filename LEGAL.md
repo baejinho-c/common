@@ -23,6 +23,9 @@
 # 모든 프로젝트 layout + 컴포넌트 동기화
 node common/sync-legal-component.js
 
+# 약관/개인정보 페이지 + 가입 동의 + resty-auth 클라이언트
+node common/sync-auth-legal.js
+
 # 이미 배포된 public HTML 일괄 주입
 node common/inject-legal.js common/public
 ```

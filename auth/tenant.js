@@ -38,6 +38,27 @@ function syncTenantsFromWorkdir(db, workdir) {
   return count
 }
 
+/** public/{slug}/index.html 이 있는 published 테넌트를 DB에 등록 */
+function syncTenantsFromPublic(db, publicDir) {
+  if (!fs.existsSync(publicDir)) return 0
+  const upsert = db.prepare(`
+    INSERT INTO tenants (slug, name, status, updated_at)
+    VALUES (@slug, @name, 'active', datetime('now'))
+    ON CONFLICT(slug) DO UPDATE SET
+      name = excluded.name,
+      updated_at = datetime('now')
+  `)
+  let count = 0
+  for (const entry of fs.readdirSync(publicDir, { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name.startsWith('.')) continue
+    if (isReservedSlug(entry.name)) continue
+    if (!fs.existsSync(path.join(publicDir, entry.name, 'index.html'))) continue
+    upsert.run({ slug: entry.name, name: entry.name })
+    count += 1
+  }
+  return count
+}
+
 function tenantExists(db, slug) {
   const row = db.prepare('SELECT slug FROM tenants WHERE slug = ? AND status = ?').get(slug, 'active')
   return !!row
@@ -52,6 +73,7 @@ module.exports = {
   isReservedSlug,
   resolveTenantSlug,
   syncTenantsFromWorkdir,
+  syncTenantsFromPublic,
   tenantExists,
   listTenants,
 }

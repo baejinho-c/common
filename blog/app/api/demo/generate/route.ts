@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 - 마무리는 독자의 행동을 유도하는 내용으로`
 
       const completion = await openai.chat.completions.create({
-        model: "gpt-4o",
+        model: "gpt-4o-mini",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `다음 주제에 대한 블로그 포스트를 작성해주세요: "${topic}"` },

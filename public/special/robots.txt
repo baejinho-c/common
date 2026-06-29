@@ -1,24 +1,18 @@
-# robots.txt for 익맛익리
-User-agent: *
+User-Agent: *
 Allow: /
 Disallow: /api/
+Disallow: /auth/profile
 Disallow: /monitor
+Disallow: /_next/
+Disallow: /admin/
 
-# Sitemap location
-Sitemap: https://yikmat-yikri.vercel.app/sitemap.xml
-
-# 검색 엔진 최적화
-User-agent: Googlebot
+User-Agent: Googlebot
 Allow: /
 Disallow: /api/
+Disallow: /auth/profile
 Disallow: /monitor
+Disallow: /_next/
+Disallow: /admin/
 
-User-agent: Bingbot
-Allow: /
-Disallow: /api/
-Disallow: /monitor
-
-User-agent: NaverBot
-Allow: /
-Disallow: /api/
-Disallow: /monitor
+Host: https://special.restyart.com
+Sitemap: https://special.restyart.com/sitemap.xml

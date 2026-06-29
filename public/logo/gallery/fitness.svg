@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" rx="32" fill="#1F2937"/>
+  <path d="M90 200 L130 200 L130 170 L170 170 L170 230 L130 230 L130 200 L270 200 L270 230 L230 230 L230 170 L270 170 L270 200 L310 200 L310 230 L270 230 L270 260 L230 260 L230 140 L270 140 L270 170 L310 170 L310 200" fill="#EF4444"/>
+  <path d="M200 80 L230 140 L200 120 L170 140 Z" fill="#F87171"/>
+  <circle cx="200" cy="200" r="55" fill="none" stroke="#EF4444" stroke-width="4" opacity="0.4"/>
+  <text x="200" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="36" font-weight="900" fill="#F9FAFB" letter-spacing="2">POWER</text>
+  <text x="200" y="345" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#EF4444" letter-spacing="5">FITNESS</text>
+</svg>

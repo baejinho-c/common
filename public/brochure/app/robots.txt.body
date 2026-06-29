@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Host: https://brochure.restyart.com
+Sitemap: https://brochure.restyart.com/sitemap.xml

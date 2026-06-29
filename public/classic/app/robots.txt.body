@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+Host: https://classic.restyart.com
+Sitemap: https://classic.restyart.com/sitemap.xml

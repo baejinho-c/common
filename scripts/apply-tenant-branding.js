@@ -103,9 +103,14 @@ function applyToTenant(slug) {
     if (!fs.existsSync(markPath) || force) fs.writeFileSync(markPath, markSvg)
     if (!fs.existsSync(logoPath) || force) fs.writeFileSync(logoPath, logoSvg)
 
-    // apple-touch-icon.svg (PNG 대체)
+    // apple-touch-icon: logo-mark 기반 (헤더 로고와 동일한 마크)
     const touchPath = path.join(dir, 'apple-touch-icon.svg')
-    if (!fs.existsSync(touchPath) || force) fs.writeFileSync(touchPath, faviconSvg.replace('viewBox="0 0 32 32"', 'viewBox="0 0 32 32" width="180" height="180"'))
+    if (!fs.existsSync(touchPath) || force) {
+      fs.writeFileSync(
+        touchPath,
+        markSvg.replace('viewBox="0 0 48 48"', 'viewBox="0 0 48 48" width="180" height="180"'),
+      )
+    }
   }
 
   const indexPath = path.join(deployDir, 'index.html')

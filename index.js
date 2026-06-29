@@ -10,7 +10,8 @@ const authRoutes = require('./auth/routes')
 const userStore = require('./auth/user-store')
 const { syncTenantsFromWorkdir, syncTenantsFromPublic, listTenants, isReservedSlug } = require('./auth/tenant')
 const { rewriteAbsolutePaths, injectClientPrefixScript, handleTenantRequest, tenantSlugFromHost, isDashboardHost } = require('./tenant-proxy')
-const { buildOverview, listPublished } = require('./lib/dashboard-overview')
+const { buildOverview, listPublished, loadManifest } = require('./lib/dashboard-overview')
+const { auditTenant, testTenantApis } = require('./lib/dashboard-tenant-audit')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -541,6 +542,45 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   })
 }
 
+// Insight Arc (전자책 스토어 / 서재)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/arc', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('arc api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
 // LogoStage AI (브랜드 분석 + 로고 생성)
 if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   app.use('/api/logo', (req, res) => {
@@ -701,6 +741,41 @@ app.get('/api/dashboard/overview', async (req, res) => {
     res.json(data)
   } catch (e) {
     console.error('dashboard overview error', e)
+    res.status(500).json({ error: String(e.message || e) })
+  }
+})
+
+app.get('/api/dashboard/tenant/:slug/audit', async (req, res) => {
+  try {
+    const slug = req.params.slug
+    if (!slug || !/^[a-z0-9_-]+$/i.test(slug)) {
+      return res.status(400).json({ error: 'invalid slug' })
+    }
+    const manifest = loadManifest(PUBLIC_DIR)
+    const livePages = req.query.live !== '0'
+    const data = await auditTenant(slug, {
+      publicDir: PUBLIC_DIR,
+      manifestRow: manifest.byTenant[slug],
+      livePages,
+    })
+    res.json(data)
+  } catch (e) {
+    console.error('dashboard tenant audit error', e)
+    res.status(500).json({ error: String(e.message || e) })
+  }
+})
+
+app.post('/api/dashboard/tenant/:slug/test-api', async (req, res) => {
+  try {
+    const slug = req.params.slug
+    if (!slug || !/^[a-z0-9_-]+$/i.test(slug)) {
+      return res.status(400).json({ error: 'invalid slug' })
+    }
+    const manifest = loadManifest(PUBLIC_DIR)
+    const data = await testTenantApis(slug, manifest.byTenant[slug])
+    res.json({ slug, ...data })
+  } catch (e) {
+    console.error('dashboard api test error', e)
     res.status(500).json({ error: String(e.message || e) })
   }
 })

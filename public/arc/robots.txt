@@ -1,4 +1,4 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /monitor/
 Disallow: /api/
@@ -10,9 +10,6 @@ Disallow: /register
 Disallow: /mypage/
 Disallow: /_next/
 Disallow: /static/
-
-User-Agent: Googlebot
-Allow: /
 Disallow: /monitor/
 Disallow: /api/
 Disallow: /admin/
@@ -22,5 +19,4 @@ Disallow: /login
 Disallow: /register
 Disallow: /mypage/
 
-Host: https://arc.restyart.com
 Sitemap: https://arc.restyart.com/sitemap.xml

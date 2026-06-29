@@ -1,13 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="CalliMarket">
-  <defs>
-    <linearGradient id="cm-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F97316"/>
-      <stop offset="1" stop-color="#EA580C"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="4" width="40" height="40" rx="10" fill="url(#cm-grad)"/>
-  <path d="M10 30C12 18 18 16 24 20C28 23 30 18 32 14" stroke="#fff" stroke-width="2.8" stroke-linecap="round" fill="none"/>
-  <path d="M8 32C14 28 20 34 28 30" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85"/>
-  <text x="50" y="33" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="#111827">Calli</text>
-  <text x="108" y="33" font-family="Georgia, 'Times New Roman', serif" font-size="24" font-weight="700" fill="#EA580C">Market</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="Calli">
+  <defs><linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="hsl(157, 65%, 48%)"/>
+    <stop offset="1" stop-color="hsl(157, 65%, 38%)"/>
+  </linearGradient></defs>
+  <rect x="0" y="4" width="40" height="40" rx="10" fill="url(#logo-grad)"/>
+  <rect x="1" y="5" width="38" height="38" rx="9" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
+  <text x="20" y="26.400000000000002" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#ffffff">CA</text>
+  <text x="50" y="33" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800"><tspan fill="#111827">Calli</tspan></text>
 </svg>

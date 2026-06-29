@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     console.log("📄 [Outline API] 프롬프트 길이:", prompt.length)
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "user",

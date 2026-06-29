@@ -1,0 +1,11 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /_next/
+Disallow: /app/
+
+Host: https://care.restyart.com
+Sitemap: https://care.restyart.com/sitemap.xml

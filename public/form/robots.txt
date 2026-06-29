@@ -1,8 +1,7 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /share/
 Disallow: /admin/
 
-Host: https://form.restyart.com
 Sitemap: https://form.restyart.com/sitemap.xml

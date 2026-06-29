@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="FormStudio">
+  <defs><linearGradient id="mark-bg" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#3B82F6"/>
+    <stop offset="1" stop-color="#4F46E5"/>
+  </linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#mark-bg)"/>
+  <rect x="1.5" y="1.5" width="45" height="45" rx="10.5" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
+  
+      <rect x="16.5" y="12" width="15" height="24" rx="2.25" fill="#fff"/>
+      <path d="M19.5 18h9M19.5 24h9M19.5 30h6" stroke="#4F46E5" stroke-width="1.7999999999999998" stroke-linecap="round"/>
+      <path d="M30 13.5l2.25 2.25 3.75-4.5" stroke="#FCD34D" stroke-width="1.9500000000000002" fill="none" stroke-linecap="round"/>
+      <circle cx="33" cy="13.5" r="1.5" fill="#FCD34D"/>
+    
+</svg>

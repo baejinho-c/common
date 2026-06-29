@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="맛집추천 AI">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#F59E0B"/>
+    <stop offset="1" stop-color="#D97706"/>
+  </linearGradient></defs>
+  <rect width="32" height="32" rx="8" fill="url(#bg)"/>
+  <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="#ffffff" stroke-opacity="0.12"/>
+  
+      <ellipse cx="16" cy="20" rx="8" ry="5" fill="#fff"/>
+      <path d="M8 20h16" stroke="#FED7AA" stroke-width="1.2"/>
+      <path d="M12 12v4M16 11v5M20 12v4" stroke="#FEF3C7" stroke-width="1.4" stroke-linecap="round"/>
+    
+</svg>

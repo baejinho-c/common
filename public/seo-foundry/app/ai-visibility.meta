@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(app)/layout,_N_T_/(app)/ai-visibility/layout,_N_T_/(app)/ai-visibility/page,_N_T_/ai-visibility"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KGFwcCk/ai-visibility/__PAGE__",
+    "/!KGFwcCk/ai-visibility",
+    "/!KGFwcCk",
+    "/_index",
+    "/_head"
+  ]
+}

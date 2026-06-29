@@ -19,6 +19,8 @@ const SKIP_PREFIX = [`${prefix}/`, '/api/', '//', 'http:', 'https:', 'mailto:', 
 function shouldPrefix(url) {
   if (!url || typeof url !== 'string') return false
   if (url.charAt(0) !== '/') return false
+  // Next.js basePath 출력 등 이미 /{tenant} 로 시작하는 경로는 중복 prefix 방지
+  if (url === prefix || url.indexOf(`${prefix}/`) === 0) return false
   for (const s of SKIP_PREFIX) {
     if (url.indexOf(s) === 0) return false
   }

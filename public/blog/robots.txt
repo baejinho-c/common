@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /signup
+Disallow: /settings
+Disallow: /_next/
+
+Sitemap: https://blog.restyart.com/sitemap.xml

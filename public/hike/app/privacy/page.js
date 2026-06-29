@@ -3,4 +3,4 @@
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */let l=(0,t(7075).Z)("ArrowLeft",[["path",{d:"m12 19-7-7 7-7",key:"1l729n"}],["path",{d:"M19 12H5",key:"x3x0zl"}]])},1331:(e,s,t)=>{"use strict";t.r(s),t.d(s,{$$typeof:()=>i,__esModule:()=>r,default:()=>n});let l=(0,t(6843).createProxy)(String.raw`/Users/baejinho/Documents/resty/hike/app/privacy/page.tsx`),{__esModule:r,$$typeof:i}=l,n=l.default}};var s=require("../../webpack-runtime.js");s.C(e);var t=e=>s(s.s=e),l=s.X(0,[638,59,998],()=>t(5096));module.exports=l})();
+ */let l=(0,t(7075).Z)("ArrowLeft",[["path",{d:"m12 19-7-7 7-7",key:"1l729n"}],["path",{d:"M19 12H5",key:"x3x0zl"}]])},1331:(e,s,t)=>{"use strict";t.r(s),t.d(s,{$$typeof:()=>i,__esModule:()=>r,default:()=>n});let l=(0,t(6843).createProxy)(String.raw`/Users/baejinho/Documents/resty/hike/app/privacy/page.tsx`),{__esModule:r,$$typeof:i}=l,n=l.default}};var s=require("../../webpack-runtime.js");s.C(e);var t=e=>s(s.s=e),l=s.X(0,[638,337,998],()=>t(5096));module.exports=l})();

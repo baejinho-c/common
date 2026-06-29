@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Brochure Maker">
+  <defs><linearGradient id="mark-bg" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#0D9488"/>
+    <stop offset="1" stop-color="#0F766E"/>
+  </linearGradient></defs>
+  <rect width="48" height="48" rx="12" fill="url(#mark-bg)"/>
+  <rect x="1.5" y="1.5" width="45" height="45" rx="10.5" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
+  
+      <path d="M13.5 15h12v27H13.5z" fill="#fff" opacity="0.92"/>
+      <path d="M25.5 15h12v27h-12z" fill="#fff" opacity="0.72"/>
+      <path d="M13.5 15l12 5.25 12-5.25" stroke="#CCFBF1" stroke-width="1.9500000000000002" fill="none" stroke-linecap="round"/>
+      <path d="M18 24h7.5M18 30h10.5" stroke="#0F766E" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+    
+</svg>

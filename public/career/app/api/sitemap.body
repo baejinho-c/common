@@ -2,100 +2,100 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://career-compass.vercel.app</loc>
-    <lastmod>2026-06-22T04:32:52.305Z</lastmod>
+    <loc>https://career.restyart.com</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/chat</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/chat</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/score-path</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/score-path</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/goal-path</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/goal-path</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/community</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/community</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/community/new</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/community/new</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/schools</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/schools</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/universities</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/universities</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/credits</loc>
-    <lastmod>2026-06-22T04:32:52.314Z</lastmod>
+    <loc>https://career.restyart.com/credits</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/privacy</loc>
-    <lastmod>2026-06-22T04:32:52.315Z</lastmod>
+    <loc>https://career.restyart.com/privacy</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
-    <loc>https://career-compass.vercel.app/schools/7010057</loc>
-    <lastmod>2026-06-22T04:32:52.315Z</lastmod>
+    <loc>https://career.restyart.com/schools/7010057</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/schools/7240001</loc>
-    <lastmod>2026-06-22T04:32:52.315Z</lastmod>
+    <loc>https://career.restyart.com/schools/7240001</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/schools/7130165</loc>
-    <lastmod>2026-06-22T04:32:52.315Z</lastmod>
+    <loc>https://career.restyart.com/schools/7130165</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
-    <loc>https://career-compass.vercel.app/community/1</loc>
-    <lastmod>2026-06-22T04:32:52.315Z</lastmod>
+    <loc>https://career.restyart.com/community/1</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/community/2</loc>
-    <lastmod>2026-06-22T04:32:52.315Z</lastmod>
+    <loc>https://career.restyart.com/community/2</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://career-compass.vercel.app/community/3</loc>
-    <lastmod>2026-06-22T04:32:52.315Z</lastmod>
+    <loc>https://career.restyart.com/community/3</loc>
+    <lastmod>2026-06-26T07:01:41.849Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>

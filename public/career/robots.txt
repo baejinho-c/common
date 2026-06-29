@@ -1,6 +1,6 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Sitemap: https://career-compass.vercel.app/sitemap.xml
+Sitemap: https://career.restyart.com/sitemap.xml

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" rx="32" fill="#EFF6FF"/>
+  <circle cx="200" cy="200" r="120" fill="url(#techGrad)"/>
+  <path d="M160 200 L200 160 L240 200 L200 240 Z" fill="white" opacity="0.95"/>
+  <circle cx="200" cy="200" r="18" fill="#1D4ED8"/>
+  <path d="M200 120 L210 155 L245 155 L218 175 L228 210 L200 190 L172 210 L182 175 L155 155 L190 155 Z" fill="#93C5FD" opacity="0.6"/>
+  <text x="200" y="330" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#1E3A8A">NEXUS</text>
+  <text x="200" y="358" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" fill="#64748B" letter-spacing="4">TECHNOLOGY</text>
+  <defs>
+    <linearGradient id="techGrad" x1="80" y1="80" x2="320" y2="320">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#1E40AF"/>
+    </linearGradient>
+  </defs>
+</svg>

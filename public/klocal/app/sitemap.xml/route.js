@@ -1,111 +1,16 @@
-(()=>{var e={};e.id=475,e.ids=[475],e.modules={846:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},3033:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},3295:e=>{"use strict";e.exports=require("next/dist/server/app-render/after-task-async-storage.external.js")},4870:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},5439:(e,r,t)=>{"use strict";t.r(r),t.d(r,{patchFetch:()=>m,routeModule:()=>c,serverHooks:()=>p,workAsyncStorage:()=>g,workUnitAsyncStorage:()=>u});var o={};t.r(o),t.d(o,{GET:()=>s});var l=t(6559),a=t(8088),n=t(7719),i=t(2190);async function s(){let e="https://klocal.restyart.com",r=`<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url>
-    <loc>${e}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="${e}"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="${e}"/>
-    <xhtml:link rel="alternate" hreflang="ja" href="${e}"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="${e}"/>
-    <xhtml:link rel="alternate" hreflang="es" href="${e}"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="${e}"/>
-  </url>
-  <url>
-    <loc>${e}/restaurants</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${e}/food-tours</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${e}/hidden-gems</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${e}/regions/seoul</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${e}/regions/busan</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${e}/regions/jeju</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>${e}/regions/jeonju</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${e}/regions/gyeongju</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${e}/categories/korean-bbq</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${e}/categories/traditional</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${e}/categories/street-food</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${e}/categories/seafood</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>${e}/about</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>${e}/contact</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>${e}/privacy</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>${e}/terms</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-</urlset>`;return new i.NextResponse(r,{headers:{"Content-Type":"application/xml","Cache-Control":"public, max-age=3600, s-maxage=3600"}})}let c=new l.AppRouteRouteModule({definition:{kind:a.RouteKind.APP_ROUTE,page:"/sitemap.xml/route",pathname:"/sitemap.xml",filename:"route",bundlePath:"app/sitemap.xml/route"},resolvedPagePath:"/Users/baejinho/Documents/resty/klocal/app/sitemap.xml/route.ts",nextConfigOutput:"",userland:o}),{workAsyncStorage:g,workUnitAsyncStorage:u,serverHooks:p}=c;function m(){return(0,n.patchFetch)({workAsyncStorage:g,workUnitAsyncStorage:u})}},6487:()=>{},8335:()=>{},9294:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-async-storage.external.js")}};var r=require("../../webpack-runtime.js");r.C(e);var t=e=>r(r.s=e),o=r.X(0,[447,580],()=>t(5439));module.exports=o})();
+(()=>{var e={};e.id=475,e.ids=[475],e.modules={846:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-page.runtime.prod.js")},2127:(e,t,r)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),!function(e,t){for(var r in t)Object.defineProperty(e,r,{enumerable:!0,get:t[r]})}(t,{resolveManifest:function(){return a},resolveRobots:function(){return o},resolveRouteData:function(){return l},resolveSitemap:function(){return n}});let i=r(7341);function o(e){let t="";for(let r of Array.isArray(e.rules)?e.rules:[e.rules]){for(let e of(0,i.resolveArray)(r.userAgent||["*"]))t+=`User-Agent: ${e}
+`;if(r.allow)for(let e of(0,i.resolveArray)(r.allow))t+=`Allow: ${e}
+`;if(r.disallow)for(let e of(0,i.resolveArray)(r.disallow))t+=`Disallow: ${e}
+`;r.crawlDelay&&(t+=`Crawl-delay: ${r.crawlDelay}
+`),t+="\n"}return e.host&&(t+=`Host: ${e.host}
+`),e.sitemap&&(0,i.resolveArray)(e.sitemap).forEach(e=>{t+=`Sitemap: ${e}
+`}),t}function n(e){let t=e.some(e=>Object.keys(e.alternates??{}).length>0),r=e.some(e=>{var t;return!!(null==(t=e.images)?void 0:t.length)}),i=e.some(e=>{var t;return!!(null==(t=e.videos)?void 0:t.length)}),o="";for(let s of(o+='<?xml version="1.0" encoding="UTF-8"?>\n',o+='<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',r&&(o+=' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'),i&&(o+=' xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"'),t?o+=' xmlns:xhtml="http://www.w3.org/1999/xhtml">\n':o+=">\n",e)){var n,a,l;o+="<url>\n",o+=`<loc>${s.url}</loc>
+`;let e=null==(n=s.alternates)?void 0:n.languages;if(e&&Object.keys(e).length)for(let t in e)o+=`<xhtml:link rel="alternate" hreflang="${t}" href="${e[t]}" />
+`;if(null==(a=s.images)?void 0:a.length)for(let e of s.images)o+=`<image:image>
+<image:loc>${e}</image:loc>
+</image:image>
+`;if(null==(l=s.videos)?void 0:l.length)for(let e of s.videos)o+=["<video:video>",`<video:title>${e.title}</video:title>`,`<video:thumbnail_loc>${e.thumbnail_loc}</video:thumbnail_loc>`,`<video:description>${e.description}</video:description>`,e.content_loc&&`<video:content_loc>${e.content_loc}</video:content_loc>`,e.player_loc&&`<video:player_loc>${e.player_loc}</video:player_loc>`,e.duration&&`<video:duration>${e.duration}</video:duration>`,e.view_count&&`<video:view_count>${e.view_count}</video:view_count>`,e.tag&&`<video:tag>${e.tag}</video:tag>`,e.rating&&`<video:rating>${e.rating}</video:rating>`,e.expiration_date&&`<video:expiration_date>${e.expiration_date}</video:expiration_date>`,e.publication_date&&`<video:publication_date>${e.publication_date}</video:publication_date>`,e.family_friendly&&`<video:family_friendly>${e.family_friendly}</video:family_friendly>`,e.requires_subscription&&`<video:requires_subscription>${e.requires_subscription}</video:requires_subscription>`,e.live&&`<video:live>${e.live}</video:live>`,e.restriction&&`<video:restriction relationship="${e.restriction.relationship}">${e.restriction.content}</video:restriction>`,e.platform&&`<video:platform relationship="${e.platform.relationship}">${e.platform.content}</video:platform>`,e.uploader&&`<video:uploader${e.uploader.info&&` info="${e.uploader.info}"`}>${e.uploader.content}</video:uploader>`,`</video:video>
+`].filter(Boolean).join("\n");if(s.lastModified){let e=s.lastModified instanceof Date?s.lastModified.toISOString():s.lastModified;o+=`<lastmod>${e}</lastmod>
+`}s.changeFrequency&&(o+=`<changefreq>${s.changeFrequency}</changefreq>
+`),"number"==typeof s.priority&&(o+=`<priority>${s.priority}</priority>
+`),o+="</url>\n"}return o+"</urlset>\n"}function a(e){return JSON.stringify(e)}function l(e,t){return"robots"===t?o(e):"sitemap"===t?n(e):"manifest"===t?a(e):""}},3033:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},3295:e=>{"use strict";e.exports=require("next/dist/server/app-render/after-task-async-storage.external.js")},4870:e=>{"use strict";e.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},6487:()=>{},7341:(e,t)=>{"use strict";function r(e){return Array.isArray(e)?e:[e]}function i(e){if(null!=e)return r(e)}function o(e){let t;if("string"==typeof e)try{t=(e=new URL(e)).origin}catch{}return t}Object.defineProperty(t,"__esModule",{value:!0}),!function(e,t){for(var r in t)Object.defineProperty(e,r,{enumerable:!0,get:t[r]})}(t,{getOrigin:function(){return o},resolveArray:function(){return r},resolveAsArrayOrUndefined:function(){return i}})},7701:(e,t,r)=>{"use strict";r.r(t),r.d(t,{patchFetch:()=>y,routeModule:()=>f,serverHooks:()=>g,workAsyncStorage:()=>v,workUnitAsyncStorage:()=>m});var i={};r.r(i),r.d(i,{default:()=>u});var o={};r.r(o),r.d(o,{GET:()=>p});var n=r(6559),a=r(8088),l=r(7719),s=r(2190);function u(){return["","/privacy","/terms"].map(e=>({url:`https://klocal.restyart.com${e}`,lastModified:new Date,changeFrequency:""===e?"daily":"weekly",priority:""===e?1:.8}))}var d=r(2127);let c={...i}.default;if("function"!=typeof c)throw Error('Default export is missing in "/Users/baejinho/Documents/resty/klocal/app/sitemap.ts"');async function p(e,t){let{__metadata_id__:r,...i}=await t.params||{},o=!!r&&r.endsWith(".xml");if(r&&!o)return new s.NextResponse("Not Found",{status:404});let n=r&&o?r.slice(0,-4):void 0,a=await c({id:n}),l=(0,d.resolveRouteData)(a,"sitemap");return new s.NextResponse(l,{headers:{"Content-Type":"application/xml","Cache-Control":"public, max-age=0, must-revalidate"}})}let f=new n.AppRouteRouteModule({definition:{kind:a.RouteKind.APP_ROUTE,page:"/sitemap.xml/route",pathname:"/sitemap.xml",filename:"sitemap",bundlePath:"app/sitemap.xml/route"},resolvedPagePath:"next-metadata-route-loader?filePath=%2FUsers%2Fbaejinho%2FDocuments%2Fresty%2Fklocal%2Fapp%2Fsitemap.ts&isDynamicRouteExtension=1!?__next_metadata_route__",nextConfigOutput:"",userland:o}),{workAsyncStorage:v,workUnitAsyncStorage:m,serverHooks:g}=f;function y(){return(0,l.patchFetch)({workAsyncStorage:v,workUnitAsyncStorage:m})}},8335:()=>{},9294:e=>{"use strict";e.exports=require("next/dist/server/app-render/work-async-storage.external.js")}};var t=require("../../webpack-runtime.js");t.C(e);var r=e=>t(t.s=e),i=t.X(0,[447,580],()=>r(7701));module.exports=i})();

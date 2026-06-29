@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" rx="32" fill="#FAFAFA"/>
+  <rect x="60" y="60" width="280" height="280" rx="8" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="200" y="210" text-anchor="middle" font-family="Georgia,serif" font-size="120" font-weight="300" fill="#111827">É</text>
+  <line x1="100" y1="250" x2="300" y2="250" stroke="#111827" stroke-width="2"/>
+  <text x="200" y="290" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="#374151" letter-spacing="8">ÉLÉGANCE</text>
+  <text x="200" y="320" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#9CA3AF" letter-spacing="4">PARIS · SEOUL</text>
+</svg>

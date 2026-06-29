@@ -5,6 +5,7 @@ const path = require('path')
 const { injectLegalHtml } = require('./legal-info')
 
 const root = process.argv[2]
+const tenant = process.argv[3] || path.basename(root || '')
 if (!root) {
   console.error('Usage: node inject-legal.js <dir>')
   process.exit(1)
@@ -18,7 +19,7 @@ function walk(dir) {
     if (ent.isDirectory()) walk(full)
     else if (/\.html?$/i.test(ent.name)) {
       const raw = fs.readFileSync(full, 'utf8')
-      const next = injectLegalHtml(raw)
+      const next = injectLegalHtml(raw, tenant)
       if (next !== raw) {
         fs.writeFileSync(full, next, 'utf8')
         count += 1

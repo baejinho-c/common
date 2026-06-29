@@ -1,0 +1,21 @@
+{
+  "name": "TRIPS - 스마트 여행 플래너",
+  "short_name": "TRIPS",
+  "description": "AI 기반 맞춤형 여행 계획과 프리미엄 여행 경험",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.jpg",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

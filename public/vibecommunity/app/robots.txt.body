@@ -1,0 +1,7 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+
+Host: https://vibecommunity.restyart.com
+Sitemap: https://vibecommunity.restyart.com/sitemap.xml

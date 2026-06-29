@@ -30,7 +30,7 @@ HTML 태그 없이 순수 텍스트로 작성해주세요.
 `
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
       max_tokens: 2000,
     })

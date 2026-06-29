@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
 
 Sitemap: https://brochure.restyart.com/sitemap.xml

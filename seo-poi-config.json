@@ -1,0 +1,45 @@
+{
+  "seoulDistricts": [
+    { "slug": "gangnam", "label": "강남구", "addressLike": "강남구" },
+    { "slug": "gangdong", "label": "강동구", "addressLike": "강동구" },
+    { "slug": "gangbuk", "label": "강북구", "addressLike": "강북구" },
+    { "slug": "gangseo", "label": "강서구", "addressLike": "강서구" },
+    { "slug": "gwanak", "label": "관악구", "addressLike": "관악구" },
+    { "slug": "gwangjin", "label": "광진구", "addressLike": "광진구" },
+    { "slug": "guro", "label": "구로구", "addressLike": "구로구" },
+    { "slug": "geumcheon", "label": "금천구", "addressLike": "금천구" },
+    { "slug": "nowon", "label": "노원구", "addressLike": "노원구" },
+    { "slug": "dobong", "label": "도봉구", "addressLike": "도봉구" },
+    { "slug": "dongdaemun", "label": "동대문구", "addressLike": "동대문구" },
+    { "slug": "dongjak", "label": "동작구", "addressLike": "동작구" },
+    { "slug": "mapo", "label": "마포구", "addressLike": "마포구" },
+    { "slug": "seodaemun", "label": "서대문구", "addressLike": "서대문구" },
+    { "slug": "seocho", "label": "서초구", "addressLike": "서초구" },
+    { "slug": "seongdong", "label": "성동구", "addressLike": "성동구" },
+    { "slug": "seongbuk", "label": "성북구", "addressLike": "성북구" },
+    { "slug": "songpa", "label": "송파구", "addressLike": "송파구" },
+    { "slug": "yangcheon", "label": "양천구", "addressLike": "양천구" },
+    { "slug": "yeongdeungpo", "label": "영등포구", "addressLike": "영등포구" },
+    { "slug": "yongsan", "label": "용산구", "addressLike": "용산구" },
+    { "slug": "eunpyeong", "label": "은평구", "addressLike": "은평구" },
+    { "slug": "jongno", "label": "종로구", "addressLike": "종로구" },
+    { "slug": "jung", "label": "중구", "addressLike": "중구" },
+    { "slug": "jungnang", "label": "중랑구", "addressLike": "중랑구" }
+  ],
+  "foodCategories": [
+    { "slug": "korean", "label": "한식", "filter": { "middleEq": "한식" } },
+    { "slug": "chinese", "label": "중식", "filter": { "middleLike": "중식" } },
+    { "slug": "japanese", "label": "일식", "filter": { "middleLike": "일식" } },
+    { "slug": "western", "label": "양식", "filter": { "middleLike": "양식" } },
+    { "slug": "cafe", "label": "카페", "filter": { "smallEq": "카페" } },
+    { "slug": "chicken", "label": "치킨", "filter": { "smallEq": "치킨" } },
+    { "slug": "pizza", "label": "피자", "filter": { "middleLike": "피자" } },
+    { "slug": "bbq", "label": "고기·BBQ", "filter": { "middleLike": "고기" } }
+  ],
+  "cafeCategories": [
+    { "slug": "cafe", "label": "카페", "filter": { "smallEq": "카페" } },
+    { "slug": "bakery", "label": "베이커리", "filter": { "smallLike": "베이커리" } },
+    { "slug": "dessert", "label": "디저트", "filter": { "smallLike": "아이스크림" } }
+  ],
+  "detailSsgLimit": 500
+}

@@ -1,28 +1,6 @@
 User-agent: *
 Allow: /
-
-# 중요한 페이지들
-Allow: /
-Allow: /privacy
-Allow: /terms
-
-# 크롤링 제외할 페이지들
 Disallow: /api/
 Disallow: /admin/
-Disallow: /_next/
-Disallow: /static/
 
-# 사이트맵 위치
-Sitemap: https://food-recommendation-ai.vercel.app/sitemap.xml
-
-# 크롤링 속도 제한
-Crawl-delay: 1
-
-# 특정 봇 설정
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 0
-
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 1
+Sitemap: https://today.restyart.com/sitemap.xml

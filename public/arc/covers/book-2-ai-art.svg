@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#581c87"/>
+      <stop offset="100%" stop-color="#c026d3"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="400" height="600" fill="url(#bg)"/>
+  <circle cx="320" cy="80" r="120" fill="#f0abfc" opacity="0.15"/>
+  <circle cx="60" cy="520" r="90" fill="#f0abfc" opacity="0.12"/>
+  <rect x="0" y="0" width="8" height="600" fill="#f0abfc" opacity="0.6"/>
+  <rect x="40" y="48" rx="6" ry="6" width="auto" height="28" fill="rgba(255,255,255,0.18)"/>
+  <text x="52" y="68" fill="white" font-family="'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif" font-size="13" font-weight="600" opacity="0.95">AI &amp; Tech</text>
+  <text x="40" y="200" fill="white" font-family="'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif" filter="url(#shadow)">
+    <tspan x="40" dy="0" font-size="28" font-weight="800">Midjourney &amp;</tspan><tspan x="40" dy="38" font-size="28" font-weight="800">Stable Diffusion</tspan><tspan x="40" dy="38" font-size="28" font-weight="800">상업용 AI 아트</tspan>
+  </text>
+  <line x1="40" y1="380" x2="160" y2="380" stroke="#f0abfc" stroke-width="3" opacity="0.8"/>
+  <text x="40" y="410" fill="white" font-family="'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif" font-size="16" font-weight="500" opacity="0.85">AI 시안 · 프로 납품</text>
+  <text x="40" y="560" fill="white" font-family="system-ui, sans-serif" font-size="12" font-weight="700" letter-spacing="2" opacity="0.5">INSIGHT ARC</text>
+</svg>
