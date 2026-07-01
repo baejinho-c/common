@@ -221,6 +221,45 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   })
 }
 
+// Classica catalog (Internet Archive streams)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/classic', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('classic api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
 // AutoBlogger auth (네이버 OAuth, 사용량)
 if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   for (const prefix of ['/api/naver', '/api/usage']) {
@@ -496,6 +535,84 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
     )
     proxyReq.on('error', (err) => {
       console.error('portfolio api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// TRIPS 여행 계획 AI
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/trips', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('trips api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// TripSim 여행 시뮬레이션 AI
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/tripsim', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('tripsim api proxy error', err)
       if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
     })
     if (body) proxyReq.write(body)

@@ -1,0 +1,33 @@
+{
+  "name": "Classica - 무료 클래식 감상",
+  "short_name": "Classica",
+  "description": "퍼블릭 도메인 클래식 음악을 무료로 스트리밍하세요. Bach, Mozart, Chopin, Beethoven 등.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#78716C",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ko-KR",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-mark.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["music", "entertainment"]
+}
