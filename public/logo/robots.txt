@@ -1,4 +1,4 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /monitor/
 Disallow: /api/
@@ -7,23 +7,15 @@ Disallow: /_next/
 Disallow: /private/
 Disallow: /*.json$
 Disallow: /temp/
-Crawl-delay: 1
-
-User-Agent: Googlebot
-Allow: /
+Disallow: /monitor/
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
 Disallow: /monitor/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /private/
 
-User-Agent: Bingbot
-Allow: /
-Disallow: /monitor/
-Disallow: /api/
-Disallow: /admin/
-Disallow: /_next/
-Disallow: /private/
-
-Host: https://logo.restyart.com
 Sitemap: https://logo.restyart.com/sitemap.xml

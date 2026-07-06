@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://ai-encyclopedia.vercel.app/</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/" />
@@ -10,7 +10,7 @@
   
   <url>
     <loc>https://ai-encyclopedia.vercel.app/search</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/search" />
@@ -18,7 +18,7 @@
   
   <url>
     <loc>https://ai-encyclopedia.vercel.app/generate</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/generate" />
@@ -26,7 +26,7 @@
   
   <url>
     <loc>https://ai-encyclopedia.vercel.app/sources</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/sources" />
@@ -35,70 +35,70 @@
   
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/photosynthesis</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/photosynthesis" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/king-sejong</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/king-sejong" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/pythagorean-theorem</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/pythagorean-theorem" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/solar-system</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/solar-system" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/three-kingdoms-unification</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/three-kingdoms-unification" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/hangeul-creation</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/hangeul-creation" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/water-cycle</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/water-cycle" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/democracy</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/democracy" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/fractions</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/fractions" />
   </url>
   <url>
     <loc>https://ai-encyclopedia.vercel.app/article/dna-structure</loc>
-    <lastmod>2026-06-25T03:58:18.768Z</lastmod>
+    <lastmod>2026-07-03T02:51:18.711Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="ko-KR" href="https://ai-encyclopedia.vercel.app/article/dna-structure" />

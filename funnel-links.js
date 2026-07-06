@@ -76,7 +76,7 @@ function buildFunnelLinksHtml(tenant) {
     .join('')
   return `
 <div data-resty-funnel="1" style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;">
-  <p style="margin:0 0 6px;font-weight:600;color:#374151;font-size:11px;">Resty 연관 서비스</p>
+  <p style="margin:0 0 6px;font-weight:600;color:#374151;font-size:11px;">연관 서비스</p>
   <p style="margin:0;line-height:1.8;font-size:11px;">${items}</p>
 </div>`
 }

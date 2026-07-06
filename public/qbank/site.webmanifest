@@ -1,34 +1,21 @@
 {
-  "name": "MyQBank - AI 맞춤 문제 은행",
+  "name": "MyQBank",
   "short_name": "MyQBank",
-  "description": "AI가 만드는 맞춤형 학습 문제",
+  "description": "AI 맞춤 문제 은행",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3B82F6",
-  "orientation": "portrait-primary",
+  "theme_color": "#7E3AF2",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable any"
+      "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "/apple-touch-icon.png",
-      "sizes": "180x180",
       "type": "image/png"
     }
-  ],
-  "categories": ["education", "productivity"],
-  "lang": "ko",
-  "dir": "ltr",
-  "scope": "/",
-  "prefer_related_applications": false
+  ]
 }

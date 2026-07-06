@@ -1,15 +1,24 @@
-User-Agent: *
+User-agent: *
 Allow: /
+
+# 중요 페이지들
 Allow: /chat
 Allow: /content
 Allow: /personality-test
 Allow: /emotion-diary
 Allow: /inquiry
-Disallow: /api/
-Disallow: /admin/
-Disallow: /privacy-data/
-Disallow: /test
-Disallow: /content-api-test
 
-Host: https://mind.restyart.com
-Sitemap: https://mind.restyart.com/sitemap.xml
+# API 경로는 크롤링 제외
+Disallow: /api/
+
+# 관리자 페이지 제외
+Disallow: /admin/
+
+# 개인정보 관련 페이지 제외
+Disallow: /privacy-data/
+
+# 사이트맵 위치
+Sitemap: https://mindclinic.co.kr/sitemap.xml
+
+# 크롤링 속도 제한 (선택사항)
+Crawl-delay: 1

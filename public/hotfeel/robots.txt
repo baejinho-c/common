@@ -1,4 +1,4 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
@@ -6,26 +6,14 @@ Disallow: /_next/
 Disallow: /static/
 Disallow: /private/
 Disallow: /monitor/
-
-User-Agent: Googlebot
-Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 Disallow: /monitor/
-
-User-Agent: Naverbot
-Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 Disallow: /monitor/
-
-User-Agent: AhrefsBot
-User-Agent: MJ12bot
-User-Agent: DotBot
 Disallow: /
 
-Host: https://hotfeel.restyart.com
 Sitemap: https://hotfeel.restyart.com/sitemap.xml
-Sitemap: https://hotfeel.restyart.com/api/rss

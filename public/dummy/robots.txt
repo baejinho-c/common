@@ -1,4 +1,4 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
@@ -10,32 +10,16 @@ Disallow: /temp/
 Disallow: *.json$
 Disallow: /search?*
 Disallow: /auth/
-
-User-Agent: GPTBot
-User-Agent: ChatGPT-User
-User-Agent: CCBot
-User-Agent: anthropic-ai
-User-Agent: Claude-Web
-User-Agent: PerplexityBot
-User-Agent: YouBot
-User-Agent: Google-Extended
 Disallow: /
-
-User-Agent: Googlebot
-Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /settings/
+Disallow: /auth/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /settings/
 Disallow: /auth/
 
-User-Agent: Bingbot
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /dashboard/
-Disallow: /settings/
-Disallow: /auth/
-
-Host: https://dummy.restyart.com
 Sitemap: https://dummy.restyart.com/sitemap.xml

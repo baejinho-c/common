@@ -1,22 +1,12 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /private/
-
-User-Agent: Googlebot
-Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /_next/
 Disallow: /private/
 
-Host: https://light.restyart.com
 Sitemap: https://light.restyart.com/sitemap.xml
-Sitemap: https://light.restyart.com/sitemap-index.xml
-Sitemap: https://light.restyart.com/sitemap-bible.xml
-Sitemap: https://light.restyart.com/sitemap-bible-chapters.xml
-Sitemap: https://light.restyart.com/sitemap-bible-verses.xml
-Sitemap: https://light.restyart.com/sitemap-qt-recent.xml
-Sitemap: https://light.restyart.com/sitemap-churches.xml

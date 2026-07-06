@@ -126,9 +126,7 @@ const PATCHES = {
   vibecommunity: [
     { file: 'components/header.tsx', find: /<Link href="\/"[^>]*>[\s\S]*?<\/Link>/, replace: '<BrandLogo href="/" size="md" />' },
   ],
-  hvalue: [
-    { file: 'components/Header.tsx', find: /<Link href="\/"[^>]*>[\s\S]*?<\/Link>/, replace: '<BrandLogo href="/" size="md" />' },
-  ],
+  hvalue: [],
   classic: [
     { file: 'components/Navigation.tsx', find: /<Link href="\/"[^>]*>[\s\S]*?<\/Link>/, replace: '<BrandLogo href="/" size="md" />' },
   ],

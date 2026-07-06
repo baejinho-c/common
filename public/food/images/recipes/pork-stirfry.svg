@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Pork stir fry">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff1eb"/>
+      <stop offset="100%" stop-color="#ffd5c8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <ellipse cx="600" cy="440" rx="280" ry="170" fill="#5d4037"/>
+  <ellipse cx="600" cy="425" rx="245" ry="135" fill="#ef6c57"/>
+  <rect x="500" y="360" width="90" height="50" rx="10" fill="#ffab91"/>
+  <rect x="620" y="430" width="86" height="50" rx="10" fill="#ffab91"/>
+  <rect x="710" y="360" width="74" height="44" rx="10" fill="#ffab91"/>
+  <rect x="460" y="450" width="14" height="70" rx="7" fill="#66bb6a"/>
+  <rect x="650" y="330" width="14" height="70" rx="7" fill="#66bb6a"/>
+</svg>

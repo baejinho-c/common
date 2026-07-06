@@ -2,8 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowLeft, Shield } from "lucide-react"
+import { RESTYART_AI_DISCLOSURE, RESTYART_COMPANY } from "@/components/restyart-legal-bar"
 
 export default function PrivacyPage() {
+  const c = RESTYART_COMPANY
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -115,7 +118,19 @@ export default function PrivacyPage() {
                   회사는 원활한 서비스 제공을 위해 필요한 경우 개인정보 처리를 위탁할 수 있으며, 위탁 시 「개인정보
                   보호법」 제26조에 따라 계약서 등에 기술적·관리적 보호조치, 재위탁 제한, 관리·감독 등을 규정합니다.
                 </p>
-                <p className="text-sm text-gray-600 mt-2">※ 현재 위탁사항 없음</p>
+                <p className="text-sm text-gray-600 mt-2">
+                  위탁사항이 변경되는 경우 본 방침을 통해 수탁자, 위탁업무 내용, 보유·이용기간을 지체 없이 고지합니다.
+                </p>
+              </section>
+
+              <section>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">제4조의2(개인정보의 국외 이전)</h2>
+                <p className="mb-3">
+                  회사는 원칙적으로 개인정보를 국내에서 처리합니다. 다만, AI 기능 또는 클라우드 기반 기능 이용 과정에서
+                  이용자가 입력한 텍스트가 국외 서버를 경유·처리될 수 있으며, 이 경우 관련 법령에 따라 필요한 고지 및
+                  보호조치를 이행합니다.
+                </p>
+                <p className="text-sm text-gray-600">{RESTYART_AI_DISCLOSURE}</p>
               </section>
 
               <section>
@@ -148,11 +163,16 @@ export default function PrivacyPage() {
                 <h2 className="text-lg font-bold text-gray-900 mb-3">제6조(처리하는 개인정보 항목)</h2>
                 <p>회사는 다음의 개인정보 항목을 처리합니다.</p>
                 <div className="bg-gray-50 p-4 rounded-lg mt-2">
-                  <p className="font-semibold">(예시/현재 설정) 1) 수집 없음</p>
-                  <p className="text-sm text-gray-600 mt-2">
-                    ※ 실제 수집 항목이 있는 경우(회원가입 정보, 결제/로그 기록 등) 목적별 필수·선택 항목을 본 조에 표로
-                    명확히 기입하십시오.
-                  </p>
+                  <ul className="list-disc pl-6 space-y-1">
+                    <li>
+                      회원가입/로그인(필수): 이메일, 비밀번호(암호화 저장), 인증 토큰 식별정보, 서비스(테넌트) 식별값
+                    </li>
+                    <li>프로필 관리(선택): 이름, 전화번호, 프로필 이미지</li>
+                    <li>서비스 이용(생성/발행): 이용자가 입력한 제목·본문·아웃라인, 발행 설정값, 블로그 ID</li>
+                    <li>소셜 연동: 네이버 계정 식별자, OAuth 연동 토큰(암호화 또는 접근통제 하 저장)</li>
+                    <li>결제/정산: 결제 이력, 거래 식별자, 환불/정산 처리 정보</li>
+                    <li>자동 수집: 접속 IP, 쿠키, 접속 일시, 기기·브라우저 정보, 이용 로그</li>
+                  </ul>
                 </div>
               </section>
 
@@ -240,10 +260,10 @@ export default function PrivacyPage() {
                         <strong>직책:</strong> 개발자
                       </li>
                       <li>
-                        <strong>연락처:</strong> 010-4068-9276
+                        <strong>연락처:</strong> bloodjino1@gmail.com
                       </li>
                       <li>
-                        <strong>이메일:</strong> baeno@nate.com
+                        <strong>이메일:</strong> {c.email}
                       </li>
                     </ul>
                   </div>
@@ -258,10 +278,10 @@ export default function PrivacyPage() {
                         <strong>담당자:</strong> 배진호
                       </li>
                       <li>
-                        <strong>연락처:</strong> 010-4068-9276
+                        <strong>연락처:</strong> bloodjino1@gmail.com
                       </li>
                       <li>
-                        <strong>이메일:</strong> baeno@nate.com
+                        <strong>이메일:</strong> {c.email}
                       </li>
                     </ul>
                   </div>
@@ -287,10 +307,10 @@ export default function PrivacyPage() {
                       <strong>담당자:</strong> 서미원
                     </li>
                     <li>
-                      <strong>연락처:</strong> 010-3452-0734
+                      <strong>연락처:</strong> bloodjino1@gmail.com
                     </li>
                     <li>
-                      <strong>이메일:</strong> restyart@naver.com
+                      <strong>이메일:</strong> {c.email}
                     </li>
                   </ul>
                 </div>
@@ -340,7 +360,7 @@ export default function PrivacyPage() {
               <section>
                 <h2 className="text-lg font-bold text-gray-900 mb-3">제14조(시행일)</h2>
                 <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="font-semibold text-blue-800">이 개인정보 처리방침은 2025년 8월 26일부터 적용됩니다.</p>
+                  <p className="font-semibold text-blue-800">이 개인정보 처리방침은 2026년 6월 30일부터 적용됩니다.</p>
                 </div>
               </section>
             </div>

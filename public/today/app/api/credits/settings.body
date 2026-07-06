@@ -1,1 +1,1 @@
-{"success":true,"settings":{"notifications":{"low_balance":true,"daily_bonus":true,"purchase_confirmation":true},"auto_recharge":{"enabled":false,"threshold":100,"package_id":"basic"},"spending_limits":{"daily_limit":500,"monthly_limit":10000}},"timestamp":"2026-06-25T05:38:23.971Z"}
+{"success":true,"settings":{"notifications":{"low_balance":true,"daily_bonus":true,"purchase_confirmation":true},"auto_recharge":{"enabled":false,"threshold":100,"package_id":"basic"},"spending_limits":{"daily_limit":500,"monthly_limit":10000}},"timestamp":"2026-07-03T01:22:59.596Z"}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Green onion pancake">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff9ec"/>
+      <stop offset="100%" stop-color="#ffeec8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="600" cy="420" r="250" fill="#d7a86e"/>
+  <circle cx="600" cy="420" r="220" fill="#e8b978"/>
+  <rect x="460" y="340" width="300" height="18" rx="9" fill="#66bb6a" transform="rotate(12 610 350)"/>
+  <rect x="430" y="460" width="340" height="18" rx="9" fill="#66bb6a" transform="rotate(-10 600 470)"/>
+  <rect x="500" y="520" width="220" height="16" rx="8" fill="#66bb6a" transform="rotate(6 610 528)"/>
+</svg>

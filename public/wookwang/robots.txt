@@ -1,7 +1,6 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Host: https://wookwang.restyart.com
 Sitemap: https://wookwang.restyart.com/sitemap.xml

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://flower.restyart.com/</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-<url><loc>https://flower.restyart.com/_not-found</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/app</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/app/_not-found</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/app/categories</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/app/recommendations</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/app/search</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/categories</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/recommendations</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-<url><loc>https://flower.restyart.com/search</loc><lastmod>2026-06-25T00:22:33.845Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url>
+<loc>https://flower.restyart.com</loc>
+<lastmod>2026-07-03T02:50:24.767Z</lastmod>
+<changefreq>daily</changefreq>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://flower.restyart.com/categories</loc>
+<lastmod>2026-07-03T02:50:24.767Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://flower.restyart.com/recommendations</loc>
+<lastmod>2026-07-03T02:50:24.767Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://flower.restyart.com/search</loc>
+<lastmod>2026-07-03T02:50:24.767Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
 </urlset>

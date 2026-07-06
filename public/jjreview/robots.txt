@@ -1,25 +1,14 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
 Disallow: /_next/
 Disallow: /static/
-
-User-Agent: GPTBot
+Disallow: /
+Disallow: /
+Disallow: /
+Disallow: /
 Disallow: /
 
-User-Agent: ChatGPT-User
-Disallow: /
-
-User-Agent: CCBot
-Disallow: /
-
-User-Agent: anthropic-ai
-Disallow: /
-
-User-Agent: Claude-Web
-Disallow: /
-
-Host: https://jjreview.restyart.com
 Sitemap: https://jjreview.restyart.com/sitemap.xml

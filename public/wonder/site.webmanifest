@@ -1,0 +1,21 @@
+{
+  "name": "WonderTale — AI 영어 동화 놀이터",
+  "short_name": "WonderTale",
+  "description": "아이가 직접 영어 동화를 만들고, 읽고, 듣고, 퀴즈로 복습하는 AI 영어 창작 놀이터",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#F97316",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

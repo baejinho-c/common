@@ -1,0 +1,21 @@
+{
+  "name": "케어브릿지 - 요양보호사 매칭 플랫폼",
+  "short_name": "케어브릿지",
+  "description": "가족과 요양보호사를 연결하는 안전한 돌봄 매칭 서비스",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

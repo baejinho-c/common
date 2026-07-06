@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** 모든 프로젝트에 RestyartLegalBar 컴포넌트 복사 + layout.tsx 반영 */
+/** 모든 프로젝트에 RestyartLegalBar 컴포넌트 복사 + layout.tsx 반영 (자체 Footer 있는 테넌트는 제외) */
 const fs = require('fs')
 const path = require('path')
 
@@ -8,9 +8,19 @@ const SRC = path.join(__dirname, 'components/restyart-legal-bar.tsx')
 const IMPORT_LINE = 'import { RestyartLegalBar } from "@/components/restyart-legal-bar"'
 const TAG = '<RestyartLegalBar />'
 
+function layoutHasTenantFooter(content) {
+  return (
+    /<Footer[\s/>]/.test(content) ||
+    /from\s+["']@\/components\/[Ff]ooter["']/.test(content) ||
+    /ConditionalFooter/.test(content) ||
+    /<footer\b/i.test(content)
+  )
+}
+
 let copied = 0
 let patched = 0
 let skipped = 0
+let footerSkipped = 0
 
 for (const name of fs.readdirSync(WORKDIR)) {
   if (name === 'common' || name.startsWith('.')) continue
@@ -25,6 +35,11 @@ for (const name of fs.readdirSync(WORKDIR)) {
   copied += 1
 
   let content = fs.readFileSync(layout, 'utf8')
+  if (layoutHasTenantFooter(content)) {
+    footerSkipped += 1
+    continue
+  }
+
   if (content.includes('RestyartLegalBar')) {
     skipped += 1
     continue
@@ -52,4 +67,4 @@ for (const name of fs.readdirSync(WORKDIR)) {
   console.log('[layout]', name)
 }
 
-console.log(`[sync-legal] components: ${copied}, layouts patched: ${patched}, skipped: ${skipped}`)
+console.log(`[sync-legal] components: ${copied}, layouts patched: ${patched}, skipped: ${skipped}, footer tenants skipped: ${footerSkipped}`)

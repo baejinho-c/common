@@ -1,10 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none" role="img" aria-label="SmartGPT Guide">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 48" fill="none" role="img" aria-label="SmartGPT Guide">
   <defs><linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#10B981"/>
-    <stop offset="1" stop-color="#059669"/>
+    <stop stop-color="#2563EB"/>
+    <stop offset="1" stop-color="#1D4ED8"/>
   </linearGradient></defs>
   <rect x="0" y="4" width="40" height="40" rx="10" fill="url(#logo-grad)"/>
   <rect x="1" y="5" width="38" height="38" rx="9" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
-  <text x="20" y="26.400000000000002" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="20" font-weight="700" fill="#ffffff">G</text>
-  <text x="50" y="33" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800"><tspan fill="#111827">SmartGPT Guide</tspan></text>
+  
+      <path d="M20 10v20" stroke="#fff" stroke-opacity="0.35" stroke-width="1.25"/>
+      <path d="M10 12.5C10 10.625 13.125 9.375 20 9.375s10 1.25 10 3.125v16.25c0 0-2.5-1.5-10-1.5S10 20 10 20V12.5z" fill="#fff" fill-opacity="0.92"/>
+      <path d="M20 9.375C30 9.375 30 10.625 30 12.5v16.25s-2.5-1.5-10-1.5S20 20 20 20V9.375z" fill="#fff" fill-opacity="0.72"/>
+      <path d="M10 12.5C10 14.375 13.125 15.625 20 15.625s10-1.25 10-3.125" stroke="#fff" stroke-opacity="0.45" stroke-width="1" fill="none"/>
+      <path d="M13.125 17.5h4.375M13.125 21.25h3.75" stroke="#1D4ED8" stroke-width="1.125" stroke-linecap="round" opacity="0.4"/>
+      <path d="M22.5 17.5h4.375M23.75 21.25h3.75" stroke="#1D4ED8" stroke-width="1.125" stroke-linecap="round" opacity="0.4"/>
+      <path d="M30.625 7.5l0.875 2.5 2.5 0.875-2.5 0.875-0.875 2.5-0.875-2.5-2.5-0.875 2.5-0.875z" fill="#34D399"/>
+      <path d="M33.75 13.125v1.5M34.5 13.875h-1.5" stroke="#6EE7B7" stroke-width="1.125" stroke-linecap="round"/>
+    
+  <text x="50" y="33" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800"><tspan fill="#111827">Smart</tspan><tspan fill="#2563EB">GPT</tspan><tspan fill="#10B981"> Guide</tspan></text>
 </svg>

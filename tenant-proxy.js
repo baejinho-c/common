@@ -2,14 +2,21 @@ const fs = require('fs')
 const path = require('path')
 const http = require('http')
 const https = require('https')
-const { injectLegalHtml } = require('./legal-info')
-
-/** 독립 사이트(교회 등) — 리스티아트 사업자 푸터 미주입 */
-const LEGAL_SKIP_TENANTS = new Set(['wookwang', 'portfolio', 'goodprice'])
+const {
+  injectLegalHtml,
+  stripLegalHtml,
+  shouldSkipLegalInjection,
+  LEGAL_SKIP_TENANTS,
+  tenantUsesServiceFooter,
+} = require('./legal-info')
 
 function maybeInjectLegal(html, name) {
-  if (LEGAL_SKIP_TENANTS.has(name)) return html
-  return injectLegalHtml(html, name)
+  if (LEGAL_SKIP_TENANTS.has(name) || tenantUsesServiceFooter(name)) {
+    return stripLegalHtml(html)
+  }
+  const stripped = stripLegalHtml(html)
+  if (shouldSkipLegalInjection(stripped)) return stripped
+  return injectLegalHtml(stripped, name)
 }
 
 function tenantPathPrefix(name) {
@@ -285,6 +292,39 @@ function injectBookSeoMeta(html, book, bookId, name, prefixStyle) {
   return html.replace(/<\/head>/i, `${metaBlock}</head>`)
 }
 
+/** wonder: /story/my-story-id → 정적 셸에도 URL의 동화 ID 주입 */
+function injectWonderStoryRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-wonder-story-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/story\/([^/]+)$/)
+  if (!match) return html
+  const storyId = decodeURIComponent(match[1])
+  const script = `\n<script data-wonder-story-id>window.__WONDER_STORY_ID__=${JSON.stringify(storyId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
+/** career: /schools/school-id → 정적 셸에도 URL의 학교 ID 주입 */
+function injectCareerSchoolRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-career-school-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/schools\/([^/]+)$/)
+  if (!match) return html
+  const schoolId = decodeURIComponent(match[1])
+  const script = `\n<script data-career-school-id>window.__CAREER_SCHOOL_ID__=${JSON.stringify(schoolId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
+/** growup: /community/posts/425 → 정적 셸에도 URL의 게시글 ID 주입 */
+function injectGrowupCommunityPostRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-growup-community-post-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/community\/posts\/(\d+)$/)
+  if (!match) return html
+  const postId = match[1]
+  const script = `\n<script data-growup-community-post-id>window.__GROWUP_COMMUNITY_POST_ID__=${JSON.stringify(postId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
 function finalizeHtml(html, reqPath, name, prefixStyle) {
   html = prepareHtml(html, name, prefixStyle)
   html = injectQuestionRouteId(html, reqPath)
@@ -292,6 +332,9 @@ function finalizeHtml(html, reqPath, name, prefixStyle) {
   html = injectInsightRouteId(html, reqPath)
   html = injectAdminBookRouteId(html, reqPath)
   html = injectViewerRouteId(html, reqPath)
+  html = injectWonderStoryRouteId(html, reqPath)
+  html = injectCareerSchoolRouteId(html, reqPath)
+  html = injectGrowupCommunityPostRouteId(html, reqPath)
   return html
 }
 
@@ -418,6 +461,21 @@ function resolveStaticPath(staticRoot, reqPath) {
     return { file: asHtml, isHtml: true }
   }
 
+  // Next.js may emit %XX filenames while HTTP paths arrive decoded (e.g. church/은총교회)
+  const encodedRel = rel.split('/').map((seg) => {
+    try {
+      return encodeURIComponent(decodeURIComponent(seg))
+    } catch (_) {
+      return seg
+    }
+  }).join('/')
+  if (encodedRel !== rel) {
+    const asHtmlEncoded = path.join(staticRoot, `${encodedRel}.html`)
+    if (fs.existsSync(asHtmlEncoded) && fs.statSync(asHtmlEncoded).isFile()) {
+      return { file: asHtmlEncoded, isHtml: true }
+    }
+  }
+
   const indexInDir = path.join(staticRoot, rel, 'index.html')
   if (fs.existsSync(indexInDir) && fs.statSync(indexInDir).isFile()) {
     return { file: indexInDir, isHtml: true }
@@ -522,6 +580,77 @@ function resolveStaticPath(staticRoot, reqPath) {
       const shells = fs.readdirSync(bookDir).filter((f) => /^\d+\.html$/.test(f))
       if (shells.length > 0) {
         return { file: path.join(bookDir, shells.sort((a, b) => Number(b) - Number(a))[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /community/posts/425 — growup 커뮤니티 게시글 상세. community.html 목록 폴백 방지
+  const growupPostMatch = clean.replace(/\/$/, '').match(/^\/community\/posts\/(\d+)$/)
+  if (growupPostMatch) {
+    const postId = growupPostMatch[1]
+    const specific = path.join(staticRoot, 'community', 'posts', `${postId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const postsDir = path.join(staticRoot, 'community', 'posts')
+    if (fs.existsSync(postsDir) && fs.statSync(postsDir).isDirectory()) {
+      const shells = fs.readdirSync(postsDir)
+        .filter((f) => /^\d+\.html$/.test(f))
+      if (shells.length > 0) {
+        return { file: path.join(postsDir, shells.sort((a, b) => Number(b) - Number(a))[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /community/category/general — sports 포럼 카테고리. community.html 목록 폴백 방지
+  const sportsCategoryMatch = clean.replace(/\/$/, '').match(/^\/community\/category\/([^/]+)$/)
+  if (sportsCategoryMatch) {
+    const categoryId = sportsCategoryMatch[1]
+    const specific = path.join(staticRoot, 'community', 'category', `${categoryId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const categoryDir = path.join(staticRoot, 'community', 'category')
+    if (fs.existsSync(categoryDir) && fs.statSync(categoryDir).isDirectory()) {
+      const shells = fs.readdirSync(categoryDir).filter((f) => f.endsWith('.html'))
+      if (shells.length > 0) {
+        return { file: path.join(categoryDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /schools/slug — 학교 상세 (career). schools.html 목록 폴백 방지
+  const careerSchoolMatch = clean.replace(/\/$/, '').match(/^\/schools\/([^/]+)$/)
+  if (careerSchoolMatch) {
+    const schoolId = careerSchoolMatch[1]
+    const specific = path.join(staticRoot, 'schools', `${schoolId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const schoolDir = path.join(staticRoot, 'schools')
+    if (fs.existsSync(schoolDir) && fs.statSync(schoolDir).isDirectory()) {
+      const shells = fs.readdirSync(schoolDir)
+        .filter((f) => f.endsWith('.html') && f !== 'page.html')
+      if (shells.length > 0) {
+        return { file: path.join(schoolDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /story/slug — 동화 상세 (wonder). 개별 HTML 없을 때 story/*.html 셸 사용
+  const storyMatch = clean.replace(/\/$/, '').match(/^\/story\/([^/]+)$/)
+  if (storyMatch) {
+    const storyId = storyMatch[1]
+    const specific = path.join(staticRoot, 'story', `${storyId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const storyDir = path.join(staticRoot, 'story')
+    if (fs.existsSync(storyDir) && fs.statSync(storyDir).isDirectory()) {
+      const shells = fs.readdirSync(storyDir)
+        .filter((f) => f.endsWith('.html') && f !== 'page.html')
+      if (shells.length > 0) {
+        return { file: path.join(storyDir, shells[0]), isHtml: true }
       }
     }
   }

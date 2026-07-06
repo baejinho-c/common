@@ -5,5 +5,11 @@
   </linearGradient></defs>
   <rect width="48" height="48" rx="12" fill="url(#mark-bg)"/>
   <rect x="1.5" y="1.5" width="45" height="45" rx="10.5" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
-  <text x="24" y="31.68" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="24" font-weight="700" fill="#ffffff">♡</text>
+  
+      <path d="M24 37.5c-5.699999999999999-4.5-11.25-8.7-11.25-14.25a5.699999999999999 5.699999999999999 0 0 1 11.25 0 5.699999999999999 5.699999999999999 0 0 1 11.25 0c0 5.550000000000001-5.550000000000001 9.75-11.25 14.25z" fill="#fff"/>
+      <rect x="21.299999999999997" y="13.5" width="5.4" height="10.5" rx="1.2000000000000002" fill="#fff"/>
+      <rect x="18" y="16.200000000000003" width="12" height="5.1" rx="1.2000000000000002" fill="#fff"/>
+      <circle cx="36.75" cy="13.5" r="1.9500000000000002" fill="#F5D0FE"/>
+      <path d="M36.75 10.5v2.4000000000000004M37.95 11.7h-2.4000000000000004" stroke="#fff" stroke-width="1.0499999999999998" stroke-linecap="round"/>
+    
 </svg>

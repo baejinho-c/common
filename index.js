@@ -66,6 +66,10 @@ function proxyRestyApiPath(req, res, apiPath) {
 // Central multi-tenant auth API — MySQL(resty-api)로 프록시 (기본: :5001)
 if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   app.use('/api/resty', (req, res) => {
+    const slug = tenantSlugFromHost(req.headers.host)
+    if (slug && !req.headers['x-subdomain']) {
+      req.headers['x-subdomain'] = slug
+    }
     let targetUrl
     try {
       targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
@@ -221,48 +225,9 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   })
 }
 
-// Classica catalog (Internet Archive streams)
+// Classica catalog + 교육부 학교 API + AutoBlogger auth
 if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
-  app.use('/api/classic', (req, res) => {
-    let targetUrl
-    try {
-      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
-    } catch (e) {
-      return res.status(500).json({ message: '잘못된 API URL', success: false })
-    }
-    const lib = targetUrl.protocol === 'https:' ? https : http
-    const body =
-      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
-    const headers = { ...req.headers, host: targetUrl.host }
-    if (body) {
-      headers['content-type'] = 'application/json'
-      headers['content-length'] = Buffer.byteLength(body)
-    }
-    const proxyReq = lib.request(
-      {
-        hostname: targetUrl.hostname,
-        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
-        path: targetUrl.pathname + targetUrl.search,
-        method: req.method,
-        headers,
-      },
-      (proxyRes) => {
-        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
-        proxyRes.pipe(res)
-      },
-    )
-    proxyReq.on('error', (err) => {
-      console.error('classic api proxy error', err)
-      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
-    })
-    if (body) proxyReq.write(body)
-    proxyReq.end()
-  })
-}
-
-// AutoBlogger auth (네이버 OAuth, 사용량)
-if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
-  for (const prefix of ['/api/naver', '/api/usage']) {
+  for (const prefix of ['/api/classic', '/api/schools', '/api/naver', '/api/usage']) {
     app.use(prefix, (req, res) => {
       let targetUrl
       try {
@@ -408,6 +373,10 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   })
 
   app.use('/api/ask', (req, res) => {
+    const slug = tenantSlugFromHost(req.headers.host)
+    if (slug && !req.headers['x-subdomain']) {
+      req.headers['x-subdomain'] = slug
+    }
     proxyRestyApiPath(req, res, '/api/ask')
   })
 

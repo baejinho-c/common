@@ -1,6 +1,5 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 
-Host: https://goodprice.restyart.com
 Sitemap: https://goodprice.restyart.com/sitemap.xml

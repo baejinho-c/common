@@ -1,7 +1,6 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Host: https://reading.restyart.com
 Sitemap: https://reading.restyart.com/sitemap.xml

@@ -2,8 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://wish.restyart.com</loc>
-<lastmod>2026-06-25T03:58:45.542Z</lastmod>
-<changefreq>yearly</changefreq>
-<priority>1</priority>
+<lastmod>2026-07-06T02:55:23.449Z</lastmod>
+<changefreq>daily</changefreq>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://wish.restyart.com/privacy</loc>
+<lastmod>2026-07-06T02:55:23.449Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://wish.restyart.com/terms</loc>
+<lastmod>2026-07-06T02:55:23.449Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
 </url>
 </urlset>

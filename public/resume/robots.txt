@@ -1,7 +1,6 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Host: https://resume.restyart.com
 Sitemap: https://resume.restyart.com/sitemap.xml

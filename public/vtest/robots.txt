@@ -1,7 +1,6 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Host: https://vtest.restyart.com
 Sitemap: https://vtest.restyart.com/sitemap.xml

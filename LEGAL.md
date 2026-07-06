@@ -17,6 +17,21 @@
 2. **퍼블리시** — `publish.sh` → `inject-legal.js` (HTML에 주입)
 3. **런타임** — `tenant-proxy.js` `prepareHtml()` (미주입 HTML 보완)
 
+### 중복 푸터 방지 (중요)
+
+서비스에 **자체 `<footer>` / `<Footer />` 컴포넌트**가 있으면:
+
+- `RestyartLegalBar`를 layout에 **추가하지 않음** (`sync-legal-component.js` 자동 제외)
+- `inject-legal.js` / 게이트웨이가 **별도 legal bar를 주입하지 않음** (`shouldSkipLegalInjection`)
+- AI 이용 안내는 **서비스 footer 안**에 `RestyartAiDisclosure`로 포함
+- footer의 **회사명(법인 표기)** 은 `리스티아트`로 통일
+
+일괄 패치:
+
+```bash
+node common/scripts/patch-tenant-footer-legal.js
+```
+
 ## 동기화 명령
 
 ```bash

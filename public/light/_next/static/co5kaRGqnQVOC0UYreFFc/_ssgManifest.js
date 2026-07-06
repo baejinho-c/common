@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Fbible\u002F[book]","\u002Fbible\u002F[book]\u002F[chapter]","\u002Fbible\u002F[book]\u002F[chapter]\u002F[verse]","\u002Fchurch\u002F[name]","\u002Fchurches\u002Fregion\u002F[slug]","\u002Fpost\u002F[id]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

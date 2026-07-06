@@ -25,8 +25,13 @@ function listTenants() {
 
 function injectBrandingMeta(html, slug, siteBase) {
   let out = html
-  const favHref = `${siteBase}favicon.svg`
-  const ogHref = `https://${slug}.restyart.com/og-image.svg`
+  const deployDir = path.join(PUBLIC_DIR, slug)
+  const hasCustomFav = fs.existsSync(path.join(deployDir, 'favicon.png'))
+  const hasCustomOg = fs.existsSync(path.join(deployDir, 'og-image.png'))
+  const favHref = hasCustomFav ? `${siteBase}favicon.png` : `${siteBase}favicon.svg`
+  const ogHref = hasCustomOg
+    ? `https://${slug}.restyart.com/og-image.png`
+    : `https://${slug}.restyart.com/og-image.svg`
 
   if (!/rel=["'](?:shortcut )?icon["']/i.test(out)) {
     out = out.replace(/<head[^>]*>/i, (m) => `${m}<link rel="icon" href="${favHref}" type="image/svg+xml"/>`)
@@ -95,17 +100,23 @@ function applyToTenant(slug) {
     const ogPath = path.join(dir, 'og-image.svg')
     const markPath = path.join(dir, 'logo-mark.svg')
     const logoPath = path.join(dir, 'logo.svg')
-    const hasFav = fs.existsSync(favPath)
-    const hasOg = fs.existsSync(path.join(dir, 'og-image.png')) || fs.existsSync(path.join(dir, 'og-image.jpg')) || fs.existsSync(ogPath)
+    const customMarkPng = path.join(dir, 'logo-mark.png')
+    const hasCustomMark = fs.existsSync(customMarkPng)
+    const hasFav = fs.existsSync(favPath) || fs.existsSync(path.join(dir, 'favicon.png'))
+    const hasOg =
+      fs.existsSync(path.join(dir, 'og-image.png')) ||
+      fs.existsSync(path.join(dir, 'og-image.jpg')) ||
+      fs.existsSync(ogPath)
 
-    if (!hasFav || force) fs.writeFileSync(favPath, faviconSvg)
-    if (!hasOg || force) fs.writeFileSync(ogPath, ogSvg)
-    if (!fs.existsSync(markPath) || force) fs.writeFileSync(markPath, markSvg)
-    if (!fs.existsSync(logoPath) || force) fs.writeFileSync(logoPath, logoSvg)
+    if ((!hasFav || force) && !fs.existsSync(path.join(dir, 'favicon.png'))) fs.writeFileSync(favPath, faviconSvg)
+    if ((!hasOg || force) && !fs.existsSync(path.join(dir, 'og-image.png'))) fs.writeFileSync(ogPath, ogSvg)
+    if ((!fs.existsSync(markPath) || force) && !hasCustomMark) fs.writeFileSync(markPath, markSvg)
+    if ((!fs.existsSync(logoPath) || force) && !hasCustomMark) fs.writeFileSync(logoPath, logoSvg)
 
     // apple-touch-icon: logo-mark 기반 (헤더 로고와 동일한 마크)
     const touchPath = path.join(dir, 'apple-touch-icon.svg')
-    if (!fs.existsSync(touchPath) || force) {
+    const touchPng = path.join(dir, 'apple-touch-icon.png')
+    if ((!fs.existsSync(touchPath) || force) && !fs.existsSync(touchPng)) {
       fs.writeFileSync(
         touchPath,
         markSvg.replace('viewBox="0 0 48 48"', 'viewBox="0 0 48 48" width="180" height="180"'),

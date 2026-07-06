@@ -2,8 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowLeft, FileText } from "lucide-react"
+import { RESTYART_AI_DISCLOSURE, RESTYART_COMPANY } from "@/components/restyart-legal-bar"
 
 export default function TermsPage() {
+  const c = RESTYART_COMPANY
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
@@ -56,8 +59,15 @@ export default function TermsPage() {
                   <li>이 약관은 서비스 화면에 게시하거나 기타의 방법으로 이용자에게 공지함으로써 효력을 발생합니다.</li>
                   <li>
                     회사는 합리적인 사유가 발생할 경우에는 이 약관을 변경할 수 있으며, 약관이 변경되는 경우 변경된
-                    약관의 내용과 시행일을 명시하여 현행약관과 함께 서비스의 초기화면에 그 시행일 7일 이전부터 시행일 후
-                    상당한 기간 동안 공지합니다.
+                    약관의 내용과 시행일을 명시하여 현행약관과 함께 서비스의 초기화면에 공지합니다.
+                  </li>
+                  <li>
+                    이용자에게 불리하거나 중요한 변경(요금, 환불, 면책범위 등)의 경우 시행일 30일 이전부터 공지하며,
+                    일반 변경은 7일 이전부터 공지합니다.
+                  </li>
+                  <li>
+                    이용자가 시행일까지 명시적으로 거부의사를 표시하지 아니하는 경우 변경 약관에 동의한 것으로 봅니다.
+                    단, 관련 법령이 달리 정하는 경우에는 그에 따릅니다.
                   </li>
                 </ol>
               </section>
@@ -75,7 +85,12 @@ export default function TermsPage() {
                     </ul>
                   </li>
                   <li>회사는 서비스의 품질 향상을 위해 서비스의 내용을 변경할 수 있습니다.</li>
+                  <li>
+                    서비스에는 인공지능(AI) 기반 기능이 포함될 수 있으며, AI 생성 결과는 참고용으로 정확성·완전성·최신성이
+                    보장되지 않습니다.
+                  </li>
                 </ol>
+                <p className="mt-3 p-3 rounded bg-gray-50 text-gray-700">{RESTYART_AI_DISCLOSURE}</p>
               </section>
 
               <section>
@@ -87,7 +102,30 @@ export default function TermsPage() {
                   </li>
                   <li>
                     회사는 제1항의 사유로 서비스의 제공이 일시적으로 중단됨으로 인하여 이용자 또는 제3자가 입은 손해에
-                    대하여 배상하지 않습니다.
+                    대하여 고의 또는 중대한 과실이 없는 한 책임을 지지 않습니다.
+                  </li>
+                </ol>
+              </section>
+
+              <section>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">제6조의2 (유료서비스, 결제 및 환불)</h2>
+                <ol className="list-decimal pl-6 space-y-2">
+                  <li>
+                    회사는 일부 기능을 유료로 제공할 수 있으며, 요금, 과금방식, 이용기간, 제공범위는 결제 화면 및 별도
+                    정책에서 안내합니다.
+                  </li>
+                  <li>
+                    이용자는 결제 전에 상품명, 가격, 과금주기, 자동결제 여부, 환불조건을 확인해야 하며, 결제 완료 시 관련
+                    조건에 동의한 것으로 봅니다.
+                  </li>
+                  <li>
+                    청약철회 및 환불은 「전자상거래 등에서의 소비자보호에 관한 법률」 및 관계 법령을 따릅니다. 다만,
+                    디지털콘텐츠의 특성상 이미 사용·소비된 부분(크레딧 사용, 생성·발행 완료된 결과물 등)에 대해서는
+                    법령이 허용하는 범위 내에서 환불이 제한될 수 있습니다.
+                  </li>
+                  <li>
+                    정기결제 상품의 해지는 다음 결제일 이전에 가능하며, 해지 이후 이미 결제된 기간의 이용분 처리 기준은
+                    결제 시 고지된 환불정책을 따릅니다.
                   </li>
                 </ol>
               </section>
@@ -203,11 +241,34 @@ export default function TermsPage() {
                     없이 복제, 송신, 출판, 배포, 방송 기타 방법에 의하여 영리목적으로 이용하거나 제3자에게 이용하게
                     하여서는 안됩니다.
                   </li>
+                  <li>
+                    이용자가 입력·업로드한 원본 데이터 및 이용자가 최종 편집·확정한 결과물의 권리는 법령 및 계약에서 달리
+                    정하지 않는 한 해당 이용자에게 귀속됩니다. 다만 회사는 서비스 제공·개선·보안 목적 범위에서 필요한
+                    이용 권한을 가집니다.
+                  </li>
                 </ol>
               </section>
 
               <section>
-                <h2 className="text-lg font-bold text-gray-900 mb-3">제13조 (분쟁해결)</h2>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">제13조 (면책)</h2>
+                <ol className="list-decimal pl-6 space-y-2">
+                  <li>
+                    회사는 천재지변, 불가항력, 기간통신사업자 장애, 제3자 플랫폼 정책변경(예: 검색엔진/블로그 제공자) 등
+                    회사의 통제 범위를 벗어난 사유로 인한 서비스 장애에 대해 책임을 지지 않습니다.
+                  </li>
+                  <li>
+                    회사는 이용자 귀책사유(계정관리 소홀, 약관 위반 행위, 잘못된 설정, 외부 플랫폼 자격 미충족 등)로 인한
+                    손해에 대해 책임을 지지 않습니다.
+                  </li>
+                  <li>
+                    회사는 AI 생성 결과의 정확성, 특정 목적 적합성, 권리 비침해를 보증하지 않으며, 게시·배포 전 최종 검토
+                    책임은 이용자에게 있습니다.
+                  </li>
+                </ol>
+              </section>
+
+              <section>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">제14조 (분쟁해결)</h2>
                 <ol className="list-decimal pl-6 space-y-2">
                   <li>
                     회사는 이용자가 제기하는 정당한 의견이나 불만을 반영하고 그 피해를 보상처리하기 위하여
@@ -221,7 +282,7 @@ export default function TermsPage() {
               </section>
 
               <section>
-                <h2 className="text-lg font-bold text-gray-900 mb-3">제14조 (재판권 및 준거법)</h2>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">제15조 (재판권 및 준거법)</h2>
                 <ol className="list-decimal pl-6 space-y-2">
                   <li>
                     회사와 이용자 간에 발생한 전자상거래 분쟁에 관한 소송은 제소 당시의 이용자의 주소에 의하고, 주소가
@@ -232,9 +293,22 @@ export default function TermsPage() {
                 </ol>
               </section>
 
+              <section>
+                <h2 className="text-lg font-bold text-gray-900 mb-3">제16조 (사업자 정보 및 고객문의)</h2>
+                <ul className="list-disc pl-6 space-y-1">
+                  <li>상호: {c.name}</li>
+                  <li>사업자등록번호: {c.businessNumber}</li>
+                  <li>통신판매업신고: {c.mailOrderNumber}</li>
+                  <li>주소: {c.address}</li>
+                  <li>
+                    고객문의: <a href={`mailto:${c.email}`}>{c.email}</a>
+                  </li>
+                </ul>
+              </section>
+
               <div className="bg-blue-50 p-4 rounded-lg mt-8">
                 <p className="font-semibold text-blue-800 mb-2">부칙</p>
-                <p className="text-blue-700 text-sm">이 약관은 2025년 8월 26일부터 시행합니다.</p>
+                <p className="text-blue-700 text-sm">이 약관은 2026년 6월 30일부터 시행합니다.</p>
               </div>
             </div>
           </CardContent>

@@ -1,36 +1,34 @@
 {
-  "name": "QBox - AI 기반 개발자 Q&A 플랫폼",
+  "name": "QBox - AI 개발자 Q&A",
   "short_name": "QBox",
   "description": "개발 질문을 올리면 AI가 즉시 답변해드립니다. React, Next.js, TypeScript 등 모든 개발 관련 질문을 환영합니다.",
   "icons": [
     {
-      "src": "/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png"
+      "src": "/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png"
-    },
-    {
-      "src": "/android-chrome-192x192.jpg",
+      "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/android-chrome-512x512.jpg",
+      "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "theme_color": "#3b82f6",
+  "theme_color": "#0891B2",
   "background_color": "#ffffff",
   "display": "standalone",
   "start_url": "/",
   "scope": "/",
   "orientation": "portrait-primary",
   "categories": ["productivity", "developer", "education"],
-  "lang": "ko",
+  "lang": "ko-KR",
   "dir": "ltr"
 }

@@ -1,0 +1,21 @@
+{
+  "name": "Brochure Maker - AI 브로셔 디자인 도구",
+  "short_name": "Brochure Maker",
+  "description": "AI로 전문가 수준의 브로셔를 10분 안에 제작하세요.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0D9488",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

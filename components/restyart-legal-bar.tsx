@@ -4,12 +4,25 @@ export const RESTYART_COMPANY = {
   businessNumber: "3961701077",
   address: "경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호",
   mailOrderNumber: "2022-성남분당C-0670",
-  email: "support@restyart.com",
+  email: "bloodjino1@gmail.com",
 } as const
 
 export const RESTYART_AI_DISCLOSURE =
   "본 서비스의 일부 콘텐츠·응답·추천·이미지 등은 인공지능(AI) 기술을 활용하여 생성될 수 있으며, " +
   "AI 생성 결과는 참고용이며 정확성·완전성을 보장하지 않습니다."
+
+export function RestyartAiDisclosure({ className }: { className?: string }) {
+  return (
+    <p
+      className={
+        className ??
+        "mt-4 rounded-md border border-gray-200 bg-gray-50 p-3 text-xs leading-relaxed text-gray-500"
+      }
+    >
+      <span className="font-semibold text-gray-700">AI 이용 안내</span> — {RESTYART_AI_DISCLOSURE}
+    </p>
+  )
+}
 
 export function RestyartLegalBar() {
   const c = RESTYART_COMPANY
@@ -20,9 +33,6 @@ export function RestyartLegalBar() {
     >
       <div className="container mx-auto px-4 py-4 max-w-6xl">
         <p className="font-semibold text-gray-700 mb-2">{c.name}</p>
-        <p className="mb-1">
-          사업자등록번호 {c.businessNumber} · 통신판매업신고 {c.mailOrderNumber}
-        </p>
         <p className="mb-1">{c.address}</p>
         <p className="mb-3">
           문의:{" "}

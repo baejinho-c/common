@@ -26,7 +26,7 @@ publish_one() {
     return 1
   fi
 
-  echo "[BUILD] $name"
+  echo "[DEPLOY] $name"
   if [ "$name" = "portfolio" ]; then
     echo "[snapshot] portfolio services from dashboard-manifest"
     node "$COMMON_DIR/scripts/build-dashboard-manifest.js" 2>/dev/null || true
@@ -40,6 +40,7 @@ publish_one() {
   export NEXT_PUBLIC_TENANT_PATH="/${name}"
   export NEXT_PUBLIC_BASE_URL="${PUBLISH_SITE_URL:-https://${name}.restyart.com}"
   export NEXT_PUBLIC_API_BASE_URL="${PUBLISH_API_URL:-https://app.restyart.com}"
+  export NEXT_PUBLIC_API_BASE="${NEXT_PUBLIC_API_BASE:-${PUBLISH_API_URL:-https://app.restyart.com}/api}"
   # API route가 빌드 시점에 키를 요구하는 프로젝트용 (런타임 auth는 common 게이트웨이)
   export OPENAI_API_KEY="${OPENAI_API_KEY:-sk-build-placeholder}"
   export OPENAI_ADMIN_KEY="${OPENAI_ADMIN_KEY:-sk-build-placeholder}"
@@ -109,11 +110,13 @@ publish_one() {
   node "$COMMON_DIR/finalize-seo.js" "$dest" "$name"
   node "$COMMON_DIR/scripts/build-tenant-sitemaps.js" "$dest" "$name"
   node "$COMMON_DIR/scripts/apply-tenant-branding.js" --slug="$name" --force
-  if [ "$name" = "wookwang" ] || [ "$name" = "portfolio" ] || [ "$name" = "goodprice" ]; then
-    node "$COMMON_DIR/strip-legal.js" "$dest"
-  else
-    node "$COMMON_DIR/inject-legal.js" "$dest" "$name"
+  if [ "$name" = "qbox" ]; then
+    echo "[qbox] inject home SEO HTML"
+    node "$COMMON_DIR/scripts/generate-qbox-home-html.js" "$dest"
+    echo "[qbox] generate question HTML from API"
+    node "$COMMON_DIR/scripts/generate-qbox-question-html.js" "$dest"
   fi
+  node "$COMMON_DIR/inject-legal.js" "$dest" "$name"
 
   echo "[ANALYTICS] inject unified GA -> ${name}"
   node "$COMMON_DIR/inject-analytics.js" "$dest" "$name"

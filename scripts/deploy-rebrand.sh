@@ -39,9 +39,14 @@ echo "[docker] build & run rebrand on :$REMOTE_PORT"
 ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" bash -s <<EOF
 set -euo pipefail
 cd $REMOTE_APP
+ENV_FILE="/opt/common/.env"
+ENV_ARGS=""
+if [ -f "\$ENV_FILE" ]; then
+  ENV_ARGS="--env-file \$ENV_FILE"
+fi
 docker build -t rebrand-app .
 docker rm -f rebrand 2>/dev/null || true
-docker run -d --name rebrand --restart unless-stopped -p 127.0.0.1:$REMOTE_PORT:3020 rebrand-app
+docker run -d --name rebrand --restart unless-stopped -p 127.0.0.1:$REMOTE_PORT:3020 \$ENV_ARGS rebrand-app
 docker ps --filter name=rebrand
 EOF
 
@@ -56,6 +61,7 @@ if [ ! -f "$CONF" ]; then
 server {
     listen 80;
     server_name rebrand.restyart.com;
+    client_max_body_size 20m;
     location / {
         proxy_pass http://127.0.0.1:3020;
         proxy_http_version 1.1;
@@ -63,7 +69,9 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_read_timeout 120s;
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 300s;
+        proxy_read_timeout 300s;
     }
 }
 EOF
@@ -72,6 +80,17 @@ EOF
     sudo certbot --nginx -d rebrand.restyart.com --non-interactive --agree-tos -m support@restyart.com || true
   fi
 else
+  sudo sed -i \
+    -e 's/proxy_read_timeout [^;]*;/proxy_read_timeout 300s;/g' \
+    -e 's/proxy_send_timeout [^;]*;/proxy_send_timeout 300s;/g' \
+    -e 's/proxy_connect_timeout [^;]*;/proxy_connect_timeout 60s;/g' \
+    "$CONF" || true
+  if ! grep -q 'client_max_body_size' "$CONF"; then
+    sudo sed -i '/server_name rebrand.restyart.com/a\    client_max_body_size 20m;' "$CONF"
+  fi
+  if ! grep -q 'proxy_read_timeout' "$CONF"; then
+    sudo sed -i '/proxy_pass http:\/\/127.0.0.1:3020/a\        proxy_connect_timeout 60s;\n        proxy_send_timeout 300s;\n        proxy_read_timeout 300s;' "$CONF"
+  fi
   sudo nginx -t && sudo systemctl reload nginx
 fi
 NGINX

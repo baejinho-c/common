@@ -1,22 +1,21 @@
-User-agent: *
+User-Agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://tech.restyart.com/sitemap.xml
-
-# Crawl-delay for polite crawling
-Crawl-delay: 1
-
-# Block admin and private areas
 Disallow: /admin/
 Disallow: /api/
 Disallow: /auth/
 Disallow: /_next/
 Disallow: /dashboard/
+Disallow: /editor/
+Disallow: /write/
 
-# Allow important pages
-Allow: /articles/
-Allow: /community/
-Allow: /write/
-Allow: /privacy/
-Allow: /terms/
+User-Agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /_next/
+Disallow: /dashboard/
+Crawl-delay: 1
+
+Host: https://tech.restyart.com
+Sitemap: https://tech.restyart.com/sitemap.xml

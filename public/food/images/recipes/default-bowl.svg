@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Food bowl">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4f8ff"/>
+      <stop offset="100%" stop-color="#e8efff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <ellipse cx="600" cy="450" rx="260" ry="145" fill="#90a4ae"/>
+  <ellipse cx="600" cy="430" rx="220" ry="110" fill="#ffffff"/>
+  <circle cx="540" cy="400" r="28" fill="#a5d6a7"/>
+  <circle cx="660" cy="430" r="30" fill="#ffcc80"/>
+  <circle cx="610" cy="490" r="26" fill="#ef9a9a"/>
+</svg>

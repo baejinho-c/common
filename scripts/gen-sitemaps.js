@@ -21,6 +21,15 @@ const specs = {
   vtest: ['', '/dashboard', '/profile', '/credits', '/interview/setup', '/privacy', '/terms'],
   youtube: ['', '/privacy', '/terms'],
   'youtube-vo': ['', '/privacy', '/terms'],
+  flower: ['', '/privacy', '/terms'],
+  history: ['', '/privacy', '/terms'],
+  hvalue: ['', '/privacy', '/terms'],
+  insect: ['', '/privacy', '/terms'],
+  play: ['', '/privacy', '/terms'],
+  portfolio: ['', '/privacy', '/terms'],
+  sight: ['', '/privacy', '/terms'],
+  smart: ['', '/privacy', '/terms'],
+  video: ['', '/privacy', '/terms'],
 }
 
 function tpl(tenant, routes) {

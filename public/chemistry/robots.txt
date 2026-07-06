@@ -1,6 +1,5 @@
-User-Agent: *
+User-agent: *
 Allow: /
 Disallow: /api/
 
-Host: https://chemistry.restyart.com
 Sitemap: https://chemistry.restyart.com/sitemap.xml

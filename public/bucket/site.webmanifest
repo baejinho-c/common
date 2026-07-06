@@ -1,0 +1,16 @@
+{
+  "name": "버킷리스트 - 꿈을 현실로",
+  "short_name": "버킷리스트",
+  "description": "인생에서 이루고 싶은 모든 꿈들을 체계적으로 관리하고 실현해나가는 플랫폼",
+  "icons": [
+    { "src": "/favicon-48x48.png", "sizes": "48x48", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "theme_color": "#0EA5E9",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "ko-KR"
+}

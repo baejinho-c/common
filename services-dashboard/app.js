@@ -17,6 +17,13 @@ function tenantUsage(slug) {
   return usageByTenant[slug] || null
 }
 
+function compareByUsage(a, b) {
+  const ua = tenantUsage(a.slug)?.totalCalls ?? 0
+  const ub = tenantUsage(b.slug)?.totalCalls ?? 0
+  if (ub !== ua) return ub - ua
+  return a.slug.localeCompare(b.slug)
+}
+
 function renderUsageSummary() {
   const el = document.getElementById('usage-stats')
   const note = document.getElementById('usage-note')
@@ -501,7 +508,8 @@ function applyFilter() {
   const grid = document.getElementById('grid')
   grid.innerHTML = ''
 
-  const filtered = allServices.filter((svc) => {
+  const filtered = allServices
+    .filter((svc) => {
     if (q && !svc.slug.includes(q) && !(svc.title || '').toLowerCase().includes(q)) return false
     if (f === 'live' && !svc.live?.home?.ok) return false
     if (f === 'seo-miss' && !(svc.seo.sitemap && svc.seo.robots)) return false
@@ -518,6 +526,7 @@ function applyFilter() {
     }
     return true
   })
+    .sort(compareByUsage)
 
   for (const svc of filtered) grid.appendChild(renderCard(svc))
   if (!filtered.length) {

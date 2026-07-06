@@ -1,105 +1,40 @@
 {
   "name": "DummyGen - AI 기반 더미데이터 생성기",
   "short_name": "DummyGen",
-  "description": "개발자와 테스터를 위한 최고의 AI 기반 더미데이터 생성 플랫폼. 한국어 최적화된 안전한 테스트 데이터를 빠르게 생성하세요.",
+  "description": "개발자와 테스터를 위한 AI 기반 더미데이터 생성 플랫폼",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#8b5cf6",
+  "theme_color": "#64748B",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "ko-KR",
-  "dir": "ltr",
-  "categories": ["developer", "productivity", "utilities"],
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-1.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide",
-      "label": "DummyGen 메인 화면"
-    },
-    {
-      "src": "/screenshots/mobile-1.jpg",
-      "sizes": "390x844",
-      "type": "image/jpeg",
-      "form_factor": "narrow",
-      "label": "모바일 데이터 생성기"
-    }
-  ],
   "icons": [
     {
-      "src": "/favicon-16x16.jpg",
-      "sizes": "16x16",
+      "src": "/favicon.png",
+      "sizes": "342x363",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/favicon-32x32.jpg",
-      "sizes": "32x32",
+      "src": "/logo-mark.png",
+      "sizes": "342x363",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "/apple-touch-icon.jpg",
+      "src": "/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
-    },
-    {
-      "src": "/favicon.jpg",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
     }
   ],
   "shortcuts": [
     {
       "name": "데이터 생성기",
       "short_name": "생성기",
-      "description": "AI 기반 더미데이터 생성",
       "url": "/generate",
-      "icons": [
-        {
-          "src": "/favicon-32x32.jpg",
-          "sizes": "32x32",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "API 문서",
-      "short_name": "API",
-      "description": "개발자 API 문서",
-      "url": "/api-docs",
-      "icons": [
-        {
-          "src": "/favicon-32x32.jpg",
-          "sizes": "32x32",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "사용 가이드",
-      "short_name": "가이드",
-      "description": "단계별 사용법 안내",
-      "url": "/guide",
-      "icons": [
-        {
-          "src": "/favicon-32x32.jpg",
-          "sizes": "32x32",
-          "type": "image/png"
-        }
-      ]
+      "icons": [{ "src": "/logo-mark.png", "sizes": "342x363", "type": "image/png" }]
     }
-  ],
-  "related_applications": [],
-  "prefer_related_applications": false,
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "launch_handler": {
-    "client_mode": "navigate-existing"
-  }
+  ]
 }

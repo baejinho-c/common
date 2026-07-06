@@ -1,12 +1,13 @@
 /** 리스티아트 공통 사업자·AI 표기 (단일 출처) */
 const { buildFunnelLinksHtml } = require('./funnel-links')
+const { LEGAL_SKIP_TENANTS, tenantUsesServiceFooter } = require('./legal-tenant-detect')
 
 const COMPANY = {
   name: '리스티아트',
   businessNumber: '3961701077',
   address: '경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호',
   mailOrderNumber: '2022-성남분당C-0670',
-  email: 'support@restyart.com',
+  email: 'bloodjino1@gmail.com',
 }
 
 const AI_DISCLOSURE =
@@ -15,13 +16,20 @@ const AI_DISCLOSURE =
 
 const MARKER = 'data-resty-legal'
 
+/** 서비스 자체 footer가 있으면 별도 legal bar 주입 생략 */
+function shouldSkipLegalInjection(html) {
+  if (!html) return true
+  if (/<footer\b/i.test(html)) return true
+  if (html.includes('AI 이용 안내') && html.includes('인공지능(AI) 기술을 활용')) return true
+  return false
+}
+
 function buildLegalFooterHtml(tenant) {
   const funnel = tenant ? buildFunnelLinksHtml(tenant) : ''
   return `
 <div id="restyart-legal-bar" ${MARKER}="1" style="margin-top:auto;border-top:1px solid #e5e7eb;background:#f9fafb;color:#4b5563;font-size:12px;line-height:1.6;">
   <div style="max-width:1200px;margin:0 auto;padding:16px 20px;">
     <p style="margin:0 0 8px;font-weight:600;color:#374151;">${COMPANY.name}</p>
-    <p style="margin:0 0 4px;">사업자등록번호 ${COMPANY.businessNumber} · 통신판매업신고 ${COMPANY.mailOrderNumber}</p>
     <p style="margin:0 0 4px;">${COMPANY.address}</p>
     <p style="margin:0 0 8px;">문의: <a href="mailto:${COMPANY.email}" style="color:#2563eb;text-decoration:none;">${COMPANY.email}</a></p>
     <p style="margin:0;padding:10px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;color:#6b7280;">
@@ -56,6 +64,10 @@ function findDivCloseIndex(html, openIndex) {
 function injectLegalHtml(html, tenant) {
   if (!html) return html
   const next = stripLegalHtml(html)
+  if (tenant && (LEGAL_SKIP_TENANTS.has(tenant) || tenantUsesServiceFooter(tenant))) {
+    return next
+  }
+  if (shouldSkipLegalInjection(next)) return next
   const footer = buildLegalFooterHtml(tenant)
   if (/<\/body>/i.test(next)) {
     return next.replace(/<\/body>/i, `${footer}\n</body>`)
@@ -84,6 +96,9 @@ module.exports = {
   COMPANY,
   AI_DISCLOSURE,
   MARKER,
+  LEGAL_SKIP_TENANTS,
+  tenantUsesServiceFooter,
+  shouldSkipLegalInjection,
   buildLegalFooterHtml,
   injectLegalHtml,
   stripLegalHtml,

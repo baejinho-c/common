@@ -1,15 +1,7 @@
-User-Agent: *
+User-agent: *
 Allow: /
-Allow: /chat
-Allow: /content
-Allow: /personality-test
-Allow: /emotion-diary
-Allow: /inquiry
 Disallow: /api/
 Disallow: /admin/
 Disallow: /privacy-data/
-Disallow: /test
-Disallow: /content-api-test
 
-Host: https://mind.restyart.com
 Sitemap: https://mind.restyart.com/sitemap.xml

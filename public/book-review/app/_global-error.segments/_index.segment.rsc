@@ -2,4 +2,4 @@
 2:I[39756,["/book-review/_next/static/chunks/01xlw8hd842-c.js","/book-review/_next/static/chunks/0d3shmwh5_nmn.js"],"default"]
 3:I[37457,["/book-review/_next/static/chunks/01xlw8hd842-c.js","/book-review/_next/static/chunks/0d3shmwh5_nmn.js"],"default"]
 4:[]
-0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"yHO4R63tnqdqScKObIoPm"}
+0:{"rsc":["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","template":["$","$L3",null,{}]}]]}],"isPartial":false,"staleTime":300,"varyParams":"$W4","buildId":"sA9YdIqLneKvtq8N88rct"}

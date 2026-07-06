@@ -1,9 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="SmartGPT Guide">
   <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#10B981"/>
-    <stop offset="1" stop-color="#059669"/>
+    <stop stop-color="#2563EB"/>
+    <stop offset="1" stop-color="#1D4ED8"/>
   </linearGradient></defs>
   <rect width="32" height="32" rx="8" fill="url(#bg)"/>
   <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="#ffffff" stroke-opacity="0.12"/>
-  <text x="16" y="21.12" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#ffffff">G</text>
+  
+      <path d="M16 8v16" stroke="#fff" stroke-opacity="0.35" stroke-width="1"/>
+      <path d="M8 10C8 8.5 10.5 7.5 16 7.5s8 1 8 2.5v13c0 0-2-1.2-8-1.2S8 16 8 16V10z" fill="#fff" fill-opacity="0.92"/>
+      <path d="M16 7.5C24 7.5 24 8.5 24 10v13s-2-1.2-8-1.2S16 16 16 16V7.5z" fill="#fff" fill-opacity="0.72"/>
+      <path d="M8 10C8 11.5 10.5 12.5 16 12.5s8-1 8-2.5" stroke="#fff" stroke-opacity="0.45" stroke-width="0.8" fill="none"/>
+      <path d="M10.5 14h3.5M10.5 17h3" stroke="#1D4ED8" stroke-width="0.9" stroke-linecap="round" opacity="0.4"/>
+      <path d="M18 14h3.5M19 17h3" stroke="#1D4ED8" stroke-width="0.9" stroke-linecap="round" opacity="0.4"/>
+      <path d="M24.5 6l0.7 2 2 0.7-2 0.7-0.7 2-0.7-2-2-0.7 2-0.7z" fill="#34D399"/>
+      <path d="M27 10.5v1.2M27.6 11.1h-1.2" stroke="#6EE7B7" stroke-width="0.9" stroke-linecap="round"/>
+    
 </svg>
