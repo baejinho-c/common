@@ -1,13 +1,13 @@
-/** 리스티아트 공통 사업자·AI 표기 (단일 출처) */
+/** 리스티아트 공통 사업자·AI 표기 (단일 출처: legal-company.json) */
+const fs = require('fs')
+const path = require('path')
 const { buildFunnelLinksHtml } = require('./funnel-links')
 const { LEGAL_SKIP_TENANTS, tenantUsesServiceFooter } = require('./legal-tenant-detect')
 
-const COMPANY = {
-  name: '리스티아트',
-  businessNumber: '3961701077',
-  address: '경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호',
-  mailOrderNumber: '2022-성남분당C-0670',
-  email: 'bloodjino1@gmail.com',
+const COMPANY = { ...require('./legal-company.json') }
+const overridePath = path.join(__dirname, 'legal-company.override.json')
+if (fs.existsSync(overridePath)) {
+  Object.assign(COMPANY, JSON.parse(fs.readFileSync(overridePath, 'utf8')))
 }
 
 const AI_DISCLOSURE =
@@ -16,7 +16,16 @@ const AI_DISCLOSURE =
 
 const MARKER = 'data-resty-legal'
 
-/** 서비스 자체 footer가 있으면 별도 legal bar 주입 생략 */
+function formatPrivacyOfficer(c) {
+  if (c.privacyOfficerName) {
+    const title = c.privacyOfficerTitle ? ` (${c.privacyOfficerTitle})` : ''
+    const phone = c.privacyOfficerPhone ? ` · ${c.privacyOfficerPhone}` : ''
+    const email = c.privacyOfficerEmail || c.email
+    return `${c.privacyOfficerName}${title} · ${email}${phone}`
+  }
+  return `[입력 필요] 운영팀 (${c.email})`
+}
+
 function shouldSkipLegalInjection(html) {
   if (!html) return true
   if (/<footer\b/i.test(html)) return true
@@ -26,18 +35,31 @@ function shouldSkipLegalInjection(html) {
 
 function buildLegalFooterHtml(tenant) {
   const funnel = tenant ? buildFunnelLinksHtml(tenant) : ''
+  const officer = formatPrivacyOfficer(COMPANY)
   return `
 <div id="restyart-legal-bar" ${MARKER}="1" style="margin-top:auto;border-top:1px solid #e5e7eb;background:#f9fafb;color:#4b5563;font-size:12px;line-height:1.6;">
   <div style="max-width:1200px;margin:0 auto;padding:16px 20px;">
     <p style="margin:0 0 8px;font-weight:600;color:#374151;">${COMPANY.name}</p>
     <p style="margin:0 0 4px;">${COMPANY.address}</p>
+    <p style="margin:0 0 4px;">사업자등록번호 ${COMPANY.businessNumber}</p>
     <p style="margin:0 0 8px;">문의: <a href="mailto:${COMPANY.email}" style="color:#2563eb;text-decoration:none;">${COMPANY.email}</a></p>
+    <p style="margin:0 0 8px;font-size:11px;color:#6b7280;">개인정보 보호책임자: ${officer}</p>
     <p style="margin:0;padding:10px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;color:#6b7280;">
       <strong style="color:#374151;">AI 이용 안내</strong> — ${AI_DISCLOSURE}
     </p>${funnel}
     <p style="margin:8px 0 0;font-size:11px;color:#9ca3af;">&copy; ${new Date().getFullYear()} ${COMPANY.name}. All rights reserved.</p>
   </div>
-</div>`
+</div>
+<script id="restyart-legal-bar-pin">(function(){
+  function pin(){
+    var el = document.getElementById('restyart-legal-bar');
+    if (!el || !el.parentNode || el.parentNode.lastElementChild === el) return;
+    el.parentNode.appendChild(el);
+  }
+  pin();
+  window.addEventListener('load', pin);
+  new MutationObserver(pin).observe(document.body, { childList: true });
+})();</script>`
 }
 
 function findDivCloseIndex(html, openIndex) {
@@ -89,6 +111,7 @@ function stripLegalHtml(html) {
     next = next.slice(0, divStart) + next.slice(divEnd)
     openRe.lastIndex = divStart
   }
+  next = next.replace(/\s*<script\b[^>]*\bid=["']restyart-legal-bar-pin["'][^>]*>[\s\S]*?<\/script>/gi, '')
   return next
 }
 
@@ -102,4 +125,5 @@ module.exports = {
   buildLegalFooterHtml,
   injectLegalHtml,
   stripLegalHtml,
+  formatPrivacyOfficer,
 }
