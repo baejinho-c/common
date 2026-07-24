@@ -12,6 +12,33 @@ const { syncTenantsFromWorkdir, syncTenantsFromPublic, listTenants, isReservedSl
 const { rewriteAbsolutePaths, injectClientPrefixScript, handleTenantRequest, tenantSlugFromHost, isDashboardHost } = require('./tenant-proxy')
 const { buildOverview, listPublished, loadManifest } = require('./lib/dashboard-overview')
 const { auditTenant, testTenantApis } = require('./lib/dashboard-tenant-audit')
+const { registerToonsnapApiRoutes } = require('./toonsnap-api')
+
+function loadEnvFile(filePath) {
+  if (!fs.existsSync(filePath)) return false
+  const content = fs.readFileSync(filePath, 'utf8')
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim()
+    if (!line || line.startsWith('#')) continue
+    const eqIndex = line.indexOf('=')
+    if (eqIndex < 0) continue
+    const key = line.slice(0, eqIndex).trim()
+    if (!key || process.env[key] !== undefined) continue
+    let value = line.slice(eqIndex + 1).trim()
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1)
+    }
+    process.env[key] = value
+  }
+  return true
+}
+
+loadEnvFile(path.resolve(__dirname, '.env'))
+loadEnvFile(path.resolve(__dirname, '..', '.env'))
+loadEnvFile('/opt/common/.env')
 
 const app = express()
 const PORT = process.env.PORT || 4000
@@ -23,7 +50,107 @@ const PUBLIC_DIR = path.join(__dirname, 'public')
 const SERVICES_DASHBOARD_DIR = path.join(__dirname, 'services-dashboard')
 const ENABLE_DEV_PROXY = process.env.ENABLE_DEV_PROXY === '1' || process.env.ENABLE_DEV_PROXY === 'true'
 
+app.disable('x-powered-by')
 app.use(express.json())
+
+function hostWithoutPort(host) {
+  return String(host || '').toLowerCase().split(':')[0]
+}
+
+function needsSecurityHeaders(host) {
+  const h = hostWithoutPort(host)
+  if (!h.endsWith('.restyart.com')) return false
+  if (h === 'app.restyart.com') return false
+  if (isDashboardHost(h)) return false
+  return true
+}
+
+/** Tenants embeddable in edugame.restyart.com (iframe minigames). */
+const EDUGAME_EMBED_HOSTS = new Set([
+  'chemistry.restyart.com',
+  'physics.restyart.com',
+])
+
+/** dashboard.restyart.com Basic Auth — DASHBOARD_BASIC_AUTH=user:pass 또는 USER/PASS */
+function getDashboardBasicAuth() {
+  const pair = String(process.env.DASHBOARD_BASIC_AUTH || '').trim()
+  if (pair.includes(':')) {
+    const i = pair.indexOf(':')
+    return { user: pair.slice(0, i), pass: pair.slice(i + 1) }
+  }
+  const user = String(process.env.DASHBOARD_USER || '').trim()
+  const pass = String(process.env.DASHBOARD_PASS || '').trim()
+  if (user && pass) return { user, pass }
+  return null
+}
+
+function requireDashboardAccess(req, res, next) {
+  if (!isDashboardHost(req.headers.host)) return next()
+  const creds = getDashboardBasicAuth()
+  if (!creds) return next()
+  const header = req.headers.authorization || ''
+  if (header.startsWith('Basic ')) {
+    try {
+      const decoded = Buffer.from(header.slice(6), 'base64').toString('utf8')
+      const i = decoded.indexOf(':')
+      const user = i >= 0 ? decoded.slice(0, i) : decoded
+      const pass = i >= 0 ? decoded.slice(i + 1) : ''
+      if (user === creds.user && pass === creds.pass) return next()
+    } catch (_) {}
+  }
+  res.setHeader('WWW-Authenticate', 'Basic realm="Restyart Dashboard", charset="UTF-8"')
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet')
+  return res.status(401).send('Dashboard authentication required')
+}
+
+app.use(requireDashboardAccess)
+
+// tenant-wide security baseline headers
+app.use((req, res, next) => {
+  if (needsSecurityHeaders(req.headers.host)) {
+    const host = hostWithoutPort(req.headers.host)
+    const embedInEdugame = EDUGAME_EMBED_HOSTS.has(host)
+    const frameAncestors = embedInEdugame
+      ? "frame-ancestors 'self' https://edugame.restyart.com"
+      : "frame-ancestors 'none'"
+    res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
+    if (!embedInEdugame) {
+      res.setHeader('X-Frame-Options', 'DENY')
+    }
+    res.setHeader('X-Content-Type-Options', 'nosniff')
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
+    res.setHeader(
+      'Permissions-Policy',
+      'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()'
+    )
+    res.setHeader(
+      'Content-Security-Policy',
+      "default-src 'self'; base-uri 'self'; object-src 'none'; " +
+      frameAncestors +
+      '; ' +
+      "img-src 'self' data: blob: https:; font-src 'self' data: https:; " +
+      "style-src 'self' 'unsafe-inline' https:; script-src 'self' 'unsafe-inline' https:; " +
+      "connect-src 'self' https://app.restyart.com https://*.restyart.com https: wss:; " +
+      "frame-src 'self' https:; upgrade-insecure-requests"
+    )
+  }
+  next()
+})
+
+/** Preserve real client IP through nginx → gateway → resty-api (server weekend fix) */
+function applyClientIpHeaders(headers, req) {
+  const forwardedFor = String(req.headers['x-forwarded-for'] || '').trim()
+  const realIp = String(req.headers['x-real-ip'] || '').trim()
+  const socketIp = String(
+    req.socket?.remoteAddress || req.connection?.remoteAddress || '',
+  ).replace(/^::ffff:/, '')
+  const clientIp = forwardedFor.split(',')[0].trim() || realIp || socketIp
+  if (clientIp) {
+    headers['x-real-ip'] = clientIp
+    if (!forwardedFor) headers['x-forwarded-for'] = clientIp
+  }
+  return clientIp
+}
 
 function proxyRestyApiPath(req, res, apiPath) {
   let targetUrl
@@ -38,6 +165,7 @@ function proxyRestyApiPath(req, res, apiPath) {
   const body =
     req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
   const headers = { ...req.headers, host: targetUrl.host }
+  applyClientIpHeaders(headers, req)
   if (body) {
     headers['content-type'] = 'application/json'
     headers['content-length'] = Buffer.byteLength(body)
@@ -63,6 +191,9 @@ function proxyRestyApiPath(req, res, apiPath) {
   proxyReq.end()
 }
 
+// ToonSnap AI (story/image) — must register before catch-all /api/resty proxy
+registerToonsnapApiRoutes(app)
+
 // Central multi-tenant auth API — MySQL(resty-api)로 프록시 (기본: :5001)
 if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   app.use('/api/resty', (req, res) => {
@@ -80,6 +211,7 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
     const body =
       req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
     const headers = { ...req.headers, host: targetUrl.host }
+    applyClientIpHeaders(headers, req)
     if (body) {
       headers['content-type'] = 'application/json'
       headers['content-length'] = Buffer.byteLength(body)
@@ -144,6 +276,13 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
     })
     if (body) proxyReq.write(body)
     proxyReq.end()
+  })
+}
+
+// secu-scan API proxy (secu-scan.restyart.com)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/scan', (req, res) => {
+    proxyRestyApiPath(req, res, '/api/secu/scan')
   })
 }
 
@@ -357,6 +496,8 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
     sight: ['/api/analyze', '/api/analyze-screenshot', '/api/validate-key'],
     video: ['/api/analyze-video', '/api/get-youtube-transcript', '/api/search-products', '/api/health', '/api/test-endpoints'],
     'book-review': ['/api/search'],
+    search: ['/api/ai-search', '/api/search', '/api/suggestions', '/api/popular'],
+    english: ['/api/status', '/api/chat', '/api/translate'],
   }
 
   // Posts / Comments / Likes — 모든 테넌트 공통 (x-subdomain = Host 서브도메인)
@@ -370,6 +511,28 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
       req.headers['x-subdomain'] = slug
     }
     proxyRestyApiPath(req, res, req.originalUrl.split('?')[0])
+  })
+
+  // Bible search/read — light 등 테넌트 same-origin /api/bible/* → resty-api (테넌트 prefix 붙이지 않음)
+  app.use((req, res, next) => {
+    const pathOnly = (req.originalUrl || '').split('?')[0]
+    if (pathOnly !== '/api/bible' && !pathOnly.startsWith('/api/bible/')) return next()
+    const slug = tenantSlugFromHost(req.headers.host)
+    if (slug && !req.headers['x-subdomain']) {
+      req.headers['x-subdomain'] = slug
+    }
+    proxyRestyApiPath(req, res, pathOnly)
+  })
+
+  // Churches (light) — same-origin /api/churches*
+  app.use((req, res, next) => {
+    const pathOnly = (req.originalUrl || '').split('?')[0]
+    if (pathOnly !== '/api/churches' && !pathOnly.startsWith('/api/churches/')) return next()
+    const slug = tenantSlugFromHost(req.headers.host)
+    if (slug && !req.headers['x-subdomain']) {
+      req.headers['x-subdomain'] = slug
+    }
+    proxyRestyApiPath(req, res, pathOnly)
   })
 
   app.use('/api/ask', (req, res) => {
@@ -392,6 +555,15 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
     const suffix = req.originalUrl.replace(/^\/api/, '')
     proxyRestyApiPath(req, res, `/api/${slug}${suffix}`)
   })
+}
+
+// Sports pickup matches + Mind counseling
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  for (const prefix of ['/api/sports', '/api/mind']) {
+    app.use(prefix, (req, res) => {
+      proxyRestyApiPath(req, res, req.originalUrl.split('?')[0])
+    })
+  }
 }
 
 // MyQBank AI (문제 생성)
@@ -667,6 +839,162 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   })
 }
 
+// TimeMap Korea (역사 시대·사건 API)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/history', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('history api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// QBox — 질문 한도 API
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/qbox', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('qbox api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// AppIcon AI (앱 아이콘 생성)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/appicon', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('appicon api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// Poster AI (포스터·인쇄물 생성)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/poster', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('poster api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
 // LogoStage AI (브랜드 분석 + 로고 생성)
 if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
   app.use('/api/logo', (req, res) => {
@@ -866,44 +1194,56 @@ app.post('/api/dashboard/tenant/:slug/test-api', async (req, res) => {
   }
 })
 
-// Usage stats (resty-api MySQL)
-if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
-  app.use('/api/dashboard/usage', (req, res) => {
-    let targetUrl
-    try {
-      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
-    } catch (e) {
-      return res.status(500).json({ message: '잘못된 API URL', success: false })
-    }
-    const lib = targetUrl.protocol === 'https:' ? https : http
-    const body =
-      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
-    const headers = { ...req.headers, host: targetUrl.host }
-    if (body) {
-      headers['content-type'] = 'application/json'
-      headers['content-length'] = Buffer.byteLength(body)
-    }
-    const proxyReq = lib.request(
-      {
-        hostname: targetUrl.hostname,
-        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
-        path: targetUrl.pathname + targetUrl.search,
-        method: req.method,
-        headers,
-      },
-      (proxyRes) => {
-        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
-        proxyRes.pipe(res)
-      },
-    )
-    proxyReq.on('error', (err) => {
-      console.error('dashboard usage proxy error', err)
-      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+// Usage stats (resty-api MySQL) — always register so UI never gets opaque Express 404
+app.use('/api/dashboard/usage', (req, res) => {
+  if (!USE_RESTY_API_PROXY || !RESTY_API_BACKEND) {
+    return res.status(503).json({
+      success: false,
+      message: 'usage API proxy disabled (USE_RESTY_API_PROXY / RESTY_API_BACKEND)',
     })
-    if (body) proxyReq.write(body)
-    proxyReq.end()
+  }
+  // Bare /api/dashboard/usage → summary (UI/error text "usage 404" 방지)
+  const bare = (req.path || '/') === '/' || req.path === ''
+  if (bare && (req.method === 'GET' || req.method === 'HEAD')) {
+    const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : ''
+    req.url = `/summary${q}`
+    req.originalUrl = `/api/dashboard/usage/summary${q}`
+  }
+  let targetUrl
+  try {
+    targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+  } catch (e) {
+    return res.status(500).json({ message: '잘못된 API URL', success: false })
+  }
+  const lib = targetUrl.protocol === 'https:' ? https : http
+  const body =
+    req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+  const headers = { ...req.headers, host: targetUrl.host }
+  applyClientIpHeaders(headers, req)
+  if (body) {
+    headers['content-type'] = 'application/json'
+    headers['content-length'] = Buffer.byteLength(body)
+  }
+  const proxyReq = lib.request(
+    {
+      hostname: targetUrl.hostname,
+      port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+      path: targetUrl.pathname + targetUrl.search,
+      method: req.method,
+      headers,
+    },
+    (proxyRes) => {
+      res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+      proxyRes.pipe(res)
+    },
+  )
+  proxyReq.on('error', (err) => {
+    console.error('dashboard usage proxy error', err)
+    if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
   })
-}
+  if (body) proxyReq.write(body)
+  proxyReq.end()
+})
 
 app.get('/api/config', (req, res) => {
   res.json({ devProxy: ENABLE_DEV_PROXY, port: PORT })
@@ -1075,12 +1415,20 @@ function listPublishedTenants() {
 }
 app.use((req, res, next) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') return next()
+  // 서브도메인 테넌트(arc.restyart.com 등)에서는 path segment가 앱 라우트다.
+  // Referer /library 를 테넌트명으로 오인해 /library/insights 로 302 하던 문제 방지.
+  if (tenantSlugFromHost(req.headers.host)) return next()
   const seg = (req.path || '').split('/').filter(Boolean)[0]
   if (!seg || !NAKED_APP_SEGMENTS.has(seg)) return next()
   if (isReservedSlug(seg)) return next()
   const published = listPublishedTenants()
   if (published.has(seg)) return next()
   const referer = req.get('referer') || ''
+  // path-style 호스트에서만 동작: referer 가 이미 서브도메인 테넌트면 skip
+  try {
+    const refHost = referer ? new URL(referer).host : ''
+    if (refHost && tenantSlugFromHost(refHost)) return next()
+  } catch (_) {}
   const m = referer.match(/:\/\/[^/]+\/([a-z0-9_-]+)(?:\/|$)/i)
   if (!m || !published.has(m[1])) return next()
   return res.redirect(302, `/${m[1]}${req.path}`)
@@ -1089,6 +1437,8 @@ app.use((req, res, next) => {
 function sendServicesDashboardFile(res, filename) {
   const file = path.join(SERVICES_DASHBOARD_DIR, filename)
   if (!fs.existsSync(file)) return false
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet')
+  res.setHeader('Cache-Control', 'private, no-store')
   res.sendFile(file)
   return true
 }
@@ -1096,9 +1446,24 @@ function sendServicesDashboardFile(res, filename) {
 // dashboard.restyart.com → 서비스 대시보드 (tenant publish로 index.html이 덮이는 것 방지)
 app.use((req, res, next) => {
   if (!isDashboardHost(req.headers.host)) return next()
-  if (req.method !== 'GET' && req.method !== 'HEAD') return next()
   const p = (req.path || '/').split('?')[0]
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet')
+  res.setHeader('Cache-Control', 'private, no-store')
   if (p.startsWith('/api/')) return next()
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next()
+
+  if (p === '/robots.txt') {
+    res.type('text/plain').send(
+      '# Internal ops dashboard — do not index\nUser-agent: *\nDisallow: /\n',
+    )
+    return
+  }
+  if (p === '/sitemap.xml') {
+    res.type('application/xml').send(
+      '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n</urlset>\n',
+    )
+    return
+  }
   if (p === '/' || p === '/index.html') {
     if (sendServicesDashboardFile(res, 'index.html')) return
   }
@@ -1111,14 +1476,29 @@ app.use((req, res, next) => {
 // 게이트웨이 루트(/) — 테넌트 서브도메인이 아닐 때 서비스 대시보드
 app.get(['/', '/index.html', '/app.js'], (req, res, next) => {
   if (tenantSlugFromHost(req.headers.host)) return next()
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet')
   const p = (req.path || '/').split('?')[0]
   const file = p === '/app.js' ? 'app.js' : 'index.html'
   if (sendServicesDashboardFile(res, file)) return
   return next()
 })
 
+// 서브도메인 테넌트의 중복 경로 prefix 제거 (server weekend fix)
+// e.g. toonsnap.restyart.com/toonsnap/... → /...
+app.use((req, res, next) => {
+  const slug = tenantSlugFromHost(req.headers.host)
+  if (!slug) return next()
+  const prefix = `/${slug}`
+  if (req.path === prefix || req.path.startsWith(`${prefix}/`)) {
+    const target = req.url.slice(prefix.length) || '/'
+    return res.redirect(302, target)
+  }
+  return next()
+})
+
 // 서브도메인 라우팅: light.restyart.com → public/light/ (경로 prefix 없음)
 app.use((req, res, next) => {
+  if ((req.path || '').startsWith('/api/')) return next()
   const slug = tenantSlugFromHost(req.headers.host)
   if (!slug) return next()
   const staticDir = path.join(PUBLIC_DIR, slug)

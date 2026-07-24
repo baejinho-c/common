@@ -69,6 +69,7 @@ export async function restyGetCreditHistory(
 ): Promise<CreditHistory> {
   const tenant = options?.tenant ?? getRestyTenant()
   const data = await creditsFetch<{
+    data?: CreditTransaction[]
     items?: CreditTransaction[]
     transactions?: CreditTransaction[]
     total?: number
@@ -77,7 +78,7 @@ export async function restyGetCreditHistory(
     options,
   )
   return {
-    transactions: data.items ?? data.transactions ?? [],
+    transactions: data.data ?? data.items ?? data.transactions ?? [],
     total: data.total,
     page,
     pageSize,

@@ -142,6 +142,81 @@ function rewriteHtmlSeoText(text) {
   return text
 }
 
+function escapeHtmlAttr(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+}
+
+function inferCanonicalUrl(filePath) {
+  let rel = path.relative(publicDir, filePath).replace(/\\/g, '/')
+  if (rel.startsWith('app/')) rel = rel.slice(4)
+
+  if (!rel.endsWith('.html')) return null
+  if (rel === '404.html' || rel === '500.html' || rel === '_not-found.html') return null
+
+  let route = rel.replace(/\.html$/, '')
+  if (route === 'index') return `${siteBase}/`
+  route = route.replace(/\/index$/, '/')
+  route = route.startsWith('/') ? route : `/${route}`
+  route = route.replace(/\/+/g, '/')
+  return route === '/' ? `${siteBase}/` : `${siteBase}${route}`
+}
+
+function injectIntoHead(text, html) {
+  if (/<\/head>/i.test(text)) {
+    return text.replace(/<\/head>/i, `${html}\n</head>`)
+  }
+  return `${html}\n${text}`
+}
+
+function ensureSeoTags(text, filePath) {
+  let out = text
+  const canonicalUrl = inferCanonicalUrl(filePath)
+
+  if (
+    canonicalUrl &&
+    !/rel=["']canonical["']/i.test(out)
+  ) {
+    out = injectIntoHead(
+      out,
+      `<link rel="canonical" href="${escapeHtmlAttr(canonicalUrl)}"/>`
+    )
+  }
+
+  const hasOgDescription = /property=["']og:description["']/i.test(out)
+  if (!hasOgDescription) {
+    const descMatch = out.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']+)["'][^>]*>/i)
+    const fallbackDesc = `${tenant} service by Restyart`
+    const ogDescription = descMatch?.[1] || fallbackDesc
+    out = injectIntoHead(
+      out,
+      `<meta property="og:description" content="${escapeHtmlAttr(ogDescription)}"/>`
+    )
+  }
+
+  const hasJsonLd = /type=["']application\/ld\+json["']/i.test(out)
+  if (!hasJsonLd) {
+    const titleMatch = out.match(/<title[^>]*>([^<]+)<\/title>/i)
+    const pageName = (titleMatch?.[1] || tenant).trim()
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: pageName,
+      url: canonicalUrl || `${siteBase}/`,
+      inLanguage: 'ko-KR',
+    }
+    out = injectIntoHead(
+      out,
+      `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`
+    )
+  }
+
+  return out
+}
+
 function rewriteHtmlOg(filePath) {
   if (!fs.existsSync(filePath)) return false
   let text = fs.readFileSync(filePath, 'utf8')
@@ -164,6 +239,8 @@ function rewriteHtmlOg(filePath) {
     /(name="twitter:image"\s+content=")\/(?!\/)([^"]*)(")/gi,
     (_, pre, path, post) => `${pre}${siteBase}/${path}${post}`
   )
+
+  text = ensureSeoTags(text, filePath)
 
   if (text === before) return false
   fs.writeFileSync(filePath, text, 'utf8')

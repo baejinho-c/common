@@ -19,12 +19,19 @@ export interface RestyUser {
   updatedAt?: string
 }
 
+export interface SignupBonus {
+  amount?: number
+  balance?: number
+  alreadyGranted?: boolean
+}
+
 export interface RestyAuthResult {
   success: boolean
   message?: string
   token?: string
   userId?: number
   user?: RestyUser
+  signupBonus?: SignupBonus | null
 }
 
 export function getRestyApiBase(): string {
@@ -74,14 +81,19 @@ export function normalizeAuthResponse(data: Record<string, unknown>): RestyAuthR
     }
   }
 
+  const signupBonus = data.signupBonus as SignupBonus | null | undefined
+
   return {
     success: data.success === true || !!token,
     message: typeof data.message === "string" ? data.message : undefined,
     token,
     userId: user?.id ?? userId,
     user,
+    signupBonus: signupBonus ?? undefined,
   }
 }
+
+export const RESTY_SESSION_UPDATED_EVENT = "resty:session-updated"
 
 export function persistRestySession(result: RestyAuthResult, tenant: string): void {
   if (typeof window === "undefined" || !result.token) return
@@ -90,10 +102,46 @@ export function persistRestySession(result: RestyAuthResult, tenant: string): vo
     localStorage.setItem("user_data", JSON.stringify({ ...result.user, subdomain: tenant }))
     localStorage.setItem("user", JSON.stringify({ ...result.user, subdomain: tenant }))
   }
+  window.dispatchEvent(new CustomEvent(RESTY_SESSION_UPDATED_EVENT))
+}
+
+export async function restyClaimSignupBonus(
+  options?: { tenant?: string; apiBase?: string; token?: string },
+): Promise<(SignupBonus & { balance: number }) | null> {
+  const tenant = options?.tenant ?? getRestyTenant()
+  const base = options?.apiBase ?? getRestyApiBase()
+  const token =
+    options?.token ??
+    (typeof window !== "undefined" ? localStorage.getItem("auth_token") : null)
+  if (!token || !tenant) return null
+
+  const response = await fetch(`${base}/api/resty/credits/claim-signup-bonus`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      "x-subdomain": tenant,
+    },
+    body: JSON.stringify({ subdomain: tenant }),
+  })
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) return null
+  return {
+    amount: typeof data.amount === "number" ? data.amount : undefined,
+    balance: typeof data.balance === "number" ? data.balance : 0,
+    alreadyGranted: data.alreadyGranted === true,
+  }
 }
 
 export async function restyRegister(
-  input: { email: string; password: string; name?: string; phone?: string; locale?: string },
+  input: {
+    email: string
+    password: string
+    name?: string
+    phone?: string
+    locale?: string
+    referralCode?: string
+  },
   options?: { tenant?: string; apiBase?: string },
 ): Promise<RestyAuthResult> {
   const tenant = options?.tenant ?? getRestyTenant()
@@ -112,6 +160,7 @@ export async function restyRegister(
       name: input.name,
       phone: input.phone,
       locale: input.locale ?? "ko-KR",
+      referralCode: input.referralCode,
     }),
   })
 
@@ -247,6 +296,46 @@ export async function restyUpdateUser(
   return { success: true, message: data.message }
 }
 
+export async function restyChangePassword(
+  input: { oldPassword: string; newPassword: string },
+  options?: { tenant?: string; apiBase?: string; token?: string; userId?: number },
+): Promise<{ success: boolean; message?: string }> {
+  const tenant = options?.tenant ?? getRestyTenant()
+  const base = options?.apiBase ?? getRestyApiBase()
+  const token =
+    options?.token ??
+    (typeof window !== "undefined" ? localStorage.getItem("auth_token") : null)
+  const userId =
+    options?.userId ??
+    (token ? parseRestyJwtUid(token) : null)
+
+  if (!userId) {
+    return { success: false, message: "로그인이 필요합니다." }
+  }
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "x-subdomain": tenant,
+  }
+  if (token) headers.Authorization = `Bearer ${token}`
+
+  const response = await fetch(`${base}/api/resty/auth/change-password`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      subdomain: tenant,
+      userId,
+      oldPassword: input.oldPassword,
+      newPassword: input.newPassword,
+    }),
+  })
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) {
+    return { success: false, message: data.message || `비밀번호 변경 실패 (${response.status})` }
+  }
+  return { success: true, message: data.message || "비밀번호가 변경되었습니다." }
+}
+
 export async function restyLogin(
   input: { email: string; password: string },
   options?: { tenant?: string; apiBase?: string },
@@ -325,4 +414,43 @@ export async function restyResetPassword(
     return { success: false, message: data.message || `재설정 실패 (${response.status})` }
   }
   return { success: true, message: data.message || "비밀번호가 변경되었습니다." }
+}
+
+export async function restyDeleteUser(
+  userId: number,
+  options?: { tenant?: string; apiBase?: string; token?: string },
+): Promise<{ success: boolean; message?: string }> {
+  const tenant = options?.tenant ?? getRestyTenant()
+  const base = options?.apiBase ?? getRestyApiBase()
+  const token =
+    options?.token ??
+    (typeof window !== "undefined" ? localStorage.getItem("auth_token") : null)
+
+  if (!token) {
+    return { success: false, message: "로그인이 필요합니다." }
+  }
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "x-subdomain": tenant,
+    Authorization: `Bearer ${token}`,
+  }
+
+  const response = await fetch(
+    `${base}/api/resty/users/${userId}?subdomain=${encodeURIComponent(tenant)}`,
+    { method: "DELETE", headers },
+  )
+  const data = await response.json().catch(() => ({}))
+  if (!response.ok) {
+    return { success: false, message: data.message || `계정 삭제 실패 (${response.status})` }
+  }
+
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("auth_token")
+    localStorage.removeItem("user_data")
+    localStorage.removeItem("user")
+    localStorage.removeItem("current_user")
+  }
+
+  return { success: true, message: data.message || "계정이 삭제되었습니다." }
 }

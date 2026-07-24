@@ -101,6 +101,22 @@ publish_one() {
     return 1
   fi
 
+  if [ "$name" = "history" ] && [ -f "$dest/landing.html" ]; then
+    echo "[history] promote landing.html -> index.html (explorer at /tkp-explorer.html)"
+    cp "$dest/landing.html" "$dest/index.html"
+    [ -f "$dest/app/index.html" ] && cp "$dest/landing.html" "$dest/app/index.html"
+  elif [ "$name" = "history" ] && [ -f "$dest/tkp-explorer.html" ]; then
+    echo "[history] promote tkp-explorer.html -> index.html"
+    cp "$dest/tkp-explorer.html" "$dest/index.html"
+    [ -f "$dest/app/index.html" ] && cp "$dest/tkp-explorer.html" "$dest/app/index.html"
+  fi
+
+  if [ "$name" = "chemistry" ] && [ -f "$dest/chemlab.html" ]; then
+    echo "[chemistry] promote chemlab.html -> index.html (레벨업 실험실)"
+    cp "$dest/chemlab.html" "$dest/index.html"
+    [ -f "$dest/app/index.html" ] && cp "$dest/chemlab.html" "$dest/app/index.html"
+  fi
+
   if [ ! -f "$dest/index.html" ]; then
     echo "[WARN] index.html not found in public/$name — 라우팅이 안 될 수 있습니다."
   fi
@@ -108,6 +124,10 @@ publish_one() {
   echo "[PREFIX] rewrite paths -> /${name}/"
   node "$COMMON_DIR/prefix-static.js" "$dest" "$name"
   node "$COMMON_DIR/finalize-seo.js" "$dest" "$name"
+  if [ "$name" = "poster" ]; then
+    echo "[poster] canonicalize route links -> /create"
+    node "$COMMON_DIR/scripts/canonicalize-poster-links.js" "$dest"
+  fi
   node "$COMMON_DIR/scripts/build-tenant-sitemaps.js" "$dest" "$name"
   node "$COMMON_DIR/scripts/apply-tenant-branding.js" --slug="$name" --force
   if [ "$name" = "qbox" ]; then

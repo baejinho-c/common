@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const http = require('http')
 const https = require('https')
+const crypto = require('crypto')
 const {
   injectLegalHtml,
   stripLegalHtml,
@@ -10,8 +11,20 @@ const {
   tenantUsesServiceFooter,
 } = require('./legal-info')
 
-function maybeInjectLegal(html, name) {
+function maybeInjectLegal(html, name, fileHint) {
   if (LEGAL_SKIP_TENANTS.has(name) || tenantUsesServiceFooter(name)) {
+    return stripLegalHtml(html)
+  }
+  const base = String(fileHint || '')
+    .split(/[\\/]/)
+    .pop()
+    .toLowerCase()
+  // iframe/임베드·풀스크린 맵은 부모와 푸터가 겹치므로 주입하지 않음
+  if (
+    base === 'gonchung-nara.html' ||
+    ((base === 'map.html' || base === 'explore.html') && name === 'insect') ||
+    /data-resty-embed=["']1["']/i.test(html || '')
+  ) {
     return stripLegalHtml(html)
   }
   const stripped = stripLegalHtml(html)
@@ -94,15 +107,66 @@ function injectClientPrefixScript(html, name, prefixStyle) {
   return html.replace(/<\/head>/i, script + '</head>')
 }
 
-/** qbox 등: /question/481 → 정적 셸(q_1)에도 URL의 질문 ID 주입 */
+/** light: 구절 셸(john/3/16.html)을 다른 절 URL에 재사용할 때 canonical/title을 URL에 맞춤 */
+function injectBibleVerseRouteMeta(html, reqPath) {
+  if (!html) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/bible\/([^/]+)\/(\d+)\/(\d+)$/)
+  if (!match) return html
+  const [, book, chapter, verse] = match
+  const pathUrl = `/bible/${book}/${chapter}/${verse}`
+  html = html.replace(
+    /(rel=["']canonical["'][^>]*href=["'])([^"']+)(["'])/i,
+    (_, a, href, c) => {
+      try {
+        const u = new URL(href, 'https://light.restyart.com')
+        u.pathname = pathUrl
+        return `${a}${u.toString()}${c}`
+      } catch {
+        return `${a}${pathUrl}${c}`
+      }
+    },
+  )
+  html = html.replace(
+    /(property=["']og:url["'][^>]*content=["'])([^"']+)(["'])/i,
+    (_, a, href, c) => {
+      try {
+        const u = new URL(href, 'https://light.restyart.com')
+        u.pathname = pathUrl
+        return `${a}${u.toString()}${c}`
+      } catch {
+        return `${a}${pathUrl}${c}`
+      }
+    },
+  )
+  // "요한복음 3:16" / "3장 16절" → URL 절 번호 (셸 잔여 텍스트)
+  html = html.replace(/(\d+)장\s*16절/g, `$1장 ${verse}절`)
+  html = html.replace(/(\d+):16\b/g, `$1:${verse}`)
+  html = html.replace(/\/bible\/([^/]+)\/(\d+)\/16(?=["'/])/g, `/bible/$1/$2/${verse}`)
+  const script = `<script data-light-verse-route>window.__LIGHT_VERSE__=${JSON.stringify({
+    book,
+    chapter: Number(chapter),
+    verse: Number(verse),
+  })};</script>`
+  if (html.indexOf('data-light-verse-route') !== -1) {
+    return html.replace(/<script data-light-verse-route>[\s\S]*?<\/script>/, script)
+  }
+  return html.replace(/<\/head>/i, `\n${script}\n</head>`)
+}
+
+/** qbox: URL 질문 ID를 주입. 셸에 다른 질문 데이터가 있으면 ID만 맞추고 stale blob 제거 */
 function injectQuestionRouteId(html, reqPath) {
-  if (!html || html.indexOf('data-qbox-question-id') !== -1) return html
+  if (!html) return html
   const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
   const match = clean.match(/^\/question\/([^/]+)$/)
   if (!match) return html
   const questionId = match[1]
-  const script = `\n<script data-qbox-question-id>window.__QBOX_QUESTION_ID__=${JSON.stringify(questionId)};</script>\n`
-  return html.replace(/<\/head>/i, script + '</head>')
+  const script = `<script data-qbox-question-id>window.__QBOX_QUESTION_ID__=${JSON.stringify(questionId)};try{delete window.__QBOX_INITIAL_QUESTION__}catch(e){window.__QBOX_INITIAL_QUESTION__=undefined}</script>`
+
+  if (html.indexOf('data-qbox-question-id') !== -1) {
+    return html.replace(/<script data-qbox-question-id>[\s\S]*?<\/script>/, script)
+  }
+  return html.replace(/<\/head>/i, `\n${script}\n</head>`)
 }
 
 /** arc: /insights/2 → 정적 셸에도 URL의 글 ID 주입 */
@@ -314,6 +378,17 @@ function injectCareerSchoolRouteId(html, reqPath) {
   return html.replace(/<\/head>/i, script + '</head>')
 }
 
+/** career: /community/444 → 목록 community.html 폴백 방지용 셸에 게시글 ID 주입 */
+function injectCareerCommunityPostRouteId(html, reqPath) {
+  if (!html || html.indexOf('data-career-community-post-id') !== -1) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/community\/(\d+)$/)
+  if (!match) return html
+  const postId = match[1]
+  const script = `\n<script data-career-community-post-id>window.__CAREER_COMMUNITY_POST_ID__=${JSON.stringify(postId)};</script>\n`
+  return html.replace(/<\/head>/i, script + '</head>')
+}
+
 /** growup: /community/posts/425 → 정적 셸에도 URL의 게시글 ID 주입 */
 function injectGrowupCommunityPostRouteId(html, reqPath) {
   if (!html || html.indexOf('data-growup-community-post-id') !== -1) return html
@@ -325,8 +400,41 @@ function injectGrowupCommunityPostRouteId(html, reqPath) {
   return html.replace(/<\/head>/i, script + '</head>')
 }
 
-function finalizeHtml(html, reqPath, name, prefixStyle) {
-  html = prepareHtml(html, name, prefixStyle)
+/**
+ * vibecommunity/hotfeel 등: /post/671 → 없는 정적 HTML일 때 최신 셸(예: 614.html)로 폴백됨.
+ * 셸에 박힌 post id / flight tree / canonical 을 URL id 로 맞추고 클라이언트가 읽을 수 있게 주입.
+ */
+function injectPostRouteId(html, reqPath) {
+  if (!html) return html
+  const clean = (reqPath || '').split('?')[0].replace(/\/$/, '')
+  const match = clean.match(/^\/post\/(\d+)$/)
+  if (!match) return html
+  const postId = match[1]
+
+  const shellMatch =
+    html.match(/urlParts\\":\[\\"\\"\s*,\s*\\"post\\"\s*,\s*\\"(\d+)\\"\]/) ||
+    html.match(/"urlParts":\["","post","(\d+)"\]/) ||
+    html.match(/\/post\/(\d+)/)
+  const shellId = shellMatch && shellMatch[1]
+  if (shellId && shellId !== postId) {
+    html = html
+      .split(`/post/${shellId}`).join(`/post/${postId}`)
+      .split(`\\"post\\",\\"${shellId}\\"`).join(`\\"post\\",\\"${postId}\\"`)
+      .split(`"post","${shellId}"`).join(`"post","${postId}"`)
+      .split(`[\\"id\\",\\"${shellId}\\",\\"d\\"]`).join(`[\\"id\\",\\"${postId}\\",\\"d\\"]`)
+      .split(`["id","${shellId}","d"]`).join(`["id","${postId}","d"]`)
+  }
+
+  const script = `<script data-resty-post-id>window.__RESTY_POST_ID__=${JSON.stringify(postId)};</script>`
+  if (html.indexOf('data-resty-post-id') !== -1) {
+    return html.replace(/<script data-resty-post-id>[\s\S]*?<\/script>/, script)
+  }
+  return html.replace(/<\/head>/i, `\n${script}\n</head>`)
+}
+
+function finalizeHtml(html, reqPath, name, prefixStyle, fileHint) {
+  html = prepareHtml(html, name, prefixStyle, fileHint)
+  html = injectBibleVerseRouteMeta(html, reqPath)
   html = injectQuestionRouteId(html, reqPath)
   html = injectBookRouteId(html, reqPath)
   html = injectInsightRouteId(html, reqPath)
@@ -334,7 +442,9 @@ function finalizeHtml(html, reqPath, name, prefixStyle) {
   html = injectViewerRouteId(html, reqPath)
   html = injectWonderStoryRouteId(html, reqPath)
   html = injectCareerSchoolRouteId(html, reqPath)
+  html = injectCareerCommunityPostRouteId(html, reqPath)
   html = injectGrowupCommunityPostRouteId(html, reqPath)
+  html = injectPostRouteId(html, reqPath)
   return html
 }
 
@@ -344,9 +454,9 @@ function serveArcViewerHtml(html, reqPath, res, name, prefixStyle, bookId) {
     .then((book) => {
       let out = base
       if (book) out = injectViewerSeoMeta(out, book, bookId, name, prefixStyle)
-      sendHtml(res, out)
+      sendHtml(res, out, name)
     })
-    .catch(() => sendHtml(res, base))
+    .catch(() => sendHtml(res, base, name))
 }
 
 function serveArcBookHtml(html, reqPath, res, name, prefixStyle, bookId) {
@@ -355,12 +465,12 @@ function serveArcBookHtml(html, reqPath, res, name, prefixStyle, bookId) {
     .then((book) => {
       let out = base
       if (book) out = injectBookSeoMeta(out, book, bookId, name, prefixStyle)
-      sendHtml(res, out)
+      sendHtml(res, out, name)
     })
-    .catch(() => sendHtml(res, base))
+    .catch(() => sendHtml(res, base, name))
 }
 
-function prepareHtml(html, name, prefixStyle) {
+function prepareHtml(html, name, prefixStyle, fileHint) {
   if (prefixStyle === 'subdomain') {
     html = stripPathPrefixForSubdomain(html, name)
     if (/<base[^>]*href=/i.test(html)) {
@@ -368,7 +478,7 @@ function prepareHtml(html, name, prefixStyle) {
     } else {
       html = html.replace(/<head([^>]*)>/i, `<head$1>\n<base href="/">`)
     }
-    html = maybeInjectLegal(html, name)
+    html = maybeInjectLegal(html, name, fileHint)
     return html
   }
 
@@ -390,13 +500,40 @@ function prepareHtml(html, name, prefixStyle) {
   }
 
   html = injectClientPrefixScript(html, name, prefixStyle)
-  html = maybeInjectLegal(html, name)
+  html = maybeInjectLegal(html, name, fileHint)
   return html
 }
 
-function sendHtml(res, html) {
+function buildLightCsp(nonce) {
+  return [
+    "default-src 'self'",
+    `script-src 'self' 'nonce-${nonce}' https://www.googletagmanager.com https://www.google-analytics.com`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https:",
+    "font-src 'self' data:",
+    "connect-src 'self' https://app.restyart.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net",
+    "frame-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+    'upgrade-insecure-requests',
+  ].join('; ')
+}
+
+function applyTenantSecurityHeaders(res, html, name) {
+  if (name !== 'light') return String(html || '')
+
+  const nonce = crypto.randomBytes(16).toString('base64')
+  res.setHeader('content-security-policy', buildLightCsp(nonce))
+
+  return String(html || '').replace(/<script\b(?![^>]*\bnonce=)/gi, `<script nonce="${nonce}"`)
+}
+
+function sendHtml(res, html, name) {
+  const securedHtml = applyTenantSecurityHeaders(res, html, name)
   res.setHeader('content-type', 'text/html; charset=utf-8')
-  res.send(html)
+  res.send(securedHtml)
 }
 
 /** 서브도메인에서 /{tenant}/bible/... 중복 prefix 제거 */
@@ -637,6 +774,25 @@ function resolveStaticPath(staticRoot, reqPath) {
     }
   }
 
+  // /community/444 — career 커뮤니티 상세. community.html 목록 폴백 방지 (new 제외)
+  const careerCommunityMatch = clean.replace(/\/$/, '').match(/^\/community\/(\d+)$/)
+  if (careerCommunityMatch) {
+    const postId = careerCommunityMatch[1]
+    const specific = path.join(staticRoot, 'community', `${postId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const communityDir = path.join(staticRoot, 'community')
+    if (fs.existsSync(communityDir) && fs.statSync(communityDir).isDirectory()) {
+      const shells = fs.readdirSync(communityDir)
+        .filter((f) => /^\d+\.html$/.test(f))
+        .sort((a, b) => Number(b.replace('.html', '')) - Number(a.replace('.html', '')))
+      if (shells.length > 0) {
+        return { file: path.join(communityDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
   // /story/slug — 동화 상세 (wonder). 개별 HTML 없을 때 story/*.html 셸 사용
   const storyMatch = clean.replace(/\/$/, '').match(/^\/story\/([^/]+)$/)
   if (storyMatch) {
@@ -687,6 +843,25 @@ function resolveStaticPath(staticRoot, reqPath) {
         .filter((f) => f.endsWith('.html') && f !== 'page.html')
       if (shells.length > 0) {
         return { file: path.join(contentDir, shells[0]), isHtml: true }
+      }
+    }
+  }
+
+  // /company/3 — 기업 상세 (linker 등). index.html 홈 폴백 방지
+  const companyMatch = clean.replace(/\/$/, '').match(/^\/company\/([^/]+)$/)
+  if (companyMatch) {
+    const companyId = companyMatch[1]
+    const specific = path.join(staticRoot, 'company', `${companyId}.html`)
+    if (fs.existsSync(specific) && fs.statSync(specific).isFile()) {
+      return { file: specific, isHtml: true }
+    }
+    const companyDir = path.join(staticRoot, 'company')
+    if (fs.existsSync(companyDir) && fs.statSync(companyDir).isDirectory()) {
+      const shells = fs.readdirSync(companyDir)
+        .filter((f) => /^\d+\.html$/.test(f))
+        .sort((a, b) => Number(b.replace('.html', '')) - Number(a.replace('.html', '')))
+      if (shells.length > 0) {
+        return { file: path.join(companyDir, shells[0]), isHtml: true }
       }
     }
   }
@@ -763,7 +938,7 @@ function tryServeStaticFile(staticRoot, reqPath, res, name, prefixStyle) {
       serveArcBookHtml(html, reqPath, res, name, prefixStyle, bookMatch[1])
       return true
     }
-    sendHtml(res, finalizeHtml(html, reqPath, name, prefixStyle))
+    sendHtml(res, finalizeHtml(html, reqPath, name, prefixStyle, resolved.file), name)
     return true
   }
 
@@ -778,7 +953,7 @@ function tryServeIndexHtml(staticRoot, name, prefixStyle, res, reqPath, accepts)
   if (!fs.existsSync(idx)) return false
   let html = fs.readFileSync(idx, 'utf8')
   html = prepareHtml(html, name, prefixStyle)
-  sendHtml(res, html)
+  sendHtml(res, html, name)
   return true
 }
 
@@ -827,7 +1002,7 @@ function handleTenantRequest(opts) {
       if (fs.existsSync(c) && fs.statSync(c).isFile()) {
         let html = fs.readFileSync(c, 'utf8')
         html = prepareHtml(html, name, prefixStyle)
-        return sendHtml(res, html)
+        return sendHtml(res, html, name)
       }
     }
   } catch (_) {}

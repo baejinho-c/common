@@ -5,8 +5,7 @@ const path = require('path')
 
 const WORKDIR = path.join(__dirname, '..')
 const FILES = [
-  ['lib/resty-auth.ts', 'lib/resty-auth.ts'],
-  ['lib/resty-credits.ts', 'lib/resty-credits.ts'],
+  ['components/restyart-legal-bar.tsx', 'components/restyart-legal-bar.tsx'],
   ['components/resty-signup-agreements.tsx', 'components/resty-signup-agreements.tsx'],
   ['components/resty-terms-page.tsx', 'components/resty-terms-page.tsx'],
   ['components/resty-privacy-page.tsx', 'components/resty-privacy-page.tsx'],

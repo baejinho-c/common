@@ -46,7 +46,7 @@ if [ -f "\$ENV_FILE" ]; then
 fi
 docker build -t admin-app .
 docker rm -f admin 2>/dev/null || true
-docker run -d --name admin --restart unless-stopped -p 127.0.0.1:$REMOTE_PORT:3000 \$ENV_ARGS admin-app
+docker run -d --name admin --restart unless-stopped -p 127.0.0.1:$REMOTE_PORT:3022 \$ENV_ARGS admin-app
 docker ps --filter name=admin
 EOF
 

@@ -63,10 +63,10 @@ function injectBrandingMeta(html, slug, siteBase) {
     `property="og:url" content="https://${slug}.restyart.com/"`,
   )
 
-  // apple-touch-icon.png 링크인데 파일 없으면 svg로 교정
-  out = out.replace(/href=["']([^"']*apple-touch-icon)\.png["']/gi, (m, base) => {
-    const rel = base.startsWith('/') ? base.slice(base.lastIndexOf('/') + 1) : base
-    return `href="${siteBase}${rel}.svg"`
+  // apple-touch-icon.png 링크인데 PNG 파일이 없을 때만 svg로 교정
+  out = out.replace(/href=["']([^"']*apple-touch-icon)\.png["']/gi, (m) => {
+    if (fs.existsSync(path.join(deployDir, 'apple-touch-icon.png'))) return m
+    return `href="${siteBase}apple-touch-icon.svg"`
   })
 
   return out
@@ -98,18 +98,21 @@ function applyToTenant(slug) {
     fs.mkdirSync(dir, { recursive: true })
     const favPath = path.join(dir, 'favicon.svg')
     const ogPath = path.join(dir, 'og-image.svg')
+    const customOgSourcePath = path.join(dir, 'og-brand-source.html')
     const markPath = path.join(dir, 'logo-mark.svg')
     const logoPath = path.join(dir, 'logo.svg')
     const customMarkPng = path.join(dir, 'logo-mark.png')
     const hasCustomMark = fs.existsSync(customMarkPng)
+    const hasCustomOgSource = fs.existsSync(customOgSourcePath)
     const hasFav = fs.existsSync(favPath) || fs.existsSync(path.join(dir, 'favicon.png'))
     const hasOg =
       fs.existsSync(path.join(dir, 'og-image.png')) ||
       fs.existsSync(path.join(dir, 'og-image.jpg')) ||
-      fs.existsSync(ogPath)
+      fs.existsSync(ogPath) ||
+      hasCustomOgSource
 
     if ((!hasFav || force) && !fs.existsSync(path.join(dir, 'favicon.png'))) fs.writeFileSync(favPath, faviconSvg)
-    if ((!hasOg || force) && !fs.existsSync(path.join(dir, 'og-image.png'))) fs.writeFileSync(ogPath, ogSvg)
+    if ((!hasOg || force) && !fs.existsSync(path.join(dir, 'og-image.png')) && !hasCustomOgSource) fs.writeFileSync(ogPath, ogSvg)
     if ((!fs.existsSync(markPath) || force) && !hasCustomMark) fs.writeFileSync(markPath, markSvg)
     if ((!fs.existsSync(logoPath) || force) && !hasCustomMark) fs.writeFileSync(logoPath, logoSvg)
 
