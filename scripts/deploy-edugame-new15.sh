@@ -41,6 +41,7 @@ DOMAINS=(
   memory-hanja.restyart.com
   hamster.restyart.com
   candle.restyart.com
+  waterdrop.restyart.com
 )
 SERVER_NAMES="${DOMAINS[*]}"
 RETIRED_SERVER_NAMES="kongkong.restyart.com rhythm-jump.restyart.com"
@@ -81,6 +82,7 @@ map \$host \$new15_entry {
     memory-hanja.restyart.com /minigames/memory-hanja/index.html;
     hamster.restyart.com /minigames/hamster-power/index.html;
     candle.restyart.com /minigames/candle-lab/index.html;
+    waterdrop.restyart.com /minigames/waterdrop-lab/index.html;
 }
 server {
     listen 80;
@@ -145,6 +147,7 @@ map \$host \$new15_entry {
     memory-hanja.restyart.com /minigames/memory-hanja/index.html;
     hamster.restyart.com /minigames/hamster-power/index.html;
     candle.restyart.com /minigames/candle-lab/index.html;
+    waterdrop.restyart.com /minigames/waterdrop-lab/index.html;
 }
 server {
     listen 443 ssl http2;
@@ -200,7 +203,7 @@ write_http_config
 CERTBOT_ARGS=()
 for domain in "${CERT_DOMAINS[@]}"; do CERTBOT_ARGS+=(-d "$domain"); done
 if ! ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" \
-  "sudo test -f /etc/letsencrypt/live/${CERT_NAME}/fullchain.pem && sudo openssl x509 -in /etc/letsencrypt/live/${CERT_NAME}/fullchain.pem -noout -text | grep -q 'DNS:candle.restyart.com'"; then
+  "sudo test -f /etc/letsencrypt/live/${CERT_NAME}/fullchain.pem && sudo openssl x509 -in /etc/letsencrypt/live/${CERT_NAME}/fullchain.pem -noout -text | grep -q 'DNS:waterdrop.restyart.com'"; then
   echo "[tls] 신규 도메인을 포함해 SAN 인증서 발급/확장"
   ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" \
     "sudo certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email --cert-name '${CERT_NAME}' --expand ${CERTBOT_ARGS[*]}"
