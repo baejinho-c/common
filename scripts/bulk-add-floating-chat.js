@@ -142,7 +142,7 @@ export default function FloatingChat() {
     setInputMessage("")
     setIsLoading(true)
 
-    let aiContent = "문의해 주셔서 감사합니다. 확인 후 안내해 드리겠습니다."
+    let aiContent = "문의주셔서 감사합니다! 이메일 주소를 남겨주시면 피드백 완료되면 남겨드리겠습니다."
 
     try {
       const response = await fetch("/api/ask", {
