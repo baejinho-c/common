@@ -11,6 +11,7 @@ export function RestyartGoogleAnalytics() {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
+          gtag('set', 'user_properties', { resty_tenant: location.hostname.split('.')[0] });
           gtag('config', '${GA_ID}', { send_page_view: true });
         `}
       </Script>
