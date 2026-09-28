@@ -112,13 +112,14 @@ Sitemap: ${siteBase}/sitemap.xml
 `
 if (fs.existsSync(robotsPath)) {
   const existing = fs.readFileSync(robotsPath, 'utf8')
-  const disallow = existing
+  // User-agent 그룹 구조를 유지해야 봇별 Disallow: / 가 전체 봇으로 번지지 않음
+  const rules = existing
     .split('\n')
-    .filter((l) => /^Disallow:/i.test(l.trim()))
+    .filter((l) => !/^\s*(Sitemap|Host):/i.test(l))
     .join('\n')
-  if (disallow) {
-    robotsBody =
-      `User-agent: *\nAllow: /\n${disallow}\n\nSitemap: ${siteBase}/sitemap.xml\n`
+    .trim()
+  if (/^\s*User-agent:/im.test(rules)) {
+    robotsBody = `${rules}\n\nSitemap: ${siteBase}/sitemap.xml\n`
   }
 }
 fs.writeFileSync(robotsPath, robotsBody, 'utf8')

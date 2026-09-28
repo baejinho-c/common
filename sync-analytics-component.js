@@ -14,7 +14,7 @@ let patched = 0
 let skipped = 0
 
 for (const name of fs.readdirSync(WORKDIR)) {
-  if (name === 'common' || name.startsWith('.')) continue
+  if (name === 'common' || name === 'admin' || name.startsWith('.')) continue
   const root = path.join(WORKDIR, name)
   if (!fs.statSync(root).isDirectory()) continue
   const layout = path.join(root, 'app/layout.tsx')

@@ -12,6 +12,12 @@ if (!root) {
   process.exit(1)
 }
 
+// 내부 운영 도구는 방문자 통계를 오염시키므로 제외
+if (tenant === 'admin') {
+  console.log('[inject-analytics] tenant=admin skipped')
+  process.exit(0)
+}
+
 let updated = 0
 let normalized = 0
 
