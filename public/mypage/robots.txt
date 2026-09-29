@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /settings/
+Disallow: /admin/
 
 Sitemap: https://mypage.restyart.com/sitemap.xml

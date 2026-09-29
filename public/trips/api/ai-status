@@ -1,1 +1,1 @@
-{"status":"ok","gemini":{"configured":true,"valid":false,"error":"fetch failed"},"openai":{"configured":true},"primary":"openai"}
+{"status":"ok","gemini":{"configured":true,"valid":false,"error":"HTTP 400"},"openai":{"configured":true},"primary":"openai"}

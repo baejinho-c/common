@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://subway.restyart.com/sitemap.xml

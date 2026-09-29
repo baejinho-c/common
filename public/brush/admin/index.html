@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko" data-resty-tenant="brush">
+<head>
+<base href="/brush/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>붓글씨 공방 관리</title>
+  <link rel="icon" href="/brush/brush-mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#2d2925;--paper:#fbf4e4;--paper2:#f0e4c8;--wood:#6a4228;--red:#c23b3b;--green:#4f8a61;--line:#ddcfad}
+    *{box-sizing:border-box}body{margin:0;background:#f5efe1;color:var(--ink);font-family:'Gowun Batang',serif}.shell{max-width:1180px;margin:auto;padding:24px 18px 50px}.head{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.mark{width:48px;height:48px;border-radius:14px;background:var(--wood);padding:6px}.brand h1{font:26px 'Jua',sans-serif;margin:0;color:var(--wood)}.brand p{margin:3px 0 0;color:#7b6b50;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:0;border-radius:12px;padding:10px 14px;cursor:pointer;font:15px 'Jua',sans-serif}.primary{background:var(--wood);color:#fff}.secondary{background:#fff;border:1px solid var(--line);color:var(--wood)}.danger{background:var(--red);color:#fff}.login{max-width:430px;margin:12vh auto;background:#fffaf0;border:2px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 16px 36px #6a422822}.login h2{text-align:center;margin:0 0 6px;font:25px 'Jua',sans-serif;color:var(--wood)}.login p{text-align:center;font-size:13px;color:#7b6b50;margin:0 0 18px}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}.field input{border:1px solid var(--line);border-radius:10px;padding:12px;font:16px 'Gowun Batang',serif}.field button{margin-top:6px}.notice{min-height:20px;text-align:center;color:var(--red);font-size:13px}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.metric{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.metric span{font-size:13px;color:#7b6b50}.metric strong{display:block;font:29px 'Jua',sans-serif;margin-top:6px;color:var(--wood)}.today{background:linear-gradient(135deg,#6a4228,#9b6742);color:#fff}.today span{color:#f9dfaf}.today strong{color:#fff7df}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}.panel-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.panel-title h2{margin:0;font:21px 'Jua',sans-serif;color:var(--wood)}.panel-title p{margin:3px 0 0;font-size:12px;color:#7b6b50}.game-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}.game{border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center}.game-char{width:46px;height:46px;border-radius:12px;background:var(--paper);display:grid;place-items:center;font:28px 'Gowun Batang',serif;color:var(--wood)}.game b{display:block;font-size:15px}.game small{display:block;font-size:11px;color:#7b6b50;margin-top:3px}.switch{display:flex;flex-direction:column;gap:6px;align-items:flex-end}.switch label{font:12px 'Jua',sans-serif;color:#7b6b50;display:flex;gap:5px;align-items:center}.switch input{accent-color:var(--green);width:17px;height:17px}.today-btn{padding:7px 9px;border-radius:9px;background:#f1e6cc;color:#76522f;font-size:12px}.today-btn.on{background:var(--red);color:#fff}.modal{position:fixed;z-index:30;inset:0;padding:18px;display:grid;place-items:center;background:#2d292599}.modal-card{width:min(100%,520px);max-height:82vh;overflow:auto;background:#fffaf0;border-radius:22px;padding:22px;box-shadow:0 16px 50px #0005}.modal-card h2{font:24px 'Jua',sans-serif;color:var(--wood);margin:0 0 5px;text-align:center}.modal-card p{text-align:center;color:#7b6b50;font-size:13px;margin:0 0 16px}.rank{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;padding:11px 2px;border-bottom:1px dashed var(--line)}.rank:last-child{border-bottom:0}.rank-num{text-align:center;font:20px 'Jua',sans-serif;color:var(--red)}.rank-name{font-weight:700}.rank-meta{display:block;color:#7b6b50;font-size:11px;margin-top:2px}.rank-score{font:20px 'Jua',sans-serif;color:var(--wood)}@media(max-width:650px){.head{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.shell{padding:18px 12px}.game-list{grid-template-columns:1fr}}
+  </style>
+<link rel="canonical" href="https://brush.restyart.com/admin/"/>
+<meta property="og:description" content="brush service by Restyart"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"brush","url":"https://brush.restyart.com/","inLanguage":"ko-KR"}</script>
+
+<script data-resty-analytics>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YVK657S8Q4', { send_page_view: true });
+    gtag('set', 'user_properties', { resty_tenant: 'brush' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YVK657S8Q4"></script>
+</head>
+<body>
+  <main class="shell">
+    <section id="loginView" class="login">
+      <img src="/brush/brush-mark.svg" alt="" class="mark" style="display:block;margin:0 auto 12px">
+      <h2>붓글씨 공방 관리</h2>
+      <p>통합 관리자 계정으로 로그인하세요.</p>
+      <form id="loginForm">
+        <label class="field">관리자 아이디<input id="username" autocomplete="username" required></label>
+        <label class="field">비밀번호<input id="password" type="password" autocomplete="current-password" required></label>
+        <button class="primary" type="submit">로그인</button>
+      </form>
+      <div id="loginNotice" class="notice"></div>
+    </section>
+
+    <section id="dashboardView" class="hidden">
+      <header class="head">
+        <div class="brand"><img src="/brush/brush-mark.svg" alt="" class="mark"><div><h1>붓글씨 공방 관리</h1><p>게임 활성화 · 오늘의 글자 · 리더보드 운영</p></div></div>
+        <div class="actions"><button id="openLeader" class="primary">🥇 오늘의 1등</button><a href="/brush/" target="_blank"><button class="secondary">공방 열기</button></a><button id="logout" class="secondary">로그아웃</button></div>
+      </header>
+      <section class="grid">
+        <article class="metric today"><span>오늘의 게임</span><strong id="todayGame">설정 중</strong></article>
+        <article class="metric"><span>누적 점수 기록</span><strong id="entryCount">0</strong></article>
+        <article class="metric"><span>기록이 있는 게임</span><strong id="playedCount">0</strong></article>
+      </section>
+      <section class="panel"><div class="panel-title"><div><h2>전체 획순 게임</h2><p>토글을 끄면 프런트 목록과 오늘의 게임 후보에서 숨겨집니다.</p></div><button id="reload" class="secondary">새로고침</button></div><div id="gameList" class="game-list"></div></section>
+    </section>
+  </main>
+  <div id="leaderModal" class="modal hidden"><div class="modal-card"><h2>🥇 오늘의 1등 대시보드</h2><p id="leaderSubtitle">오늘의 게임 기록</p><div id="leaderRows"></div><button id="closeLeader" class="secondary" style="width:100%;margin-top:15px">닫기</button></div></div>
+  <script>
+    const API='https://app.restyart.com/api/brush'; let token=sessionStorage.getItem('brush_admin_token')||''; let state={games:[],overview:null};
+    const $=s=>document.querySelector(s); const esc=v=>String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); const age=v=>v==='10+'?'10세+':v+'세'; const date=v=>{try{return new Date(v).toLocaleDateString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch{return ''}};
+    function headers(){return {'Content-Type':'application/json','Authorization':'Bearer '+token}}
+    async function request(path,opts={}){const r=await fetch(API+path,{...opts,headers:{...headers(),...(opts.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||d.message||'요청에 실패했습니다.');return d}
+    async function load(){const [overview,games]=await Promise.all([request('/admin/overview'),request('/admin/games')]);state={overview,games:games.games||[]};render()}
+    function render(){const o=state.overview||{},today=o.today;$('#todayGame').textContent=today?today.character+' · '+today.title:'미설정';$('#entryCount').textContent=Number(o.totals?.entries||0).toLocaleString();$('#playedCount').textContent=Number(o.totals?.played_games||0).toLocaleString();$('#gameList').innerHTML=state.games.map(g=>`<article class="game"><div class="game-char">${esc(g.character)}</div><div><b>${esc(g.title)}</b><small>${esc(g.series)} · ${esc(g.description)}</small></div><div class="switch"><label><input type="checkbox" data-active="${esc(g.key)}" ${g.isActive?'checked':''}> 활성</label><button class="today-btn ${g.isToday?'on':''}" data-today="${esc(g.key)}">${g.isToday?'오늘의 게임':'오늘로 설정'}</button></div></article>`).join('');document.querySelectorAll('[data-active]').forEach(el=>el.addEventListener('change',()=>updateGame(el.dataset.active,{isActive:el.checked})));document.querySelectorAll('[data-today]').forEach(el=>el.addEventListener('click',()=>updateGame(el.dataset.today,{isToday:true,isActive:true})))}
+    async function updateGame(key,body){try{await request('/admin/games/'+encodeURIComponent(key),{method:'PATCH',body:JSON.stringify(body)});await load()}catch(e){alert(e.message)}}
+    function openLeader(){const o=state.overview||{},today=o.today,rows=o.leaders||[];$('#leaderSubtitle').textContent=today?today.character+' · '+today.title:'오늘의 게임이 설정되지 않았습니다.';$('#leaderRows').innerHTML=rows.length?rows.map((r,i)=>`<div class="rank"><div class="rank-num">${['🥇','🥈','🥉'][i]||i+1}</div><div class="rank-name">${esc(r.nickname)}<span class="rank-meta">${age(r.age_bucket)} · ${date(r.created_at)} · 실수 ${r.mistakes}회</span></div><div class="rank-score">${r.score}</div></div>`).join(''):'<p>아직 기록이 없습니다.</p>';$('#leaderModal').classList.remove('hidden')}
+    $('#loginForm').addEventListener('submit',async e=>{e.preventDefault();$('#loginNotice').textContent='';try{const r=await fetch('https://app.restyart.com/api/admin/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:$('#username').value,password:$('#password').value})});const d=await r.json();if(!r.ok)throw new Error(d.message||'로그인에 실패했습니다.');token=d.token;sessionStorage.setItem('brush_admin_token',token);$('#loginView').classList.add('hidden');$('#dashboardView').classList.remove('hidden');await load()}catch(err){$('#loginNotice').textContent=err.message}});
+    $('#reload').addEventListener('click',()=>load().catch(e=>alert(e.message)));$('#openLeader').addEventListener('click',openLeader);$('#closeLeader').addEventListener('click',()=>$('#leaderModal').classList.add('hidden'));$('#leaderModal').addEventListener('click',e=>{if(e.target===$('#leaderModal'))$('#leaderModal').classList.add('hidden')});$('#logout').addEventListener('click',()=>{sessionStorage.removeItem('brush_admin_token');token='';location.reload()});
+    if(token){$('#loginView').classList.add('hidden');$('#dashboardView').classList.remove('hidden');load().catch(()=>{sessionStorage.removeItem('brush_admin_token');location.reload()})}
+  </script>
+
+<div id="restyart-legal-bar" data-resty-legal="1" style="margin-top:auto;border-top:1px solid #e5e7eb;background:#f9fafb;color:#4b5563;font-size:12px;line-height:1.6;">
+  <div style="max-width:1200px;margin:0 auto;padding:16px 20px;">
+    <p style="margin:0 0 8px;font-weight:600;color:#374151;">리스티아트</p>
+    <p style="margin:0 0 4px;">경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호</p>
+    <p style="margin:0 0 4px;">사업자등록번호 3961701077</p>
+    <p style="margin:0 0 8px;">문의: <a href="mailto:bloodjino1@gmail.com" style="color:#2563eb;text-decoration:none;">bloodjino1@gmail.com</a></p>
+    <p style="margin:0 0 8px;font-size:11px;color:#6b7280;">개인정보 보호책임자: 배진호 (개인정보보호책임자) · bloodjino1@gmail.com</p>
+    <p style="margin:0;padding:10px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;color:#6b7280;">
+      <strong style="color:#374151;">AI 이용 안내</strong> — 본 서비스의 일부 콘텐츠·응답·추천·이미지 등은 인공지능(AI) 기술을 활용하여 생성될 수 있으며, AI 생성 결과는 참고용이며 정확성·완전성을 보장하지 않습니다.
+    </p>
+<div data-resty-funnel="1" style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;">
+  <p style="margin:0 0 6px;font-weight:600;color:#374151;font-size:11px;">연관 서비스</p>
+  <p style="margin:0;line-height:1.8;font-size:11px;"><a href="https://growup.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">그로우맘</a><a href="https://wonder.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">WonderTale</a><a href="https://recipe.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">레시피</a><a href="https://library.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">AI 백과</a><a href="https://gpt.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">AI 커뮤니티</a></p>
+</div>
+    <p style="margin:8px 0 0;font-size:11px;color:#9ca3af;">&copy; 2026 리스티아트. All rights reserved.</p>
+  </div>
+</div>
+<script id="restyart-legal-bar-pin">(function(){
+  function pin(){
+    var el = document.getElementById('restyart-legal-bar');
+    if (!el || !el.parentNode || el.parentNode.lastElementChild === el) return;
+    el.parentNode.appendChild(el);
+  }
+  pin();
+  window.addEventListener('load', pin);
+  new MutationObserver(pin).observe(document.body, { childList: true });
+})();</script>
+</body>
+</html>

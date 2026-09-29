@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
 
 Sitemap: https://rebrand.restyart.com/sitemap.xml

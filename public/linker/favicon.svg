@@ -1,9 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="CorpLinker">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#0EA5E9"/>
-    <stop offset="1" stop-color="#0284C7"/>
-  </linearGradient></defs>
+  <defs>
+    <linearGradient id="bg" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#1E40AF"/>
+    </linearGradient>
+  </defs>
   <rect width="32" height="32" rx="8" fill="url(#bg)"/>
-  <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="#ffffff" stroke-opacity="0.12"/>
-  <text x="16" y="21.12" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#ffffff">L</text>
+  <rect x="1" y="1" width="30" height="30" rx="7" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
+  <!-- network links -->
+  <path d="M16 11.2L22.2 20.8H9.8L16 11.2z" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linejoin="round"/>
+  <circle cx="16" cy="11.2" r="2.4" fill="#ffffff"/>
+  <circle cx="22.2" cy="20.8" r="2.4" fill="#ffffff"/>
+  <circle cx="9.8" cy="20.8" r="2.4" fill="#ffffff"/>
+  <circle cx="16" cy="16.5" r="1.6" fill="#7DD3FC"/>
 </svg>

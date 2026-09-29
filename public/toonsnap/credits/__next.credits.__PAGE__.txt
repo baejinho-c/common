@@ -1,0 +1,8 @@
+1:"$Sreact.fragment"
+2:I[1456,["2","static/chunks/2-39dc0db19ed91291.js","352","static/chunks/352-e18e2664e4f3ab61.js","30","static/chunks/30-56afa58e3b4f650d.js","699","static/chunks/app/credits/page-11bbd52426682554.js"],"TopCreditBar"]
+3:I[2002,["2","static/chunks/2-39dc0db19ed91291.js","352","static/chunks/352-e18e2664e4f3ab61.js","30","static/chunks/30-56afa58e3b4f650d.js","699","static/chunks/app/credits/page-11bbd52426682554.js"],""]
+4:I[7030,["2","static/chunks/2-39dc0db19ed91291.js","352","static/chunks/352-e18e2664e4f3ab61.js","30","static/chunks/30-56afa58e3b4f650d.js","699","static/chunks/app/credits/page-11bbd52426682554.js"],"RestyAccountPanel"]
+5:I[4626,[],"OutletBoundary"]
+6:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"min-h-dvh bg-background","children":[["$","$L2",null,{}],["$","div",null,{"className":"mx-auto flex w-full max-w-xl flex-col gap-4 px-4 py-8","children":[["$","div",null,{"className":"flex items-center justify-between gap-3","children":[["$","div",null,{"children":[["$","p",null,{"className":"text-sm text-muted-foreground","children":"ToonSnap"}],["$","h1",null,{"className":"text-2xl font-bold tracking-tight","children":"계정 · 크레딧"}]]}],["$","$L3",null,{"href":"/","className":"text-sm font-medium text-primary underline-offset-4 hover:underline","children":"← 만화 만들기로"}]]}],["$","$L4",null,{}],["$","p",null,{"className":"text-xs leading-relaxed text-muted-foreground","children":["로그인 전 무료 체험은 브라우저당 최대 ",5,"회입니다. 로그인 후 생성 시 계정 크레딧 1회가 차감됩니다. 잔액·내역이 보이지 않으면 새로고침하거나 다시 로그인해 주세요."]}]]}]]}],null,["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"XJG2Pm35H3n8laHpAerTk"}
+7:null

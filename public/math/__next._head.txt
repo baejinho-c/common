@@ -1,0 +1,5 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/001djf8qejz~0.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"ViewportBoundary"]
+3:I[97367,["/_next/static/chunks/001djf8qejz~0.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#f4f4ec","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"#1a2620","media":"(prefers-color-scheme: dark)"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"수학의 숲 · Math Forest"}],["$","meta","1",{"name":"description","content":"공식을 외우는 것이 아니라, 증명으로 연결되는 생각의 숲을 탐험하세요. 수학의 모든 지식을 그래프로 연결하는 AI 기반 수학 학습 플랫폼."}],["$","meta","2",{"name":"generator","content":"v0.app"}]]}]}]}],null]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"F_lX_srwjZHaQI4UG6i70"}

@@ -3,6 +3,7 @@ node_modules/
 assembled_copies/
 *.log
 __pycache__/
+public/edugame/
 publish-batch.log
 dashboard.log
 dashboard-4100.log

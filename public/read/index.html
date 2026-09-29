@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>독해 탐정단 · 시즌 1</title>
+<meta name="description" content="글 속 단서를 찾아 사건을 해결하는 어린이 독해 게임. 시즌 1 20개 사건 파일로 읽기, 추리, 순서 파악, 원인과 결과를 자연스럽게 익혀요.">
+<meta property="og:title" content="독해 탐정단 · 시즌 1">
+<meta property="og:description" content="사건을 읽고, 단서를 찾고, 추리하며 독해력을 기르는 어린이 독해 탐정 게임">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://read.restyart.com/">
+<meta property="og:image" content="/read/assets/case-01.webp">
+<link rel="canonical" href="https://read.restyart.com/">
+<link rel="icon" href="/read/assets/case-01.webp">
+<style>
+:root{
+  --bg:#f4ecd9; --paper:#fffaf0; --ink:#16324d; --line:rgba(22,50,77,.14);
+  --yellow:#f6cf5a; --yellow2:#ffe48c; --red:#d86a57; --blue:#2d5f91; --green:#5a8e7f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:radial-gradient(circle at top,#fff 0,#f7f1e7 34%,#efe2c8 100%);color:var(--ink)}
+button{font:inherit;cursor:pointer}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 18px}
+.top{position:sticky;top:0;z-index:30;background:rgba(255,250,240,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:72px}
+.brand{display:flex;align-items:center;gap:12px;background:none;border:0;padding:0;color:var(--ink);text-align:left}
+.badge{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--yellow);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-size:20px}
+.brand strong{display:block;font-size:18px}
+.brand small{display:block;font-size:11px;letter-spacing:.16em;color:#6b7a84}
+.nav{display:flex;gap:18px;align-items:center;font-size:13px;font-weight:700;color:#42525c}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:stretch;padding:22px 0 14px}
+.hero-card,.panel{background:var(--paper);border:1px solid var(--line);border-radius:24px;box-shadow:0 10px 30px rgba(20,40,60,.08)}
+.hero-card{padding:32px}
+.kicker{font-size:12px;font-weight:900;letter-spacing:.18em;color:var(--blue)}
+h1{font-size:clamp(38px,5vw,68px);line-height:.92;margin:10px 0 14px;letter-spacing:-.07em}
+.accent{color:var(--red)}
+.desc{font-size:17px;line-height:1.85;color:#4b5c68;max-width:48ch}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-size:12px;font-weight:800}
+.hero-art{position:relative;overflow:hidden;min-height:320px;border-radius:24px;border:1px solid var(--line);background:#1a2a39}
+.hero-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.66) 0,rgba(0,0,0,.26) 40%,transparent 72%)}
+.hero-art .label{position:absolute;left:18px;bottom:18px;z-index:1;color:#fff;font-weight:900;font-size:15px}
+.section{padding:14px 0 24px}
+.section h2{margin:0 0 14px;font-size:28px;letter-spacing:-.04em}
+.section p.lead{margin:0 0 14px;color:#4b5c68;line-height:1.8}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.case{border:2px solid #74552b;border-radius:18px;overflow:hidden;background:#fff7e7;box-shadow:0 6px 0 #b89a68;text-align:left;padding:0}
+.case.active{outline:4px solid var(--yellow);outline-offset:2px}
+.case.locked{opacity:.42;filter:saturate(.7)}
+.case.locked .case-info{position:relative}
+.case.locked .case-info::after{content:"잠김";position:absolute;right:0;top:-2px;background:#17324d;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:900}
+.case img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:#e8dcc2}
+.case-info{padding:12px}
+.case-no{font-size:12px;font-weight:900;color:#72532a}
+.case-title{font-size:18px;font-weight:950;margin:4px 0}
+.case-sub{font-size:12px;color:#64727c;line-height:1.5}
+.play{margin-top:16px;display:none;grid-template-columns:1.2fr .8fr;gap:14px}
+.flow{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.step{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:900;color:#6a7881}
+.step.on{background:var(--yellow);color:#16324d}
+.scene{position:relative;border-radius:22px;overflow:hidden;border:3px solid #70522e;background:#111;min-height:410px}
+.scene.flash{animation:flash .55s ease}
+.scene img{width:100%;height:100%;display:block;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.hotspot{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  padding:0;
+  border:none;
+  background:transparent;
+  z-index:3;
+  cursor:pointer;
+}
+.hotspot .pin{
+  width:46px;height:46px;border-radius:50%;
+  border:4px solid #ffe36d;background:rgba(255,243,163,.78);
+  box-shadow:0 0 0 4px rgba(255,181,0,.18),0 0 18px rgba(255,255,255,.4);
+  display:grid;place-items:center;
+  font-size:20px;font-weight:950;color:#7c4600;
+  backdrop-filter: blur(2px);
+}
+.hotspot .tag{
+  min-width:max-content;
+  max-width:128px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#16324de6;
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.01em;
+  box-shadow:0 6px 16px rgba(0,0,0,.18);
+  white-space:nowrap;
+}
+.hotspot .sub{
+  margin-top:-2px;
+  font-size:10px;
+  font-weight:800;
+  color:#fff;
+  background:#d98c11;
+  border-radius:999px;
+  padding:2px 7px;
+}
+.hotspot.gold .pin{border-color:#fff0a0;background:#ffd84c}
+.hotspot.gold .tag{background:#8b5d00}
+.hotspot:hover .pin{transform:scale(1.05)}
+.hotspot:hover .tag{transform:translateY(-1px)}
+.note{padding:16px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,#fffdf7,#f9f2df)}
+.note h3{margin:0 0 10px;font-size:24px}
+.note p{margin:0;color:#4e5e68;line-height:1.85}
+.clue-list{margin-top:14px;display:grid;gap:10px}
+.clue{padding:12px 12px;border:1px dashed rgba(22,50,77,.28);border-radius:14px;background:#fff;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.clue b{display:block;font-size:14px}
+.clue small{display:block;color:#6b7a84;margin-top:4px;line-height:1.5}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-weight:800;font-size:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{border:2px solid var(--ink);border-radius:14px;background:var(--yellow);padding:12px 16px;font-weight:900;box-shadow:3px 3px 0 var(--ink)}
+.btn.secondary{background:#fff}
+.scene-info{padding:14px 16px;border-top:1px solid var(--line);background:rgba(255,255,255,.72)}
+.scene-info strong{display:block;font-size:16px}
+.scene-info small{display:block;margin-top:4px;color:#64727c;line-height:1.6}
+.story{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.story-card{padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff}
+.story-card h3{margin:0 0 10px;font-size:18px}
+.story-card ul{margin:0;padding-left:18px;color:#4d5d67;line-height:1.8}
+.workspace{margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff}
+.workspace h4{margin:0 0 10px;font-size:18px}
+.workspace p{margin:0;color:#4d5d67;line-height:1.8}
+.workspace .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.choice{border:1px solid #17324d44;background:#fff;padding:9px 12px;border-radius:12px;font-weight:800}
+.choice.on{background:var(--yellow)}
+.footer-note{padding:26px 0 40px;color:#64727c;font-size:13px;line-height:1.8}
+.playing .hero,
+.playing .section:not(.play),
+.playing .footer-note{display:none}
+.playing .play{display:grid}
+.section:not(.play){display:none}
+.record{margin:12px 0 10px;padding:12px 14px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.record h4{margin:0 0 6px;font-size:14px}
+.record p{margin:0;color:#4d5d67;line-height:1.75;font-size:14px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,120px);background:#162534;color:#fff;padding:12px 16px;border-radius:14px;font-weight:800;transition:.2s;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{transform:translate(-50%,0)}
+@keyframes flash{
+  0%{transform:scale(.99);box-shadow:0 0 0 rgba(246,207,90,0)}
+  50%{transform:scale(1.01);box-shadow:0 0 0 6px rgba(246,207,90,.25)}
+  100%{transform:scale(1);box-shadow:none}
+}
+@media (max-width: 960px){
+  .hero,.play,.story{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .scene{min-height:320px}
+}
+@media (max-width: 640px){
+  .top .wrap{min-height:64px}
+  .nav{display:none}
+  .grid{grid-template-columns:1fr}
+  .hero-card{padding:22px}
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap">
+    <button class="brand" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <span class="badge">⌕</span>
+      <span><strong>독해 탐정단</strong><small>READING DETECTIVE CLUB</small></span>
+    </button>
+    <div class="nav">
+      <span>시즌 1 · 20개 사건</span>
+      <span>글 속 단서 찾기</span>
+      <span>추리형 독해</span>
+    </div>
+    <a class="pill" href="#cases" style="text-decoration:none;color:inherit">사건 바로가기</a>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-card">
+      <div class="kicker">SEASON 1 · FIRST 20 CASE FILES</div>
+      <h1>읽고,<br><span class="accent">찾고</span>,<br>추리하자</h1>
+      <p class="desc">사건이 생겼어요. 아이는 지문을 읽고, 문장 속 단서를 직접 찾고, 누가 / 어디서 / 무엇을 / 왜를 연결해 사건을 해결합니다. 시즌 1은 20개 케이스로 구성됩니다.</p>
+      <div class="toolbar">
+        <button class="btn" id="startBtn" type="button">첫 사건 시작</button>
+        <button class="btn secondary" id="randomBtn" type="button">랜덤 사건</button>
+      </div>
+      <div class="stats">
+        <div class="stat">대상: 6~8세</div>
+        <div class="stat">권장 플레이: 3~5분</div>
+        <div class="stat">난이도: ★~★★★</div>
+        <div class="stat">사건 파일 20개</div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="/read/assets/case-01-detective.webp" alt="독해 탐정단 대표 이미지">
+      <div class="label">사건 파일을 열어 단서를 찾아보세요</div>
+    </div>
+  </section>
+
+  <section class="section play">
+    <div>
+      <div class="scene" id="scene">
+        <img id="sceneImg" alt="사건 현장">
+      </div>
+      <div class="scene-info">
+        <strong id="sceneHint">사건을 선택하면 현장 이미지와 단서 위치가 여기에 나타납니다.</strong>
+        <small id="sceneDesc">각 케이스는 짧은 지문 + 단서 4개 + 황금 단서 1개로 구성되어 있어요.</small>
+      </div>
+    </div>
+    <div class="note">
+      <div class="pill" id="caseMeta">CASE 001 · 사라진 딸기</div>
+      <h3 id="caseTitle">사라진 딸기</h3>
+      <div class="record">
+        <h4>사건 기록</h4>
+        <p id="caseRecord">아침에 넣어 둔 딸기와 점심에 남은 딸기를 비교해 보세요.</p>
+      </div>
+      <p id="caseDesc">아침에 넣어 둔 딸기와 점심에 남은 딸기를 비교해 보세요.</p>
+      <div class="flow" id="flow"></div>
+      <div class="workspace" id="workspace">
+        <h4 id="wsTitle">단서를 찾아보세요</h4>
+        <p id="wsDesc">현장에서 증거를 찾고, 기록한 뒤, 수첩에 정리해 근거를 골라요.</p>
+        <div class="choices" id="wsChoices"></div>
+      </div>
+      <div class="clue-list" id="clueList"></div>
+      <div class="toolbar">
+        <button class="btn" id="prevBtn" type="button">이전 사건</button>
+        <button class="btn secondary" id="nextBtn" type="button">다음 사건</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer-note">
+    시즌 1은 20개 사건 파일로 이어지며, 후속 시즌에서는 안내문·일기·문자·표·메뉴판 같은 실생활 글로 확장할 수 있습니다.
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const base = '/read/assets/';
+const CASES = [
+  {id:1,title:'사라진 딸기',img:base+'case-01-detective.webp',desc:'누가 몰래 먹었는지 증거로 찾는 사건입니다.',hint:'말보다 몸에 남은 단서를 먼저 보세요.',story:'아침에 유나는 냉장고에 딸기 다섯 개를 넣어두었습니다. 점심이 되자 딸기는 세 개만 남아 있었습니다. 식탁 위에는 딸기 씨가 조금 남아 있었고, 아빠의 입가에는 빨간 자국이 묻어 있었습니다.',focus:'입가 자국과 씨앗 흔적',clues:[['입가 자국','아빠의 입가에 빨간 자국이 남아 있어요.','84%','40%'],['남은 딸기','점심에 세 개만 남았어요.','31%','60%'],['딸기 씨','식탁 위에 작은 씨가 보였어요.','58%','79%'],['냉장고 문','문이 조금 열려 있었어요.','16%','27%']],gold:['정답 단서','딸기를 먹은 사람은 아빠예요.']},
+  {id:2,title:'뒤바뀐 우산',img:base+'case-02-detective.webp',desc:'누가 다른 우산을 가져갔는지 현장 증거로 찾는 사건입니다.',hint:'우산 색보다 손잡이와 물방울이 중요해요.',story:'민준이는 노란 우산을 가지고 학교에 갔습니다. 하교할 때는 친구의 파란 우산을 들고 나왔습니다. 현관 바닥에는 파란 우산에서 떨어진 물방울이 있었고, 우산꽂이에는 노란 손잡이 자국이 남아 있었습니다.',focus:'손잡이 자국과 물방울',clues:[['파란 물방울','현관 바닥에 파란 우산 물방울이 있었어요.','66%','52%'],['노란 손잡이 자국','우산꽂이에 노란 자국이 남아 있었어요.','22%','66%'],['학교 다녀오기','비 오는 날 학교에 갔어요.','86%','26%'],['친구의 우산','잘못 가져온 우산은 친구의 것이에요.','43%','41%']],gold:['정답 단서','잘못 가져온 우산은 파란 우산이에요.']},
+  {id:3,title:'두 번째로 온 친구',img:base+'case-03.webp',desc:'입구 발자국과 도착 순서를 읽는 사건입니다.',hint:'먼저 온 사람보다, 문 앞 흔적을 보세요.',story:'민지는 학교에 먼저 도착했습니다. 그 뒤에 준호가 왔습니다. 마지막으로 수아가 교실에 들어왔습니다. 현관 앞 바닥에는 준호 신발의 물자국이 가장 선명하게 남아 있었습니다.',focus:'도착 순서와 발자국',clues:[['민지','처음 도착했어요.','18%','22%'],['준호 발자국','현관 앞 물자국이 가장 선명해요.','60%','52%'],['수아','마지막에 들어왔어요.','84%','58%'],['교실 문','교실로 들어오는 순서를 볼 수 있어요.','30%','30%']],gold:['정답 단서','두 번째로 온 친구는 준호예요.']},
+  {id:4,title:'강아지 공은 어디에?',img:base+'case-04.webp',desc:'공이 어디로 갔는지 발자국과 흔적을 읽는 사건입니다.',hint:'물건이 굴러간 자국과 숨은 자리만 보세요.',story:'강아지가 거실에서 공을 가지고 놀았습니다. 공은 소파 아래로 굴러갔고, 바닥에는 둥근 자국이 남았습니다. 소파 밑을 비추니 공이 살짝 보였습니다.',focus:'굴러간 자국과 숨은 자리',clues:[['둥근 자국','공이 굴러간 흔적이에요.','56%','62%'],['소파 아래','공이 숨은 자리예요.','37%','74%'],['거실','사건이 일어난 곳이에요.','15%','42%'],['강아지 발자국','공을 따라 이동했어요.','78%','37%']],gold:['정답 단서','공은 소파 아래에 있어요.']},
+  {id:5,title:'수상한 목격자',img:base+'case-05.webp',desc:'말과 현장 증거가 맞는지 비교하는 사건입니다.',hint:'눈으로 본 장면과 말이 같은지 확인해 보세요.',story:'공원에는 빨간 모자를 쓴 아이와 파란 가방을 든 아이가 있었습니다. 빨간 모자를 쓴 아이는 자전거를 탔고, 파란 가방을 든 아이는 벤치에 앉아 있었습니다. 그런데 목격자는 파란 가방 아이가 자전거를 탔다고 말했습니다.',focus:'말과 현장 비교',clues:[['빨간 모자','자전거를 탄 아이예요.','24%','31%'],['파란 가방','벤치에 앉아 있었어요.','67%','64%'],['목격자의 말','현장과 다르게 말했어요.','84%','28%'],['자전거 바퀴 자국','빨간 모자 아이 쪽에 남아 있었어요.','45%','58%']],gold:['정답 단서','목격자의 말이 틀렸어요.']},
+  {id:6,title:'사라진 연필',img:base+'case-06.webp',desc:'물건이 사라진 자리를 읽고 행방을 찾는 사건입니다.',hint:'책상 위와 필통 안의 흔적을 보세요.',story:'지우는 아침에 연필을 책상 위에 두었습니다. 쉬는 시간 뒤에 연필이 보이지 않았습니다. 책상 위에는 연필 자국만 남아 있었고, 필통 안에는 연필심 가루가 조금 묻어 있었습니다.',focus:'물건의 흔적 찾기',clues:[['책상 자국','아침에 두었던 자리예요.','25%','63%'],['필통 안','연필심 가루가 묻어 있었어요.','63%','64%'],['쉬는 시간 뒤','연필이 보이지 않았어요.','81%','29%'],['연필심 가루','누군가 필통을 열었을 수 있어요.','46%','40%']],gold:['정답 단서','연필은 필통 안을 다시 찾아봐야 해요.']},
+  {id:7,title:'누가 축구를 했을까?',img:base+'case-07.webp',desc:'행동 흔적을 보고 누가 무엇을 했는지 찾는 사건입니다.',hint:'운동장에 남은 공 자국과 사람의 행동을 맞춰 보세요.',story:'운동장에는 세 명의 아이가 있었습니다. 민호는 줄넘기를 했고, 소라는 그림을 그렸으며, 준서는 축구를 했습니다. 운동장 한쪽에는 공이 굴러간 자국이 길게 남아 있었습니다.',focus:'행동 흔적 비교',clues:[['공 자국','축구를 한 흔적이에요.','72%','58%'],['민호','줄넘기를 했어요.','26%','37%'],['소라','그림을 그렸어요.','21%','71%'],['준서','축구를 했어요.','39%','33%']],gold:['정답 단서','축구를 한 사람은 준서예요.']},
+  {id:8,title:'종이가 날아간 이유',img:base+'case-08.webp',desc:'왜 그랬는지 바람과 결과를 연결하는 사건입니다.',hint:'바람, 창문, 종이의 관계를 읽어 보세요.',story:'갑자기 바람이 세게 불기 시작했습니다. 책상 위 종이들이 날아갔습니다. 창문이 열려 있었고, 지민이는 얼른 창문을 닫았습니다. 왜 닫았는지 생각해 봐요.',focus:'원인과 결과 연결',clues:[['열린 창문','바람이 들어오는 길이었어요.','78%','26%'],['날아간 종이','바람의 결과예요.','42%','63%'],['강한 바람','먼저 일어난 일이에요.','83%','29%'],['창문 닫기','지민이가 바로 막았어요.','18%','76%']],gold:['정답 단서','바람 때문에 종이가 날아가서 창문을 닫았어요.']},
+  {id:9,title:'지우의 마음',img:null,desc:'행동을 보고 마음을 추리해 보는 사건입니다.',hint:'표정 대신 행동을 보고 마음을 맞혀 보세요.',story:'준서는 열심히 만든 블록 성이 무너지자 한동안 아무 말도 하지 않았습니다. 그리고 다시 천천히 블록을 쌓기 시작했습니다.',focus:'인물의 마음 추리',clues:[['무너진 블록 성','속상한 일이 있었어요.','18%','26%'],['한동안 말 없음','마음이 가라앉았을 수 있어요.','68%','60%'],['다시 쌓기','포기하지 않았어요.','74%','37%'],['천천히 행동','조심스러운 마음이에요.','45%','73%']],gold:['정답 단서','처음 마음은 속상함이었어요.']},
+  {id:10,title:'글에 없는 단서',img:null,desc:'글에 있는 내용과 없는 내용을 구분하는 사건입니다.',hint:'정말 글에 나왔는지 확인해 보세요.',story:'소라는 아침에 우유를 마시고 노란 운동화를 신고 아빠와 함께 유치원에 갔습니다. 글에는 있는 것과 없는 것을 구분해야 합니다.',focus:'글에 없는 내용 찾기',clues:[['우유','아침에 마셨어요.','28%','65%'],['노란 운동화','신고 갔어요.','50%','39%'],['아빠와 함께','유치원에 갔어요.','78%','27%'],['사과','글에 나오지 않았어요.','43%','74%']],gold:['정답 단서','사과를 먹었다는 말은 글에 없어요.']},
+  {id:11,title:'이상한 아침 기록',img:null,desc:'일과 순서를 단서로 다시 맞추는 사건입니다.',hint:'손 씻기 뒤에 무엇을 했는지 찾아보세요.',story:'현우는 손을 씻었습니다. 그다음 식탁에 앉았습니다. 밥을 다 먹은 뒤 이를 닦았습니다. 세 장의 흔적 카드로 순서를 맞춰야 합니다.',focus:'시간 순서',clues:[['손 씻기 카드','가장 먼저 놓였어요.','22%','34%'],['식탁 카드','그다음 행동이에요.','58%','45%'],['양치 카드','마지막에 쓰였어요.','81%','63%'],['흔적 카드','순서대로 정리해야 해요.','46%','24%']],gold:['정답 단서','손 씻기 → 밥 먹기 → 양치 순서예요.']},
+  {id:12,title:'도서관의 쪽지',img:null,desc:'장소와 목적을 연결해 어디를 갔는지 찾는 사건입니다.',hint:'책을 빌리러 간 흔적과 쪽지를 보세요.',story:'엄마는 책을 빌리러 도서관에 갔습니다. 아빠는 신문을 보러 거실에 앉았습니다. 소라는 공부를 하러 책상 앞에 갔습니다. 책갈피가 꽂힌 책과 반납 쪽지가 도서관에 남아 있었습니다.',focus:'장소 연결',clues:[['책갈피','도서관 책에 꽂혀 있었어요.','22%','66%'],['반납 쪽지','책을 빌린 흔적이에요.','58%','50%'],['엄마','도서관에 갔어요.','76%','31%'],['책상 앞','공부하러 간 자리예요.','44%','73%']],gold:['정답 단서','책을 빌리러 간 곳은 도서관이에요.']},
+  {id:13,title:'누구의 도시락일까?',img:null,desc:'이름표와 냄새 흔적으로 주인을 찾는 사건입니다.',hint:'도시락 위 이름과 주변 단서를 함께 보세요.',story:'교실 책상 위에는 파란 도시락이 있었습니다. 이름표에는 수진이라고 적혀 있었습니다. 옆 친구의 빨간 도시락은 아직 가방 안에 있었고, 파란 도시락에서는 김이 살짝 올라왔습니다.',focus:'주인과 흔적 연결',clues:[['이름표','수진이라고 적혀 있어요.','28%','72%'],['김 나는 도시락','방금 열어 둔 것 같아요.','69%','42%'],['빨간 도시락','옆 친구의 가방 안에 있었어요.','79%','26%'],['책상 위 도시락','가장 먼저 눈에 띄었어요.','41%','61%']],gold:['정답 단서','파란 도시락은 수진의 것이에요.']},
+  {id:14,title:'비 오는 날의 약속',img:base+'case-14-detective.webp',desc:'약속이 바뀐 이유를 현장 증거로 찾는 사건입니다.',hint:'젖은 신발과 바뀐 장소를 함께 보세요.',story:'민준이는 친구와 놀이터에서 만나기로 했습니다. 그런데 비가 와서 약속 장소가 실내 놀이터로 바뀌었습니다. 현관에는 젖은 발자국이 남아 있었고, 우산꽂이에는 급히 넣은 우산이 하나 더 있었습니다.',focus:'바뀐 약속의 이유 찾기',clues:[['젖은 발자국','비를 맞고 들어온 흔적이에요.','81%','58%'],['우산 하나 더','급하게 챙긴 우산이에요.','57%','44%'],['놀이터 메모','원래 약속 장소예요.','24%','30%'],['실내 놀이터 표지','새로 바뀐 장소예요.','62%','73%']],gold:['정답 단서','비 때문에 약속 장소가 바뀌었어요.']},
+  {id:15,title:'범인은 누구?',img:base+'case-15-detective.webp',desc:'증언보다 바닥 증거를 먼저 읽는 사건입니다.',hint:'누구 말이 아니라 무엇이 남았는지 보세요.',story:'가게에서 과자가 사라졌습니다. 민수는 자기가 먹지 않았다고 했고, 수아는 고양이가 훔쳐 갔다고 했습니다. 하지만 바닥에는 찢어진 과자 봉지 조각과 초콜릿 가루가 남아 있었습니다.',focus:'증언과 증거 비교',clues:[['과자 봉지 조각','바닥에 남은 핵심 증거예요.','72%','55%'],['초콜릿 가루','손에 묻을 수 있는 흔적이에요.','46%','69%'],['민수의 말','아니라고 했어요.','24%','28%'],['수아의 말','고양이를 봤다고 했어요.','33%','42%']],gold:['정답 단서','바닥의 봉지 조각이 진짜 단서예요.']},
+  {id:16,title:'젖은 운동화',img:base+'case-16-detective.webp',desc:'결과를 보고 왜 그런 일이 생겼는지 찾는 사건입니다.',hint:'운동화가 젖은 경로를 따라가 보세요.',story:'하늘에서 비가 내렸습니다. 지민이는 놀이터에서 뛰어다니다가 운동화를 적셨습니다. 집 앞에는 물웅덩이가 있었고, 신발 밑에는 진흙이 붙어 있었습니다.',focus:'원인과 결과 연결',clues:[['비','먼저 내린 원인이에요.','81%','26%'],['물웅덩이','젖게 만든 길이에요.','56%','63%'],['진흙','신발에 묻은 흔적이에요.','37%','44%'],['젖은 운동화','결과예요.','24%','73%']],gold:['정답 단서','비와 물웅덩이 때문에 운동화가 젖었어요.']},
+  {id:17,title:'수상한 시간표',img:base+'case-17-detective.webp',desc:'메모와 시간표 중 무엇이 맞는지 찾는 사건입니다.',hint:'적혀 있는 순서와 실제 순서를 비교해 보세요.',story:'1교시는 국어, 2교시는 수학, 3교시는 체육입니다. 그런데 책상 위 메모에는 체육이 먼저라고 적혀 있었습니다. 칠판 옆에는 오늘의 시간표가 붙어 있었고, 순서가 정확히 적혀 있었습니다.',focus:'정보 비교',clues:[['오늘의 시간표','정확한 순서를 알려 줘요.','83%','30%'],['책상 메모','틀린 순서가 적혀 있어요.','45%','61%'],['1교시 국어','가장 먼저예요.','22%','45%'],['3교시 체육','가장 나중이에요.','67%','74%']],gold:['정답 단서','시간표가 메모보다 정확해요.']},
+  {id:18,title:'두 개의 증언',img:base+'case-18-detective.webp',desc:'서로 다른 말에서 같은 사실을 찾아내는 사건입니다.',hint:'두 사람이 같은 부분을 말했는지 보세요.',story:'놀이터에서 공을 누가 찼는지 물었습니다. 민수는 자신이 찼다고 했고, 수아는 준서가 찼다고 했습니다. 하지만 둘 다 공이 나무 아래로 굴러갔다고 말했습니다. 공이 멈춘 곳은 같았습니다.',focus:'공통 사실 찾기',clues:[['민수의 말','자신이 찼다고 했어요.','25%','37%'],['수아의 말','준서가 찼다고 했어요.','44%','68%'],['나무 아래','둘 다 같은 곳을 말했어요.','71%','52%'],['공 멈춘 곳','사건의 공통 증거예요.','57%','29%']],gold:['정답 단서','공이 나무 아래로 간 것은 둘 다 맞아요.']},
+  {id:19,title:'토끼가 탈출한 길',img:base+'case-19-detective.webp',desc:'발자국과 통로를 따라 경로를 찾는 사건입니다.',hint:'어느 길에서 발자국이 선명한지 보세요.',story:'토끼는 울타리 옆을 지나 꽃밭을 지나 작은 문으로 나갔습니다. 발자국은 꽃밭 쪽에서 가장 선명했습니다. 울타리 옆에는 흙이 조금 흩어져 있었고, 작은 문은 열려 있었습니다.',focus:'경로 추리',clues:[['꽃밭 발자국','가장 선명한 흔적이에요.','73%','47%'],['열린 작은 문','탈출한 마지막 길이에요.','54%','69%'],['흩어진 흙','처음 움직인 흔적이에요.','32%','31%'],['울타리 옆','지나간 길의 시작이에요.','21%','58%']],gold:['정답 단서','토끼는 꽃밭 쪽 길로 나갔어요.']},
+  {id:20,title:'명탐정의 첫 사건',img:base+'case-20-detective.webp',desc:'여러 증거를 한 번에 묶어 최종 결론을 찾는 사건입니다.',hint:'열쇠, 발자국, 시간표를 함께 읽어 보세요.',story:'명탐정이 된 지 첫날, 책상 위에는 사라진 열쇠, 젖은 발자국, 그리고 바뀐 시간표가 함께 놓여 있었습니다. 현관에는 작은 흙자국이 남아 있었고, 창문은 반쯤 열려 있었습니다.',focus:'종합 추리',clues:[['사라진 열쇠','없어진 물건이에요.','78%','31%'],['젖은 발자국','어디서 왔는지 알려 줘요.','52%','66%'],['흙자국','현관 근처의 흔적이에요.','36%','42%'],['반쯤 열린 창문','들어온 길일 수 있어요.','24%','70%']],gold:['정답 단서','여러 단서를 종합해 범위를 좁혀야 해요.']}
+];
+
+const state = { current: 0, unlocked: 0, step: 0, solved: false, found: [], selected: [] };
+const FLOW = ['단서 찾기','증거 기록','핵심 증거 선택','정답 확인','사건 해결'];
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast.t);
+  toast.t = setTimeout(()=>t.classList.remove('show'),1700);
+}
+
+function sceneImage(c){
+  if (c.img) return c.img;
+  const title = c.title;
+  const accent = ['#f6cf5a','#d86a57','#2d5f91','#5a8e7f'][c.id % 4];
+  const bg = ['#f9f1df','#f6edd7','#f5f0e4','#f7eadf'][c.id % 4];
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="${bg}"/>
+        <stop offset="100%" stop-color="#dbc89e"/>
+      </linearGradient>
+      <pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse">
+        <circle cx="4" cy="4" r="2" fill="rgba(22,50,77,0.08)"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="800" fill="url(#g)"/>
+    <rect width="1200" height="800" fill="url(#dots)"/>
+    <rect x="80" y="80" width="1040" height="640" rx="38" fill="rgba(255,255,255,.26)" stroke="rgba(22,50,77,.16)" stroke-width="4"/>
+    <path d="M120 560C260 460 390 500 520 420C670 325 780 250 935 242" fill="none" stroke="${accent}" stroke-width="22" stroke-linecap="round" stroke-dasharray="12 18" opacity=".9"/>
+    <circle cx="250" cy="270" r="86" fill="rgba(255,255,255,.55)"/>
+    <circle cx="920" cy="520" r="150" fill="${accent}22"/>
+    <circle cx="950" cy="170" r="26" fill="${accent}" opacity=".85"/>
+    <circle cx="190" cy="610" r="22" fill="${accent}" opacity=".55"/>
+    <text x="98" y="130" fill="#16324d" font-size="42" font-weight="900">독해 탐정단</text>
+    <text x="98" y="188" fill="#16324d" font-size="26" font-weight="700">CASE ${String(c.id).padStart(3,'0')}</text>
+    <text x="98" y="270" fill="#16324d" font-size="52" font-weight="900">${title}</text>
+    <text x="98" y="344" fill="#35546e" font-size="24" font-weight="700">이미지는 사건 내용에 맞춰 자동 생성된 미리보기예요.</text>
+    <text x="98" y="396" fill="#35546e" font-size="22" font-weight="700">${c.focus}</text>
+  </svg>`;
+  return 'data:image/svg+xml;charset=UTF-8,' + svg.replace(/\n/g,'').replace(/\s{2,}/g,' ');
+}
+
+function renderGrid(){
+  const grid = $('#caseGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  CASES.forEach((c, i)=>{
+    const btn = document.createElement('button');
+    const locked = i > state.unlocked;
+    btn.className = 'case' + (i===state.current ? ' active' : '') + (locked ? ' locked' : '');
+    btn.type = 'button';
+    btn.innerHTML = `
+      <img src="${sceneImage(c)}" alt="${c.title}">
+      <div class="case-info">
+        <div class="case-no">CASE ${String(c.id).padStart(3,'0')}</div>
+        <div class="case-title">${c.title}</div>
+        <div class="case-sub">${c.desc}</div>
+      </div>`;
+    btn.onclick = ()=> locked ? toast('먼저 현재 사건을 해결해 보세요') : selectCase(i);
+    grid.appendChild(btn);
+  });
+}
+
+function addHotspot(clue, label, gold=false){
+  const el = document.createElement('button');
+  el.type = 'button';
+  el.className = 'hotspot' + (gold ? ' gold' : '');
+  el.style.left = clue[3] || '50%';
+  el.style.top = clue[4] || '50%';
+  el.title = clue[0] + (gold ? ' · 황금 단서' : ' · 단서 위치');
+  el.innerHTML = `
+    <span class="pin">${gold ? '★' : label}</span>
+    <span class="tag">${gold ? '황금 단서' : clue[0]}</span>
+    <span class="sub">${gold ? '정답으로 가는 핵심' : '눌러서 조사'}</span>
+  `;
+  el.onclick = ()=>toast((gold ? '황금 단서 위치: ' : '단서 위치: ') + clue[0]);
+  $('#scene').appendChild(el);
+}
+
+function renderCase(){
+  const c = CASES[state.current];
+  $('#sceneImg').src = sceneImage(c);
+  $('#caseMeta').textContent = `CASE ${String(c.id).padStart(3,'0')} · ${c.title}`;
+  $('#caseTitle').textContent = c.title;
+  $('#caseRecord').textContent = c.story;
+  $('#caseDesc').textContent = c.desc;
+  $('#sceneHint').textContent = c.hint;
+  $('#sceneDesc').textContent = c.story;
+  state.found = [];
+  state.selected = [];
+  state.step = 0;
+  state.solved = false;
+  renderFlow(0);
+  renderWorkspace(c,0);
+  const list = $('#clueList');
+  list.innerHTML = '';
+  c.clues.forEach((clue, idx)=>{
+    const div = document.createElement('div');
+    div.className = 'clue';
+    div.innerHTML = `<div><b>${idx+1}. ${clue[0]}</b><small>${clue[1]}</small></div><span>📌 단서</span>`;
+    div.onclick = ()=>inspectClue(idx);
+    list.appendChild(div);
+  });
+  $$('.hotspot').forEach(el=>el.remove());
+  c.clues.forEach((clue, idx)=>addHotspot(clue, idx+1));
+  addHotspot([c.gold[0], c.gold[1], '', '84%', '82%'], '★', true);
+  renderGrid();
+  const scene = $('#scene');
+  scene.classList.remove('flash');
+  void scene.offsetWidth;
+  scene.classList.add('flash');
+}
+
+function renderFlow(active){
+  $('#flow').innerHTML = FLOW.map((s,i)=>`<span class="step ${i===active?'on':''}">${i+1}. ${s}</span>`).join('');
+}
+
+function renderWorkspace(c, step){
+  const titles = ['단서를 찾고 있어요','증거를 기록해요','핵심 증거를 골라요','정답을 확인해요','사건이 해결됐어요'];
+  const descs = [
+    '현장 이미지에서 단서를 찾으면 수첩에 기록돼요.',
+    '찾은 단서 중 사건에 중요한 것부터 골라 보세요.',
+    '핵심 증거 2개를 골라야 정답을 확인할 수 있어요.',
+    '지문과 증거가 맞는지 마지막으로 확인해요.',
+    c.gold[1]
+  ];
+  $('#wsTitle').textContent = titles[step];
+  $('#wsDesc').textContent = descs[step];
+  const foundText = state.found.length ? `${state.found.length}개 단서를 찾았어요` : '아직 찾은 단서가 없어요';
+  const selectedText = state.selected.length ? `${state.selected.length}개 핵심 증거를 골랐어요` : '핵심 증거를 골라 보세요';
+  const choices = step===0
+    ? [`<button class="choice on" type="button" onclick="advanceStep(1)" ${state.found.length < 2 ? 'disabled' : ''}>${foundText}</button>`]
+    : step===1
+      ? c.clues.map((x,i)=>`<button class="choice ${state.selected.includes(i)?'on':''}" type="button" onclick="toggleEvidence(${i})">${i+1}. ${x[0]}</button>`).concat(`<button class="choice on" type="button" onclick="advanceStep(2)" ${state.selected.length < 2 ? 'disabled' : ''}>${selectedText}</button>`)
+      : step===2
+        ? [`<button class="choice on" type="button" onclick="advanceStep(3)" ${state.selected.length < 2 ? 'disabled' : ''}>정답 확인하기</button>`]
+        : step===3
+          ? [`<button class="choice on" type="button" onclick="completeCase()">${c.gold[1]}</button>`]
+          : [`<button class="choice on" type="button" onclick="completeCase()">다음 사건 열기</button>`];
+  $('#wsChoices').innerHTML = choices.join('');
+}
+
+function advanceStep(step){
+  const c = CASES[state.current];
+  const max = FLOW.length - 1;
+  const s = Math.min(step, max);
+  if (s === 1 && state.found.length < 2) return toast('먼저 현장에서 단서를 조금 더 찾아보세요');
+  if (s === 2 && state.selected.length < 2) return toast('핵심 증거 2개를 골라야 해요');
+  if (s === 3 && state.selected.length < 2) return toast('증거를 먼저 골라 보세요');
+  state.step = s;
+  renderFlow(s);
+  renderWorkspace(c, s);
+  toast(`${FLOW[s]} 단계로 이동했어요`);
+}
+
+function inspectClue(idx){
+  const c = CASES[state.current];
+  const name = c.clues[idx][0];
+  if (!state.found.includes(idx)) state.found.push(idx);
+  toast(`단서 발견: ${name}`);
+  if (state.step === 0 && state.found.length >= 2) renderWorkspace(c, 0);
+}
+
+function toggleEvidence(idx){
+  const c = CASES[state.current];
+  if (state.selected.includes(idx)) state.selected = state.selected.filter(v => v !== idx);
+  else if (state.selected.length < 2) state.selected.push(idx);
+  renderWorkspace(c, 1);
+}
+
+function completeCase(){
+  if (state.solved) return;
+  if (state.found.length < 2 || state.selected.length < 2) {
+    toast('단서를 더 모아야 사건을 해결할 수 있어요');
+    return;
+  }
+  state.solved = true;
+  const next = Math.min(state.current + 1, CASES.length - 1);
+  state.unlocked = Math.max(state.unlocked, next);
+  toast('사건 해결! 다음 사건이 열렸어요');
+  renderGrid();
+  setTimeout(()=>selectCase(next), 650);
+}
+
+function selectCase(i){
+  state.current = i;
+  document.body.classList.add('playing');
+  renderCase();
+  document.getElementById('scene').scrollIntoView({behavior:'smooth',block:'center'});
+  toast(CASES[i].title + ' 사건을 열었어요');
+}
+
+$('#startBtn').onclick = ()=>{
+  selectCase(0);
+};
+$('#randomBtn').onclick = ()=>selectCase(Math.floor(Math.random()*(state.unlocked+1)));
+$('#prevBtn').onclick = ()=>selectCase(Math.max(0, state.current - 1));
+$('#nextBtn').onclick = ()=>selectCase(Math.min(state.unlocked, state.current + 1));
+
+$('#scene').onclick = (e)=>{
+  if (e.target === $('#scene')) {
+    toast('장면을 눌렀어요. 단서 버튼을 눌러 보세요.');
+  }
+};
+
+renderGrid();
+</script>
+</body>
+</html>

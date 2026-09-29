@@ -1,0 +1,3 @@
+{
+  "/api/edugame-games/[gameId]/route": "app/api/edugame-games/[gameId]/route.js"
+}

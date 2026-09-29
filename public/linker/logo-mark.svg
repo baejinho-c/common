@@ -1,9 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="CorpLinker">
-  <defs><linearGradient id="mark-bg" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#0EA5E9"/>
-    <stop offset="1" stop-color="#0284C7"/>
-  </linearGradient></defs>
+  <defs>
+    <linearGradient id="mark-bg" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#1E40AF"/>
+    </linearGradient>
+  </defs>
   <rect width="48" height="48" rx="12" fill="url(#mark-bg)"/>
   <rect x="1.5" y="1.5" width="45" height="45" rx="10.5" fill="none" stroke="#ffffff" stroke-opacity="0.14"/>
-  <text x="24" y="31.68" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="24" font-weight="700" fill="#ffffff">L</text>
+  <path d="M24 16.5L33.4 31.5H14.6L24 16.5z" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linejoin="round"/>
+  <circle cx="24" cy="16.5" r="3.5" fill="#ffffff"/>
+  <circle cx="33.4" cy="31.5" r="3.5" fill="#ffffff"/>
+  <circle cx="14.6" cy="31.5" r="3.5" fill="#ffffff"/>
+  <circle cx="24" cy="24.5" r="2.3" fill="#7DD3FC"/>
 </svg>

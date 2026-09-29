@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+Host: https://appicon.restyart.com
+Sitemap: https://appicon.restyart.com/sitemap.xml

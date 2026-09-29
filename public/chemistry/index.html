@@ -1,8 +1,871 @@
-<!DOCTYPE html><html lang="ko" data-resty-tenant="chemistry"><head><meta property="og:title" content="화학 연구소"/><meta property="og:url" content="https://chemistry.restyart.com/"/><meta property="og:image" content="https://chemistry.restyart.com/og-image.svg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:image" content="https://chemistry.restyart.com/og-image.svg"/><link rel="apple-touch-icon" href="/chemistry/apple-touch-icon.svg"/><link rel="icon" href="/chemistry/favicon.svg" type="image/svg+xml"/>
-<base href="/chemistry/"><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" href="/chemistry/_next/static/media/0b78ff376f6b9734-s.p.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="/chemistry/_next/static/media/723e11e5093b8e80.p.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="stylesheet" href="/chemistry/_next/static/css/7eac84acf86ed2c2.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/chemistry/_next/static/chunks/webpack-99baf41fc2989f65.js"/><script src="/chemistry/_next/static/chunks/4bd1b696-9cd32c8f0ef2005e.js" async=""></script><script src="/chemistry/_next/static/chunks/684-bcfa5eb549631357.js" async=""></script><script src="/chemistry/_next/static/chunks/main-app-7fa5d85b89c05a5d.js" async=""></script><script src="/chemistry/_next/static/chunks/371-2bbb61763e700d77.js" async=""></script><script src="/chemistry/_next/static/chunks/app/layout-084b8d3de4ff7825.js" async=""></script><script src="/chemistry/_next/static/chunks/b536a0f1-4e0c9a08c5f06bd0.js" async=""></script><script src="/chemistry/_next/static/chunks/bd904a5c-8f01c23bbebf48c3.js" async=""></script><script src="/chemistry/_next/static/chunks/b79b7286-c0d22df9b53642d9.js" async=""></script><script src="/chemistry/_next/static/chunks/46-df5511a6d91f9f0f.js" async=""></script><script src="/chemistry/_next/static/chunks/app/page-d43257bc963c967d.js" async=""></script><link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-YVK657S8Q4" as="script"/><meta name="next-size-adjust" content=""/><title>김 박사의 초등 화학 연구소</title><meta name="description" content="초등 과학 교육과정 기반 상호작용 화학 학습 플랫폼"/><meta name="generator" content="v0.dev"/><style>
-html {
-  font-family: 'GeistSans', 'GeistSans Fallback';
-  --font-sans: __variable_8adcd2;
-  --font-mono: __variable_46451f;
+<!DOCTYPE html>
+<html lang="ko" data-resty-tenant="chemistry">
+<head><meta property="og:title" content="화학 연구소"/><meta property="og:url" content="https://chemistry.restyart.com/"/>
+<base href="/chemistry/">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>김 박사의 초등 화학 실험실 | 레벨업 실험 게임</title>
+<meta name="description" content="붓고, 젓고, 부글부글! 초등 과학 교과서 실험 5가지를 직접 해보는 레벨제 인터랙티브 화학 실험실." />
+<link rel="icon" href="/chemistry/favicon.png?v=20260721a" type="image/png" />
+<link rel="icon" href="/chemistry/favicon-32x32.png?v=20260721a" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/chemistry/apple-touch-icon.png?v=20260721a" sizes="180x180" />
+<meta property="og:image" content="https://chemistry.restyart.com/icon.png?v=20260721a" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap');
+:root{
+  --ink:#2E4057; --bg:#EFF7FA; --panel:#FFFFFF; --mint:#3EC6A8;
+  --line:#D6E6EE; --soft:#7A93A5;
 }
-        </style><script src="/chemistry/_next/static/chunks/polyfills-42372ed130431b0a.js" noModule=""></script></head><body><div class="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100"><div class="bg-white/80 backdrop-blur-sm border-b border-purple-200 p-4"><div class="max-w-7xl mx-auto flex items-center justify-between"><div class="flex items-center gap-4"><div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-2xl">👨‍🔬</div><div><h1 class="text-2xl font-bold text-purple-800">김 박사의 초등 화학 연구소</h1><div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap w-4 h-4 text-purple-600"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg><button type="button" role="combobox" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex items-center justify-between rounded-md border border-input bg-background px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 w-32 h-8 text-sm"><span style="pointer-events:none"></span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 opacity-50" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button><select aria-hidden="true" tabindex="-1" style="position:absolute;border:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;word-wrap:normal"></select></div></div></div><div class="flex items-center gap-4"><div class="text-right"><div class="text-sm font-medium text-purple-700">실험 성공률</div><div class="text-lg font-bold text-green-600">0<!-- -->%</div></div><div class="text-right"><div class="text-sm font-medium text-purple-700">발견한 물질</div><div class="text-lg font-bold text-blue-600">0<!-- -->개</div></div></div></div></div><div class="max-w-7xl mx-auto px-6 mb-4"><div class="bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-200 rounded-2xl p-4 relative" style="opacity:0;transform:translateY(-20px)"><div class="flex items-start gap-3"><div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-xl flex-shrink-0">👨‍🔬</div><div class="flex-1"><div class="bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-sm"><p class="text-amber-800 font-medium">안녕하세요! 김 박사의 화학 연구소에 오신 것을 환영합니다! 학년을 선택하고 화학의 신비로운 세계를 탐험해보세요! 🧪✨</p></div></div></div><div class="absolute -bottom-2 left-16 w-4 h-4 bg-white/80 rotate-45 border-r border-b border-amber-200"></div></div></div><div class="max-w-7xl mx-auto p-6"><div dir="ltr" data-orientation="horizontal" class="w-full"><div role="tablist" aria-orientation="horizontal" class="h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground grid w-full grid-cols-3 mb-6" tabindex="-1" data-orientation="horizontal" style="outline:none"><button type="button" role="tab" aria-selected="true" aria-controls="radix-«Rb7db»-content-learning" data-state="active" id="radix-«Rb7db»-trigger-learning" class="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex items-center gap-2" tabindex="-1" data-orientation="horizontal" data-radix-collection-item=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain w-4 h-4"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M19.938 10.5a4 4 0 0 1 .585.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M19.967 17.484A4 4 0 0 1 18 18"></path></svg>학습 코너</button><button type="button" role="tab" aria-selected="false" aria-controls="radix-«Rb7db»-content-experiment" data-state="inactive" id="radix-«Rb7db»-trigger-experiment" class="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex items-center gap-2" tabindex="-1" data-orientation="horizontal" data-radix-collection-item=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-test-tube w-4 h-4"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5c-1.4 0-2.5-1.1-2.5-2.5V2"></path><path d="M8.5 2h7"></path><path d="M14.5 16h-5"></path></svg>실험 코너</button><button type="button" role="tab" aria-selected="false" aria-controls="radix-«Rb7db»-content-analysis" data-state="inactive" id="radix-«Rb7db»-trigger-analysis" class="justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm flex items-center gap-2" tabindex="-1" data-orientation="horizontal" data-radix-collection-item=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-4 h-4"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>상세 분석</button></div><div data-state="active" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-«Rb7db»-trigger-learning" id="radix-«Rb7db»-content-learning" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-6" style="animation-duration:0s"><div class="rounded-lg border bg-card text-card-foreground shadow-sm bg-gradient-to-r from-green-100 to-blue-100 border-green-200"><div class="flex flex-col space-y-1.5 p-6"><div class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 text-green-800"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-5 h-5"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>초등 <!-- -->1<!-- -->학년 학습 목표</div></div><div class="p-6 pt-0"><div class="space-y-4"><h3 class="text-lg font-bold text-green-700">물질 관찰하기</h3><div><h4 class="font-medium text-green-700 mb-2">학습 목표</h4><ul class="list-disc list-inside space-y-1"><li class="text-green-600 text-sm">물체의 모양, 크기, 색깔 구분</li><li class="text-green-600 text-sm">냄새로 물질 구분</li><li class="text-green-600 text-sm">만져서 느낌 알기</li></ul></div><div><h4 class="font-medium text-green-700 mb-2">주요 활동</h4><div class="flex flex-wrap gap-2"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-green-300 text-green-700">오감으로 물질 탐험</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-green-300 text-green-700">물질 분류 게임</div></div></div><div><h4 class="font-medium text-green-700 mb-2">핵심 용어</h4><div class="flex flex-wrap gap-2"><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">모양</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">크기</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">색깔</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">냄새</div><div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">감촉</div></div></div></div></div></div><div class="rounded-lg border text-card-foreground shadow-sm bg-white/90 backdrop-blur-sm border-purple-200"><div class="flex flex-col space-y-1.5 p-6"><div class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 text-purple-800"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain w-5 h-5"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M19.938 10.5a4 4 0 0 1 .585.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M19.967 17.484A4 4 0 0 1 18 18"></path></svg>교육과정 맞춤 화학 학습 - 모든 것을 클릭해보세요!</div></div><div class="p-6 pt-0"><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="rounded-lg border text-card-foreground shadow-sm bg-blue-50 border-blue-200"><div class="flex flex-col space-y-1.5 p-6"><div class="font-semibold tracking-tight text-lg text-blue-800 flex items-center gap-2">⚛️ 원소 탐험 (<!-- -->2<!-- -->개)<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-4 h-4"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></div></div><div class="p-6 pt-0"><p class="text-sm text-blue-700 mb-3">1<!-- -->학년에서 배우는 원소들을 클릭해서 자세히 알아보세요!</p><div class="grid grid-cols-3 gap-2"><button class="gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input hover:text-accent-foreground rounded-md px-3 h-16 flex flex-col items-center justify-center hover:bg-blue-100 cursor-pointer bg-transparent" type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed"><div class="text-lg font-bold">H</div><div class="text-xs">수소</div><div class="text-xs text-gray-500">기체</div></button><button class="gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input hover:text-accent-foreground rounded-md px-3 h-16 flex flex-col items-center justify-center hover:bg-blue-100 cursor-pointer bg-transparent" type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed"><div class="text-lg font-bold">O</div><div class="text-xs">산소</div><div class="text-xs text-gray-500">기체</div></button></div></div></div><div class="rounded-lg border text-card-foreground shadow-sm bg-red-50 border-red-200"><div class="flex flex-col space-y-1.5 p-6"><div class="font-semibold tracking-tight text-lg text-red-800 flex items-center gap-2">🔗 결합 유형<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-microscope w-4 h-4"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg></div></div><div class="p-6 pt-0"><p class="text-sm text-red-700 mb-3">결합 유형을 클릭해서 자세히 알아보세요!</p><div class="space-y-2"><button class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input hover:text-accent-foreground h-9 rounded-md px-3 w-full justify-start hover:bg-red-100 cursor-pointer bg-transparent" type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed"><div class="flex items-center gap-2"><div class="w-3 h-3 rounded bg-blue-400"></div>공유결합<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info w-3 h-3 ml-auto"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div></button><button class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input hover:text-accent-foreground h-9 rounded-md px-3 w-full justify-start hover:bg-red-100 cursor-pointer bg-transparent" type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed"><div class="flex items-center gap-2"><div class="w-3 h-3 rounded bg-red-400"></div>이온결합<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info w-3 h-3 ml-auto"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg></div></button></div></div></div><div class="rounded-lg border text-card-foreground shadow-sm bg-green-50 border-green-200"><div class="flex flex-col space-y-1.5 p-6"><div class="font-semibold tracking-tight text-lg text-green-800 flex items-center gap-2">🧪 화합물 도감 (<!-- -->1<!-- -->개)<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-4 h-4"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg></div></div><div class="p-6 pt-0"><p class="text-sm text-green-700 mb-3">1<!-- -->학년에서 배우는 화합물을 클릭해서 상세 정보를 확인하세요!</p><div class="space-y-2"><button class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:text-accent-foreground h-9 rounded-md px-3 w-full justify-start cursor-pointer opacity-50 hover:bg-gray-100" disabled="" type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed"><div class="flex items-center gap-2"><div class="font-bold">???</div><div class="text-xs">미발견</div></div></button></div></div></div></div></div></div></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-«Rb7db»-trigger-experiment" hidden="" id="radix-«Rb7db»-content-experiment" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-6"></div><div data-state="inactive" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-«Rb7db»-trigger-analysis" hidden="" id="radix-«Rb7db»-content-analysis" tabindex="0" class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-6"></div></div><div class="rounded-lg border bg-card text-card-foreground shadow-sm bg-gradient-to-r from-blue-100 to-purple-100 border-purple-200 mt-6"><div class="flex flex-col space-y-1.5 p-6"><div class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 text-purple-800"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy w-5 h-5"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>초등 <!-- -->1<!-- -->학년 화합물 도감 - 클릭해서 상세 정보 확인! (<!-- -->0<!-- -->/<!-- -->1<!-- -->)</div></div><div class="p-6 pt-0"><div aria-valuemax="100" aria-valuemin="0" role="progressbar" data-state="indeterminate" data-max="100" class="relative h-4 w-full overflow-hidden rounded-full bg-secondary mb-4"><div data-state="indeterminate" data-max="100" class="h-full w-full flex-1 bg-primary transition-all" style="transform:translateX(-100%)"></div></div><div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3"><div><div class="p-3 rounded-lg border-2 text-center bg-gray-50 border-gray-200 opacity-50"><div class="text-lg font-bold">???</div><div class="text-xs text-gray-600">미발견</div><div class="text-xs text-gray-500 mt-1">초등 <!-- -->1<!-- -->학년</div><div class="text-xs text-blue-600 mt-1">실험해서 발견하세요!</div></div></div></div></div></div></div><div class="fixed bottom-6 right-6 z-50"><button class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2" tabindex="0" style="transform:scale(0)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle w-6 h-6"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg><span class="hidden sm:block font-medium">문의하기</span></button></div></div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-blue-600 shadow-lg hover:bg-blue-700" aria-label="문의 채팅 열기"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle h-6 w-6"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></button><script src="/chemistry/_next/static/chunks/webpack-99baf41fc2989f65.js" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[9243,[\"371\",\"static/chunks/371-2bbb61763e700d77.js\",\"177\",\"static/chunks/app/layout-084b8d3de4ff7825.js\"],\"\"]\n3:I[7555,[],\"\"]\n4:I[1295,[],\"\"]\n5:I[9032,[\"371\",\"static/chunks/371-2bbb61763e700d77.js\",\"177\",\"static/chunks/app/layout-084b8d3de4ff7825.js\"],\"default\"]\n6:I[894,[],\"ClientPageRoot\"]\n7:I[7980,[\"367\",\"static/chunks/b536a0f1-4e0c9a08c5f06bd0.js\",\"831\",\"static/chunks/bd904a5c-8f01c23bbebf48c3.js\",\"682\",\"static/chunks/b79b7286-c0d22df9b53642d9.js\",\"371\",\"static/chunks/371-2bbb61763e700d77.js\",\"46\",\"static/chunks/46-df5511a6d91f9f0f.js\",\"974\",\"static/chunks/app/page-d43257bc963c967d.js\"],\"default\"]\na:I[9665,[],\"OutletBoundary\"]\nd:I[9665,[],\"ViewportBoundary\"]\nf:I[9665,[],\"MetadataBoundary\"]\n11:I[6614,[],\"\"]\n:HL[\"/_next/static/media/0b78ff376f6b9734-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/media/723e11e5093b8e80.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n:HL[\"/_next/static/css/7eac84acf86ed2c2.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"b\":\"3q0_K9GrjiMJ22on0Rsse\",\"p\":\"\",\"c\":[\"\",\"\"],\"i\":false,\"f\":[[[\"\",{\"children\":[\"__PAGE__\",{}]},\"$undefined\",\"$undefined\",true],[\"\",[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/7eac84acf86ed2c2.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"ko\",\"children\":[[\"$\",\"head\",null,{\"children\":[[\"$\",\"$L2\",null,{\"src\":\"https://www.googletagmanager.com/gtag/js?id=G-YVK657S8Q4\",\"strategy\":\"afterInteractive\"}],[\"$\",\"$L2\",null,{\"id\":\"google-analytics\",\"strategy\":\"afterInteractive\",\"children\":\"\\n            window.dataLayer = window.dataLayer || [];\\n            function gtag(){dataLayer.push(arguments);}\\n            gtag('js', new Date());\\n            gtag('config', 'G-YVK657S8Q4');\\n          \"}],[\"$\",\"style\",null,{\"children\":\"\\nhtml {\\n  font-family: 'GeistSans', 'GeistSans Fallback';\\n  --font-sans: __variable_8adcd2;\\n  --font-mono: __variable_46451f;\\n}\\n        \"}]]}],[\"$\",\"body\",null,{\"children\":[[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}],[\"$\",\"div\",null,{\"data-resty-legal\":\"1\",\"className\":\"mt-auto border-t border-gray-200 bg-gray-50 text-gray-600 text-xs leading-relaxed\",\"children\":[\"$\",\"div\",null,{\"className\":\"container mx-auto px-4 py-4 max-w-6xl\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-700 mb-2\",\"children\":\"리스티아트\"}],[\"$\",\"p\",null,{\"className\":\"mb-1\",\"children\":\"경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호\"}],[\"$\",\"p\",null,{\"className\":\"mb-3\",\"children\":[\"문의:\",\" \",[\"$\",\"a\",null,{\"href\":\"mailto:bloodjino1@gmail.com\",\"className\":\"text-blue-600 hover:underline\",\"children\":\"bloodjino1@gmail.com\"}]]}],[\"$\",\"p\",null,{\"className\":\"p-3 bg-white border border-gray-200 rounded-md text-gray-500\",\"children\":[[\"$\",\"span\",null,{\"className\":\"font-semibold text-gray-700\",\"children\":\"AI 이용 안내\"}],\" — \",\"본 서비스의 일부 콘텐츠·응답·추천·이미지 등은 인공지능(AI) 기술을 활용하여 생성될 수 있으며, AI 생성 결과는 참고용이며 정확성·완전성을 보장하지 않습니다.\"]}],[\"$\",\"p\",null,{\"className\":\"mt-2 text-[11px] text-gray-400\",\"children\":[\"© \",2026,\" \",\"리스티아트\",\". All rights reserved.\"]}]]}]}],[\"$\",\"$L5\",null,{}]]}]]}]]}],{\"children\":[\"__PAGE__\",[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L6\",null,{\"Component\":\"$7\",\"searchParams\":{},\"params\":{},\"promises\":[\"$@8\",\"$@9\"]}],\"$undefined\",null,[\"$\",\"$La\",null,{\"children\":[\"$Lb\",\"$Lc\",null]}]]}],{},null,false]},null,false],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$1\",\"tLOhQmvYizQdWGNOVCgj-\",{\"children\":[[\"$\",\"$Ld\",null,{\"children\":\"$Le\"}],[\"$\",\"meta\",null,{\"name\":\"next-size-adjust\",\"content\":\"\"}]]}],[\"$\",\"$Lf\",null,{\"children\":\"$L10\"}]]}],false]],\"m\":\"$undefined\",\"G\":[\"$11\",\"$undefined\"],\"s\":false,\"S\":true}\n"])</script><script>self.__next_f.push([1,"8:{}\n9:{}\n"])</script><script>self.__next_f.push([1,"e:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\nb:null\n"])</script><script>self.__next_f.push([1,"c:null\n10:[[\"$\",\"title\",\"0\",{\"children\":\"김 박사의 초등 화학 연구소\"}],[\"$\",\"meta\",\"1\",{\"name\":\"description\",\"content\":\"초등 과학 교육과정 기반 상호작용 화학 학습 플랫폼\"}],[\"$\",\"meta\",\"2\",{\"name\":\"generator\",\"content\":\"v0.dev\"}]]\n"])</script></body></html>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);font-family:'Gowun Dodum',sans-serif;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.jua{font-family:'Jua',sans-serif;font-weight:400}
+:focus-visible{outline:3px solid var(--mint);outline-offset:2px;border-radius:4px}
+
+/* ---------- 헤더 ---------- */
+header{
+  display:flex;align-items:center;gap:10px;padding:12px 16px;
+  background:var(--panel);border-bottom:2px solid var(--line);
+  position:sticky;top:0;z-index:20;
+}
+.dr{width:40px;height:40px;border-radius:12px;background:transparent;display:grid;place-items:center;font-size:22px;border:none;overflow:hidden;flex-shrink:0}
+.dr img{width:100%;height:100%;object-fit:cover;display:block}
+header h1{font-size:17px}
+header small{display:block;font-size:10.5px;color:var(--soft)}
+.prog{margin-left:auto;text-align:right}
+.prog .jua{font-size:13px;color:var(--mint)}
+.prog-bar{width:110px;height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:4px}
+.prog-bar i{display:block;height:100%;background:var(--mint);border-radius:6px;transition:width .6s}
+
+main{max-width:560px;margin:0 auto;padding:16px 14px 60px}
+
+/* ---------- 레벨 선택 ---------- */
+.intro{background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.intro p{font-size:13.5px;line-height:1.7}
+.lv-list{display:flex;flex-direction:column;gap:12px}
+.lv-card{
+  display:flex;align-items:center;gap:14px;text-align:left;width:100%;
+  background:var(--panel);border:2px solid var(--line);border-radius:18px;padding:14px;
+  transition:transform .15s, border-color .15s;
+}
+.lv-card:not(.locked):hover{transform:translateY(-2px);border-color:var(--c)}
+.lv-card.locked{opacity:.55}
+.lv-num{
+  width:52px;height:52px;border-radius:14px;background:var(--c);color:#fff;
+  display:grid;place-items:center;font-size:24px;flex:none;box-shadow:0 3px 0 rgba(0,0,0,.12);
+}
+.lv-card h2{font-size:17px}
+.lv-card .tag{font-size:10.5px;color:var(--soft);margin-top:3px}
+.lv-card .tag b{color:var(--c);font-weight:700}
+.lv-star{margin-left:auto;font-size:24px;flex:none}
+
+/* ---------- 실험 화면 ---------- */
+#exp{display:none}
+.exp-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.back{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:8px 13px;font-size:13px;font-weight:700}
+.exp-top h2{font-size:18px}
+.exp-top .tag{font-size:10.5px;color:var(--soft)}
+.say{
+  background:var(--panel);border:2px solid var(--line);border-radius:16px;
+  padding:11px 14px;display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;min-height:58px;
+}
+.say .dr{width:34px;height:34px;font-size:18px;flex:none}
+.say p{font-size:14px;line-height:1.65;padding-top:4px}
+.stage{
+  background:linear-gradient(180deg,#FDFEFF, #F2F8FB 70%, #E2EEF3 70%);
+  border:2px solid var(--line);border-radius:20px;padding:16px 12px 0;
+  min-height:180px;max-height:38vh;overflow-y:auto;position:relative;
+  display:flex;justify-content:center;align-items:flex-end;gap:14px;
+}
+.footbar{
+  background:var(--panel);border:2px solid var(--line);border-radius:16px;
+  padding:12px 10px;margin-bottom:12px;
+}
+.footbar:empty{display:none}
+main{padding-bottom:20px}
+#exp{padding-bottom:0}
+.bench{position:absolute;bottom:0;left:0;right:0;height:30%;background:#D9C6A8;border-top:4px solid #C4AE8C}
+.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.tool{
+  background:var(--panel);border:2px solid var(--line);border-radius:14px;
+  padding:10px 14px;font-size:14px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;
+  transition:transform .12s;min-width:86px;
+}
+.tool:active{transform:scale(.94)}
+.tool .em{font-size:24px}
+.tool.used{opacity:.4;pointer-events:none}
+.tool.hot{border-color:var(--mint);box-shadow:0 0 0 3px rgba(62,198,168,.2)}
+
+/* 비커 & 액체 */
+.beaker{
+  width:92px;height:112px;position:relative;z-index:2;
+  border:4px solid #A6BFCD;border-top:none;border-radius:0 0 18px 18px;
+  background:rgba(255,255,255,.35);
+}
+.beaker::before{content:"";position:absolute;top:-2px;left:-10px;right:-10px;height:6px;background:#A6BFCD;border-radius:6px}
+.beaker .mark{position:absolute;right:6px;width:14px;height:2px;background:#A6BFCD;opacity:.6}
+.liquid{
+  position:absolute;bottom:0;left:0;right:0;height:62%;
+  background:rgba(150,205,235,.75);transition:background 1.1s, height .9s;
+  border-radius:0 0 14px 14px;overflow:hidden;
+}
+.tall{width:86px;height:190px}
+.label{position:absolute;bottom:-26px;left:50%;transform:translateX(-50%);font-size:12px;white-space:nowrap;font-weight:700;color:var(--soft)}
+.result-chip{
+  position:absolute;top:-34px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:#fff;border-radius:10px;padding:4px 10px;font-size:11.5px;white-space:nowrap;
+  animation:pop .4s cubic-bezier(.3,1.6,.5,1) both;
+}
+@keyframes pop{from{transform:translateX(-50%) scale(.4);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
+
+/* 입자/거품/김 */
+.grain{position:absolute;width:7px;height:7px;border-radius:50%;z-index:3;transition:opacity 1s}
+@keyframes drop{from{transform:translateY(-90px)}to{transform:translateY(0)}}
+.bub{position:absolute;border-radius:50%;background:rgba(255,255,255,.85);animation:rise linear both}
+@keyframes rise{from{transform:translateY(0) scale(1);opacity:.9}to{transform:translateY(-140px) scale(1.4);opacity:0}}
+.foam{position:absolute;border-radius:50%;animation:erupt ease-out both}
+@keyframes erupt{
+  0%{transform:translate(0,0) scale(.4);opacity:1}
+  100%{transform:translate(var(--dx), var(--dy)) scale(1.3);opacity:0}
+}
+.steam{position:absolute;font-size:20px;animation:steamUp 1.8s ease-out both;opacity:.8}
+@keyframes steamUp{from{transform:translateY(0)}to{transform:translateY(-90px);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.shaking{animation:shake .5s ease-in-out 3}
+.stir-rod{
+  position:absolute;top:-40px;left:50%;width:7px;height:96px;background:linear-gradient(#C9D8E2,#9DB7C6);
+  border-radius:4px;transform-origin:top center;z-index:4;
+}
+.stirring{animation:stir .9s ease-in-out 2}
+@keyframes stir{0%,100%{transform:rotate(-16deg)}50%{transform:rotate(16deg)}}
+
+/* 붓기 애니메이션 */
+.pour-bottle{position:absolute;font-size:34px;z-index:6;animation:pourB 1.4s ease-in-out both}
+@keyframes pourB{
+  0%{transform:translate(60px,-110px) rotate(0)}
+  35%{transform:translate(6px,-96px) rotate(-70deg)}
+  75%{transform:translate(6px,-96px) rotate(-70deg)}
+  100%{transform:translate(60px,-110px) rotate(0);opacity:0}
+}
+.stream{position:absolute;width:5px;background:var(--sc,#BEE3F5);border-radius:4px;z-index:5;animation:streamA 1s .35s ease-in both;transform-origin:top}
+@keyframes streamA{0%{height:0;opacity:0}25%{opacity:1}100%{height:74px;opacity:1}}
+
+/* pH 띠 */
+.ph{width:100%;max-width:300px;margin:12px auto 0}
+.ph .bar{height:14px;border-radius:8px;background:linear-gradient(90deg,#E4574B,#F0A860,#8E6FB8,#4E9ED6,#3D6FB0)}
+.ph .cursor{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:11px solid var(--ink);margin-top:3px;transform:translateX(-8px);transition:margin-left 1.1s;position:relative}
+.ph .lbl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--soft);margin-top:2px}
+
+/* 온도계 */
+.thermo{width:26px;height:170px;border:3px solid #A6BFCD;border-radius:14px;position:relative;background:#fff;z-index:2}
+.thermo .merc{position:absolute;bottom:6px;left:6px;right:6px;background:linear-gradient(#F26B5E,#E4574B);border-radius:8px;height:20%;transition:height .5s}
+.thermo .t-lbl{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:700;white-space:nowrap}
+.ice{position:absolute;background:rgba(210,236,250,.95);border:2px solid #BEE0F2;border-radius:6px;width:26px;height:26px;transition:transform .6s, opacity .6s;z-index:3}
+
+/* 액션 버튼 */
+.acts{display:flex;gap:10px;justify-content:center;margin-top:14px}
+.act{
+  background:var(--mint);color:#fff;border-radius:16px;padding:13px 22px;font-size:16px;
+  box-shadow:0 4px 0 rgba(0,0,0,.12);transition:transform .12s;
+}
+.act:active{transform:translateY(2px)}
+.act.warm{background:#F0885E}
+.act.cold{background:#5FA8D8}
+.act.ghost{background:var(--panel);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.act:disabled{opacity:.4;pointer-events:none}
+
+/* 퀴즈/성공 오버레이 */
+.ovl{position:fixed;inset:0;background:rgba(35,55,70,.55);display:grid;place-items:center;padding:18px;z-index:50}
+.ovl[hidden]{display:none!important}
+.card{background:var(--panel);border-radius:22px;padding:22px 20px;width:100%;max-width:400px;text-align:center}
+.card h3{font-size:19px;margin-bottom:6px}
+.card .q{font-size:15px;line-height:1.7;margin:10px 0 14px}
+.q-opt{display:flex;flex-direction:column;gap:8px}
+.q-opt button{
+  border:2px solid var(--line);border-radius:14px;padding:12px;font-size:15px;font-weight:700;
+  transition:border-color .15s;background:#FAFCFD;
+}
+.q-opt button:hover{border-color:var(--mint)}
+.q-opt button.no{border-color:#E4574B;color:#E4574B;animation:shake .4s}
+.exp-note{font-size:12.5px;color:var(--soft);margin-top:12px;line-height:1.6}
+.star-big{font-size:60px;animation:starPop .6s cubic-bezier(.3,1.8,.5,1) both}
+@keyframes starPop{from{transform:scale(0) rotate(-40deg)}to{transform:scale(1) rotate(0)}}
+.confetti{position:fixed;top:-10px;font-size:18px;animation:fall linear both;z-index:60;pointer-events:none}
+@keyframes fall{to{transform:translateY(105vh) rotate(360deg)}}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#dbg{display:none}
+</style>
+<link rel="canonical" href="https://chemistry.restyart.com/"/>
+<meta property="og:description" content="붓고, 젓고, 부글부글! 초등 과학 교과서 실험 5가지를 직접 해보는 레벨제 인터랙티브 화학 실험실."/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"chemistry","url":"https://chemistry.restyart.com/","inLanguage":"ko-KR"}</script>
+
+<script data-resty-analytics>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-YVK657S8Q4', { send_page_view: true });
+    gtag('set', 'user_properties', { resty_tenant: 'chemistry' });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YVK657S8Q4"></script>
+</head>
+<body>
+
+<header>
+  <div class="dr"><img src="/chemistry/icon.png?v=20260721a" alt="화학 실험실" width="40" height="40" /></div>
+  <div>
+    <h1 class="jua">김 박사의 화학 실험실</h1>
+    <small>초등 교과서 실험, 직접 해보기</small>
+  </div>
+  <div class="prog">
+    <span class="jua" id="progTxt">실험 성공 0/10</span>
+    <div class="prog-bar"><i id="progBar" style="width:0%"></i></div>
+  </div>
+</header>
+
+<main>
+  <!-- 레벨 선택 -->
+  <section id="home">
+    <div class="intro">
+      <div class="dr">🥽</div>
+      <p class="jua" id="introMsg">보안경 착용 완료! 어떤 실험부터 해볼까?<br/><span style="font-size:11.5px;color:var(--soft);font-family:'Gowun Dodum'">실험을 성공하면 다음 레벨이 열려요.</span></p>
+    </div>
+    <div class="lv-list" id="lvList"></div>
+  </section>
+
+  <!-- 실험 화면 -->
+  <section id="exp">
+    <div class="exp-top">
+      <button class="back" id="backBtn">← 연구소</button>
+      <div>
+        <h2 class="jua" id="expTitle"></h2>
+        <div class="tag" id="expTag"></div>
+      </div>
+    </div>
+    <div class="say"><div class="dr"><img src="/chemistry/icon.png?v=20260721a" alt="" width="40" height="40" /></div><p id="sayTxt"></p></div>
+    <div class="footbar">
+      <div class="tools" id="tools"></div>
+      <div class="acts" id="acts"></div>
+    </div>
+    <div class="stage" id="stage"><div class="bench"></div></div>
+  </section>
+</main>
+
+<!-- 퀴즈 -->
+<div class="ovl" id="quizOvl" hidden>
+  <div class="card">
+    <h3 class="jua">🔬 관찰 퀴즈</h3>
+    <p class="q" id="quizQ"></p>
+    <div class="q-opt" id="quizOpts"></div>
+    <p class="exp-note" id="quizNote"></p>
+  </div>
+</div>
+
+<!-- 성공 -->
+<div class="ovl" id="doneOvl" hidden>
+  <div class="card">
+    <div class="star-big">⭐</div>
+    <h3 class="jua" id="doneTitle">실험 성공!</h3>
+    <p class="q" id="doneMsg"></p>
+    <button class="act" id="doneBtn">연구소로 돌아가기</button>
+  </div>
+</div>
+
+<script>
+/* ================= 디버그 로그 ================= */
+function log(msg){
+  const d = document.getElementById("dbg");
+  if(!d) return;
+  const line = document.createElement("div");
+  line.textContent = "▸ " + msg;
+  d.appendChild(line);
+  d.scrollTop = d.scrollHeight;
+}
+log("스크립트 시작됨");
+
+/* ================= 상태 ================= */
+let SAVE = { stars: {} };
+function persist(){ try{ localStorage.setItem("chemlab-save", JSON.stringify(SAVE)); }catch(e){} }
+const $ = s => document.querySelector(s);
+const starCount = () => Object.keys(SAVE.stars).length;
+
+/* ================= 레벨 정의 ================= */
+const LEVELS = [
+  { id:1, title:"녹아라 녹아!", em:"🥄", color:"#5FA8D8",
+    tag:"물에 녹는 것과 안 녹는 것 · 초등 4학년 <b>용해와 용액</b>",
+    quiz:{ q:"물에 넣고 저어도 녹지 않은 것은 무엇이었나요?", opts:["모래","설탕","소금"], ans:0,
+      note:"설탕과 소금은 물에 녹아 용액이 되지만, 모래는 녹지 않고 가라앉아요." } },
+  { id:2, title:"얼음의 변신", em:"🧊", color:"#7E6FB8",
+    tag:"고체 → 액체 → 기체 · 초등 4학년 <b>물의 상태 변화</b>",
+    quiz:{ q:"물이 펄펄 끓어서 하늘로 올라간 김의 정체는?", opts:["수증기 (기체 상태의 물)","연기","구름 조각"], ans:0,
+      note:"물은 온도에 따라 얼음(고체) → 물(액체) → 수증기(기체)로 모습을 바꿔요." } },
+  { id:3, title:"무지개 층층탑", em:"🌈", color:"#E8A33D",
+    tag:"섞이지 않는 액체의 층 · 초등 <b>혼합물 탐구 활동</b>",
+    quiz:{ q:"세 액체 중 가장 무거워서 맨 아래에 가라앉은 것은?", opts:["꿀","물","식용유"], ans:0,
+      note:"무거운 순서는 꿀 > 물 > 기름! 그래서 꿀이 맨 아래, 기름이 맨 위에 떠요." } },
+  { id:4, title:"색깔 마법 물약", em:"🧪", color:"#C85A9E",
+    tag:"산성과 염기성 · 초등 5학년 <b>산과 염기</b>",
+    quiz:{ q:"보라색 양배추 지시약에 식초를 넣으면 무슨 색이 되었나요?", opts:["붉은색","푸른색","보라색 그대로"], ans:0,
+      note:"산성(식초)은 붉은색, 염기성(베이킹소다)은 푸른색으로 변해요. 지시약은 색으로 알려주는 탐정!" } },
+  { id:5, title:"부글부글 화산", em:"🌋", color:"#E4574B",
+    tag:"기체가 생기는 반응 · 초등 6학년 <b>여러 가지 기체</b>",
+    quiz:{ q:"베이킹소다와 식초가 만나 부글부글! 이때 생긴 기체는?", opts:["이산화탄소","산소","수소"], ans:0,
+      note:"이산화탄소 거품이 뿜어져 나온 거예요. 진짜 화산 같죠? 이 기체는 불을 끄는 데도 쓰여요." } },
+  { id:6, title:"비밀 편지", em:"🍋", color:"#B7A93D",
+    tag:"산화 반응 · <b>레몬즙 투명 잉크</b>",
+    quiz:{ q:"레몬즙으로 쓴 글씨를 나타나게 한 것은?", opts:["열(따뜻하게)","물","바람"], ans:0,
+      note:"레몬즙은 열을 받으면 갈색으로 변해요. 그래서 따뜻하게 하면 숨은 글씨가 나타나죠!" } },
+  { id:7, title:"춤추는 건포도", em:"🍇", color:"#7E6FB8",
+    tag:"기체와 뜨고 가라앉기 · <b>탄산수 실험</b>",
+    quiz:{ q:"건포도가 위아래로 춤춘 이유는?", opts:["기체 방울이 붙어 떠오름","건포도가 헤엄침","물이 뜨거워서"], ans:0,
+      note:"탄산수의 이산화탄소 방울이 건포도에 붙어 위로 띄우고, 방울이 터지면 다시 가라앉아요!" } },
+  { id:8, title:"우유 불꽃놀이", em:"🎆", color:"#C85A9E",
+    tag:"계면활성제와 표면장력 · <b>우유+물감 실험</b>",
+    quiz:{ q:"세제 한 방울로 물감이 확 퍼진 이유는?", opts:["세제가 기름 막을 깨뜨려서","물감이 무거워서","우유가 뜨거워서"], ans:0,
+      note:"우유의 지방과 물감이 세제를 만나 사방으로 도망치듯 퍼지면서 불꽃놀이가 돼요!" } },
+  { id:9, title:"거인 치약", em:"🦷", color:"#3EC6A8",
+    tag:"촉매와 빠른 반응 · <b>코끼리 치약 실험</b>",
+    quiz:{ q:"거품이 순식간에 뿜어져 나온 건 무엇 때문일까요?", opts:["효모가 반응을 빠르게 도와서","치약이 커져서","물이 끓어서"], ans:0,
+      note:"효모가 촉매가 되어 반응을 아주 빠르게 만들어요. 그래서 거품이 폭발하듯 쏟아져 나오죠!" } },
+  { id:10, title:"물 위의 마법", em:"🌶️", color:"#E4574B",
+    tag:"표면장력 · <b>후추 도망 실험</b>",
+    quiz:{ q:"손가락에 세제를 묻히자 후추가 확 도망간 이유는?", opts:["세제가 물의 팽팽함을 풀어서","후추가 무서워서","물이 흔들려서"], ans:0,
+      note:"물 표면은 팽팽한 막 같아요(표면장력). 세제가 그 막을 풀어버리면 후추가 가장자리로 확 밀려나요!" } },
+];
+
+/* ================= 홈 ================= */
+function renderHome(){
+  log("renderHome() 실행 시작");
+  $("#progTxt").textContent = `실험 성공 ${starCount()}/${LEVELS.length}`;
+  $("#progBar").style.width = (starCount()/LEVELS.length*100) + "%";
+  $("#lvList").innerHTML = LEVELS.map((lv,i)=>{
+    const locked = i>0 && !SAVE.stars[LEVELS[i-1].id];
+    const done = !!SAVE.stars[lv.id];
+    return `
+    <button class="lv-card ${locked?'locked':''}" data-lv="${lv.id}" style="--c:${lv.color}" ${locked?'disabled':''}>
+      <span class="lv-num jua">${locked?'🔒':lv.em}</span>
+      <span>
+        <h2 class="jua">Lv.${lv.id} ${lv.title}</h2>
+        <div class="tag">${lv.tag}</div>
+      </span>
+      <span class="lv-star">${done?'⭐':(locked?'':'▶')}</span>
+    </button>`;
+  }).join("");
+  const cards = document.querySelectorAll(".lv-card:not(.locked)");
+  log("잠금 안 된 카드 수: " + cards.length);
+  cards.forEach(c=>
+    c.addEventListener("click", ()=>{
+      log("카드 클릭됨: Lv." + c.dataset.lv);
+      try{
+        startLevel(+c.dataset.lv);
+      }catch(err){
+        log("startLevel 오류: " + err.message);
+        const d = document.getElementById("dbg");
+        d.lastChild.classList.add("err");
+      }
+    }));
+  log("renderHome() 완료, 카드 " + LEVELS.length + "개 렌더됨");
+  if(starCount()===LEVELS.length){
+    $("#introMsg").innerHTML = `모든 실험 성공! 🎉 너는 이제 <b style="color:var(--mint)">명예 화학 연구원</b>이야!<br/><span style="font-size:11.5px;color:var(--soft);font-family:'Gowun Dodum'">좋아하는 실험을 다시 해봐도 좋아.</span>`;
+  }
+}
+
+/* ================= 공통 도우미 ================= */
+let currentLv = null;
+function say(t){ $("#sayTxt").innerHTML = t; }
+function el(html){ const d=document.createElement("div"); d.innerHTML=html.trim(); return d.firstChild; }
+function stageAdd(html){ const n=el(html); $("#stage").appendChild(n); return n; }
+function clearExp(){ $("#stage").innerHTML='<div class="bench"></div>'; $("#tools").innerHTML=""; $("#acts").innerHTML=""; }
+
+function pourAnim(target, color, cb){
+  const r = target.getBoundingClientRect(), s = $("#stage").getBoundingClientRect();
+  const x = r.left - s.left + r.width/2, y = r.top - s.top;
+  const b = stageAdd(`<div class="pour-bottle" style="left:${x-16}px;top:${y}px">🧴</div>`);
+  const st = stageAdd(`<div class="stream" style="--sc:${color};left:${x-2}px;top:${y-18}px"></div>`);
+  setTimeout(()=>{ b.remove(); st.remove(); cb && cb(); }, 1400);
+}
+function bubbles(container, n, color, area){
+  for(let i=0;i<n;i++){
+    const s = 5+Math.random()*9;
+    const b = el(`<span class="bub" style="width:${s}px;height:${s}px;left:${8+Math.random()*(area||60)}px;bottom:${4+Math.random()*20}px;background:${color||'rgba(255,255,255,.85)'};animation-duration:${1+Math.random()*1.2}s;animation-delay:${Math.random()*0.8}s"></span>`);
+    container.appendChild(b);
+    setTimeout(()=>b.remove(), 2600);
+  }
+}
+function askQuiz(lv){
+  const { q, opts, ans, note } = lv.quiz;
+  $("#quizQ").textContent = q;
+  $("#quizNote").textContent = "";
+  const shuffled = opts.map((o,i)=>({o,i})).sort(()=>Math.random()-.5);
+  $("#quizOpts").innerHTML = shuffled.map(x=>`<button data-i="${x.i}">${x.o}</button>`).join("");
+  $("#quizOvl").hidden = false;
+  $("#quizOpts").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
+    if(+b.dataset.i === ans){
+      $("#quizOvl").hidden = true;
+      SAVE.stars[lv.id] = true; persist();
+      celebrate(lv, note);
+    } else {
+      b.classList.add("no");
+      $("#quizNote").textContent = "음… 실험에서 본 걸 다시 떠올려 볼까?";
+    }
+  }));
+}
+function celebrate(lv, note){
+  $("#doneTitle").textContent = `Lv.${lv.id} ${lv.title} 성공!`;
+  $("#doneMsg").textContent = note;
+  $("#doneOvl").hidden = false;
+  for(let i=0;i<24;i++){
+    const c = el(`<span class="confetti" style="left:${Math.random()*100}vw;animation-duration:${1.6+Math.random()*1.6}s;animation-delay:${Math.random()*.5}s">${["🎉","⭐","🧪","✨","🫧"][i%5]}</span>`);
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(), 3500);
+  }
+}
+$("#doneBtn").addEventListener("click", ()=>{
+  $("#doneOvl").hidden = true;
+  goHome();
+});
+$("#backBtn").addEventListener("click", goHome);
+function goHome(){
+  $("#exp").style.display = "none";
+  $("#home").style.display = "block";
+  renderHome();
+}
+function startLevel(id){
+  log("startLevel(" + id + ") 진입");
+  currentLv = LEVELS.find(l=>l.id===id);
+  log("currentLv 찾음: " + (currentLv ? currentLv.title : "못 찾음!"));
+  $("#home").style.display = "none";
+  $("#exp").style.display = "block";
+  $("#expTitle").textContent = `Lv.${id} ${currentLv.title}`;
+  $("#expTag").innerHTML = currentLv.tag;
+  clearExp();
+  log("RUN[" + id + "] 호출 직전, 존재 여부: " + (typeof RUN[id]));
+  RUN[id]();
+  log("RUN[" + id + "]() 실행 완료");
+}
+
+/* ================= Lv.1 녹아라 녹아! ================= */
+const RUN = {};
+RUN[1] = function(){
+  say("비커 세 개에 물을 담았어. <b>설탕, 소금, 모래</b>를 하나씩 넣고 저어 보자. 뭐가 녹을까?");
+  const subs = [
+    { name:"설탕", em:"🍬", color:"#F5F0E0", dissolve:true },
+    { name:"소금", em:"🧂", color:"#F2F2F2", dissolve:true },
+    { name:"모래", em:"🏖️", color:"#D9B36A", dissolve:false },
+  ];
+  let doneCnt = 0;
+  subs.forEach((s, idx)=>{
+    const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:36px">
+      <div class="beaker"><div class="mark" style="top:30%"></div><div class="mark" style="top:55%"></div>
+        <div class="liquid"></div></div>
+      <div class="label">${s.name} 실험</div></div>`);
+    const beaker = wrap.querySelector(".beaker");
+    const tool = el(`<button class="tool hot"><span class="em">${s.em}</span>${s.name} 넣기</button>`);
+    $("#tools").appendChild(tool);
+    tool.addEventListener("click", ()=>{
+      tool.classList.add("used");
+      // 알갱이 투하
+      const grains = [];
+      for(let i=0;i<10;i++){
+        const g = el(`<span class="grain" style="background:${s.color};left:${18+Math.random()*50}px;top:${20+Math.random()*20}px;animation:drop .5s ${Math.random()*.3}s ease-in both"></span>`);
+        beaker.appendChild(g); grains.push(g);
+      }
+      say(`${s.name}을(를) 넣었어! 이제 <b>유리 막대로 저어</b> 볼까?`);
+      const stir = el(`<button class="tool hot"><span class="em">🥢</span>${s.name} 젓기</button>`);
+      $("#tools").appendChild(stir);
+      stir.addEventListener("click", ()=>{
+        stir.classList.add("used");
+        const rod = el(`<div class="stir-rod stirring"></div>`);
+        beaker.appendChild(rod);
+        bubbles(beaker.querySelector(".liquid"), 6);
+        setTimeout(()=>{
+          rod.remove();
+          if(s.dissolve){
+            grains.forEach(g=>g.style.opacity=0);
+            beaker.appendChild(el(`<div class="result-chip">스르륵~ 녹았어요!</div>`));
+          } else {
+            grains.forEach(g=>{ g.style.transition="top 1s"; g.style.top=(88+Math.random()*10)+"px"; });
+            beaker.appendChild(el(`<div class="result-chip">가라앉았어요!</div>`));
+          }
+          doneCnt++;
+          if(doneCnt===3){
+            say("세 가지 다 실험했네! 결과를 잘 봤지? <b>관찰 퀴즈</b> 나갑니다~");
+            setTimeout(()=>askQuiz(currentLv), 1200);
+          } else say(`오~ 잘 봤어? 다음 재료도 넣어 보자!`);
+        }, 1900);
+      });
+    });
+  });
+};
+
+/* ================= Lv.2 얼음의 변신 ================= */
+RUN[2] = function(){
+  say("꽁꽁 언 <b>얼음</b>이 있어. 🔥가열 버튼으로 뜨겁게 만들면 어떻게 변할까? <b>수증기</b>까지 만들어 보자!");
+  let temp = -10, reached = false;
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:34px;display:flex;gap:22px;align-items:flex-end">
+    <div class="beaker" id="b2" style="width:110px;height:130px">
+      <div class="liquid" id="wtr" style="height:8%;background:rgba(150,205,235,.85)"></div>
+    </div>
+    <div class="thermo"><div class="t-lbl" id="tlbl">-10℃</div><div class="merc" id="merc"></div></div>
+  </div>`);
+  const beaker = wrap.querySelector("#b2");
+  const ices = [];
+  [[14,70],[48,74],[32,46]].forEach(([x,y])=>{
+    const ice = el(`<div class="ice" style="left:${x}px;top:${y}px"></div>`);
+    beaker.appendChild(ice); ices.push(ice);
+  });
+  const stateChip = el(`<div class="label" id="stateLbl" style="font-size:13px;color:var(--ink)">상태: <b>고체 (얼음)</b></div>`);
+  wrap.appendChild(stateChip);
+
+  const heat = el(`<button class="act warm">🔥 가열하기</button>`);
+  const cool = el(`<button class="act cold">❄️ 식히기</button>`);
+  $("#acts").append(heat, cool);
+
+  function update(){
+    temp = Math.max(-10, Math.min(110, temp));
+    $("#tlbl").textContent = temp + "℃";
+    $("#merc").style.height = ((temp+10)/120*88+8) + "%";
+    const wtr = $("#wtr");
+    if(temp <= 0){
+      ices.forEach(i=>{ i.style.opacity=1; i.style.transform="scale(1)"; });
+      wtr.style.height = "8%";
+      $("#stateLbl").innerHTML = "상태: <b>고체 (얼음)</b>";
+    } else if(temp < 100){
+      const t = temp/100;
+      ices.forEach(i=>{ i.style.opacity = 1-t; i.style.transform = `scale(${1-t*0.8})`; });
+      wtr.style.height = (8 + t*54) + "%";
+      $("#stateLbl").innerHTML = "상태: <b>액체 (물)</b> — 얼음이 녹고 있어요";
+      if(temp >= 25) say("얼음이 <b>사르르 녹아서 물</b>이 되고 있어! 더 뜨겁게 해볼까?");
+    } else {
+      wtr.style.height = "62%";
+      ices.forEach(i=>i.style.opacity=0);
+      $("#stateLbl").innerHTML = "상태: <b>기체 (수증기)</b> — 펄펄 끓어요!";
+      bubbles(wtr, 10);
+      for(let i=0;i<3;i++){
+        const s = el(`<span class="steam" style="left:${16+Math.random()*70}px;top:-6px;animation-delay:${i*0.3}s">💨</span>`);
+        beaker.appendChild(s); setTimeout(()=>s.remove(), 2000);
+      }
+      if(!reached){
+        reached = true;
+        say("우와, <b>수증기</b>가 되어 날아간다! 물의 세 가지 모습을 다 봤어. 퀴즈 타임!");
+        setTimeout(()=>askQuiz(currentLv), 2200);
+      }
+    }
+  }
+  heat.addEventListener("click", ()=>{ temp += 25; update(); });
+  cool.addEventListener("click", ()=>{ temp -= 25; update(); });
+  update();
+};
+
+/* ================= Lv.3 무지개 층층탑 ================= */
+RUN[3] = function(){
+  say("<b>꿀, 물, 식용유</b>를 한 컵에 부으면 섞일까? 아무거나 순서대로 부어 봐!");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:34px">
+    <div class="beaker tall" id="cyl" style="display:flex;flex-direction:column-reverse;overflow:hidden"></div>
+    <div class="label">층층탑 컵</div></div>`);
+  const cyl = wrap.querySelector("#cyl");
+  const liquids = [
+    { name:"꿀", em:"🍯", color:"#D9A441", rank:1 },
+    { name:"물", em:"💧", color:"rgba(126,200,240,.8)", rank:2 },
+    { name:"식용유", em:"🫒", color:"rgba(247,226,122,.85)", rank:3 },
+  ];
+  let poured = 0;
+  liquids.forEach(L=>{
+    const t = el(`<button class="tool hot"><span class="em">${L.em}</span>${L.name} 붓기</button>`);
+    $("#tools").appendChild(t);
+    t.addEventListener("click", ()=>{
+      t.classList.add("used");
+      pourAnim(cyl, L.color, ()=>{
+        const layer = el(`<div style="height:0;background:${L.color};transition:height 1s;order:${-L.rank};display:grid;place-items:center;font-size:11px;font-weight:700;color:rgba(46,64,87,.7)">${L.name}</div>`);
+        cyl.appendChild(layer);
+        requestAnimationFrame(()=>{ layer.style.height = "56px"; });
+        poured++;
+        if(poured===1) say("오! 부었다. 다음 액체도 부어 보자.");
+        if(poured===2) say("어라? <b>섞이지 않고 층</b>이 생기네! 마지막 액체도!");
+        if(poured===3){
+          say("무지개 층층탑 완성! 🌈 무거운 액체가 <b>아래</b>로 가는 거야. 퀴즈!");
+          setTimeout(()=>askQuiz(currentLv), 1600);
+        }
+      });
+    });
+  });
+};
+
+/* ================= Lv.4 색깔 마법 물약 ================= */
+RUN[4] = function(){
+  say("이 보라색 물약은 <b>붉은 양배추 지시약</b>이야. 산성을 만나면? 염기성을 만나면? 직접 넣어 보자!");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:34px">
+    <div class="beaker" style="width:110px;height:130px"><div class="liquid" id="ind" style="height:60%;background:#8E6FB8"></div></div>
+    <div class="label">양배추 지시약</div></div>`);
+  const ind = wrap.querySelector("#ind");
+  const ph = el(`<div class="ph"><div class="bar"></div><div class="cursor" id="phCur" style="margin-left:50%"></div>
+    <div class="lbl"><span>산성 🍋</span><span>중성</span><span>염기성 🧼</span></div></div>`);
+  $("#acts").appendChild(ph);
+  let tried = { acid:false, base:false };
+  function pourReagent(kind){
+    const isAcid = kind==="acid";
+    pourAnim(wrap, isAcid ? "#F0D060" : "#DDEEF8", ()=>{
+      ind.style.background = isAcid ? "#E4574B" : "#3D6FB0";
+      $("#phCur").style.marginLeft = isAcid ? "10%" : "90%";
+      bubbles(ind, 8);
+      wrap.querySelector(".result-chip")?.remove();
+      wrap.querySelector(".beaker").appendChild(el(`<div class="result-chip">${isAcid?"붉은색! 산성이야":"푸른색! 염기성이야"}</div>`));
+      tried[kind] = true;
+      if(tried.acid && tried.base){
+        say("색깔로 산성·염기성을 알아내다니, 진짜 화학 탐정인걸! 퀴즈 타임~");
+        setTimeout(()=>askQuiz(currentLv), 1800);
+      } else {
+        say(isAcid ? "식초(산성)를 만나니 <b>붉게</b> 변했어! 이제 다른 것도 넣어 보자."
+                   : "베이킹소다수(염기성)를 만나니 <b>푸르게</b> 변했어! 다른 것도 넣어 보자.");
+        resetBtn.disabled = false;
+      }
+    });
+  }
+  const t1 = el(`<button class="tool hot"><span class="em">🍶</span>식초 넣기</button>`);
+  const t2 = el(`<button class="tool hot"><span class="em">🧂</span>베이킹소다수 넣기</button>`);
+  const resetBtn = el(`<button class="act ghost" disabled>💧 지시약 새로 담기</button>`);
+  $("#tools").append(t1, t2);
+  $("#acts").appendChild(resetBtn);
+  t1.addEventListener("click", ()=>{ t1.classList.add("used"); pourReagent("acid"); });
+  t2.addEventListener("click", ()=>{ t2.classList.add("used"); pourReagent("base"); });
+  resetBtn.addEventListener("click", ()=>{
+    ind.style.background = "#8E6FB8";
+    $("#phCur").style.marginLeft = "50%";
+    wrap.querySelector(".result-chip")?.remove();
+    resetBtn.disabled = true;
+    say("보라색으로 돌아왔어. 아직 안 넣어 본 걸 넣어 보자!");
+  });
+};
+
+/* ================= Lv.5 부글부글 화산 ================= */
+RUN[5] = function(){
+  say("신나는 화산 실험! 플라스크에 <b>베이킹소다</b>가 들어 있어. 여기에 <b>식초</b>를 부으면…? 마음의 준비, 됐지?");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:34px">
+    <svg width="130" height="150" viewBox="0 0 130 150" id="flask">
+      <path d="M52 8 h26 v40 l30 74 a12 12 0 0 1 -11 18 H33 a12 12 0 0 1 -11 -18 l30 -74 Z"
+        fill="rgba(255,255,255,.5)" stroke="#A6BFCD" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M36 118 q29 -14 58 0 l8 20 a6 6 0 0 1 -6 8 H34 a6 6 0 0 1 -6 -8 Z" fill="#F5F0E0"/>
+    </svg>
+    <div class="label">베이킹소다 플라스크</div></div>`);
+  const t = el(`<button class="tool hot"><span class="em">🍶</span>식초 붓기!</button>`);
+  $("#tools").appendChild(t);
+  t.addEventListener("click", ()=>{
+    t.classList.add("used");
+    say("간다아아~ 조심해!");
+    pourAnim(wrap, "#F0D060", ()=>{
+      wrap.querySelector("#flask").classList.add("shaking");
+      say("<b>부글부글부글!!!</b> 🌋 거품이 폭발하고 있어!!");
+      const colors = ["#FFFFFF","#FFE8EE","#FDF3D8","#E8F6FF"];
+      let burst = 0;
+      const iv = setInterval(()=>{
+        for(let i=0;i<7;i++){
+          const s = 10+Math.random()*18;
+          const f = el(`<span class="foam" style="width:${s}px;height:${s}px;left:${52+Math.random()*26}px;top:10px;background:${colors[i%4]};--dx:${(Math.random()-0.5)*130}px;--dy:${-60-Math.random()*130}px;animation-duration:${0.9+Math.random()*0.9}s;box-shadow:0 0 0 2px rgba(166,191,205,.3)"></span>`);
+          wrap.appendChild(f);
+          setTimeout(()=>f.remove(), 2000);
+        }
+        if(++burst > 10){
+          clearInterval(iv);
+          say("후아~ 대성공! 이 어마어마한 거품의 정체가 뭘까? 마지막 퀴즈!");
+          setTimeout(()=>askQuiz(currentLv), 1400);
+        }
+      }, 240);
+    });
+  });
+};
+
+/* ================= Lv.6 비밀 편지 ================= */
+RUN[6] = function(){
+  say("레몬즙으로 쓴 <b>투명한 비밀 글씨</b>가 있어. 🔥 따뜻하게 데우면 뭐가 나타날까? 데우기 버튼을 눌러 봐!");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:20px">
+    <div style="width:180px;height:120px;background:#F5EFE0;border:3px solid #D9C6A8;border-radius:8px;position:relative;box-shadow:0 4px 10px rgba(0,0,0,.1);display:grid;place-items:center">
+      <div id="secret" style="font-size:34px;opacity:0;transition:opacity 2s;color:#8A5A2B;font-family:'Jua'">참 잘했어요!</div>
+      <div id="heatglow" style="position:absolute;inset:0;background:radial-gradient(circle,rgba(255,160,60,.35),transparent 70%);opacity:0;transition:opacity .6s;border-radius:6px"></div>
+    </div>
+    <div class="label">비밀 편지</div></div>`);
+  let heat = 0;
+  const btn = el(`<button class="act warm">🔥 촛불로 데우기</button>`);
+  $("#acts").appendChild(btn);
+  btn.addEventListener("click", ()=>{
+    heat++;
+    $("#heatglow").style.opacity = Math.min(1, heat*0.35);
+    $("#secret").style.opacity = Math.min(1, heat*0.35);
+    for(let i=0;i<3;i++){ const s=el(`<span class="steam" style="left:${60+Math.random()*60}px;top:0;animation-delay:${i*0.2}s">✨</span>`); wrap.appendChild(s); setTimeout(()=>s.remove(),1800); }
+    if(heat===1) say("어? 뭔가 <b>희미하게</b> 보이기 시작해! 더 데워 보자.");
+    if(heat>=3){
+      btn.disabled = true;
+      say("우와, 숨어 있던 글씨가 <b>짠!</b> 하고 나타났어! 레몬즙의 비밀이야. 퀴즈 나갑니다~");
+      setTimeout(()=>askQuiz(currentLv), 1600);
+    }
+  });
+};
+
+/* ================= Lv.7 춤추는 건포도 ================= */
+RUN[7] = function(){
+  say("<b>탄산수</b> 컵에 건포도를 넣어 볼까? 가라앉을까, 뜰까? 넣어 보자!");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:30px">
+    <div class="beaker" id="soda" style="width:100px;height:150px"><div class="liquid" style="height:80%;background:rgba(210,230,200,.55)"></div></div>
+    <div class="label">탄산수</div></div>`);
+  const beaker = wrap.querySelector("#soda");
+  const t = el(`<button class="tool hot"><span class="em">🍇</span>건포도 넣기</button>`);
+  $("#tools").appendChild(t);
+  t.addEventListener("click", ()=>{
+    t.classList.add("used");
+    say("건포도가 <b>둥실둥실</b> 춤추기 시작했어! 기체 방울이 붙었다 떨어졌다 하는 거야~");
+    const raisins = [];
+    for(let i=0;i<5;i++){
+      const r = el(`<div style="position:absolute;width:12px;height:9px;border-radius:50%;background:#5B3A29;left:${20+i*13}px;bottom:20px;z-index:3"></div>`);
+      beaker.appendChild(r); raisins.push({el:r, y:20, up:Math.random()>.5});
+    }
+    let ticks=0;
+    const iv = setInterval(()=>{
+      raisins.forEach(r=>{
+        if(r.up){ r.y += 6+Math.random()*4; if(r.y>110) r.up=false; }
+        else { r.y -= 5+Math.random()*3; if(r.y<20) r.up=true; }
+        r.el.style.bottom = r.y+"px";
+      });
+      bubbles(beaker.querySelector(".liquid"), 3, 'rgba(255,255,255,.7)', 70);
+      if(++ticks>18){
+        clearInterval(iv);
+        say("계속 오르락내리락~ 신기하지? 왜 춤췄을까? 퀴즈!");
+        setTimeout(()=>askQuiz(currentLv), 1200);
+      }
+    }, 260);
+  });
+};
+
+/* ================= Lv.8 우유 불꽃놀이 ================= */
+RUN[8] = function(){
+  say("<b>우유</b> 위에 물감을 톡톡 떨어뜨렸어. 여기에 <b>세제</b> 한 방울을 콕 찍으면? 마법이 시작돼!");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:20px">
+    <div id="dish" style="width:190px;height:150px;border-radius:50%;background:#FAF7F0;border:4px solid #E0D8C8;position:relative;overflow:hidden;box-shadow:inset 0 3px 10px rgba(0,0,0,.06)"></div>
+    <div class="label">우유 접시</div></div>`);
+  const dish = wrap.querySelector("#dish");
+  const cols = ["#E4574B","#3EC6A8","#5FA8D8","#E8A33D","#C85A9E"];
+  const dots = [];
+  cols.forEach((c,i)=>{
+    const a = i/cols.length*Math.PI*2;
+    const d = el(`<div style="position:absolute;width:20px;height:20px;border-radius:50%;background:${c};left:${85+Math.cos(a)*30}px;top:${65+Math.sin(a)*30}px;transition:transform 1.6s ease-out,width 1.6s,height 1.6s"></div>`);
+    dish.appendChild(d); dots.push({el:d, a});
+  });
+  const t = el(`<button class="tool hot"><span class="em">🧴</span>세제 콕 찍기</button>`);
+  $("#tools").appendChild(t);
+  t.addEventListener("click", ()=>{
+    t.classList.add("used");
+    say("<b>펑!</b> 물감들이 사방으로 도망가면서 불꽃놀이가 됐어! 🎆");
+    dots.forEach(d=>{
+      d.el.style.transform = `translate(${Math.cos(d.a)*70}px, ${Math.sin(d.a)*55}px) scale(2.4)`;
+      d.el.style.width = "8px"; d.el.style.height = "8px";
+    });
+    setTimeout(()=>{ say("왜 물감이 확 퍼졌을까? 마지막 관찰 퀴즈~"); askQuiz(currentLv); }, 2000);
+  });
+};
+
+/* ================= Lv.9 거인 치약 (코끼리 치약) ================= */
+RUN[9] = function(){
+  say("병 속에 특별한 물이 있어. 여기에 <b>효모</b>를 넣으면 거품이 어마어마하게 솟아나! 준비됐어?");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:20px">
+    <div style="width:44px;height:90px;background:rgba(200,220,230,.5);border:3px solid #A6BFCD;border-radius:0 0 10px 10px;position:relative;margin:80px auto 0">
+      <div style="position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:16px;height:24px;background:#A6BFCD;border-radius:4px"></div>
+      <div id="foamcol" style="position:absolute;bottom:0;left:-4px;right:-4px;height:0;background:linear-gradient(#FFF,#FDE8EE);border-radius:8px;transition:height .3s"></div>
+    </div>
+    <div class="label">비밀의 병</div></div>`);
+  const t = el(`<button class="tool hot"><span class="em">🫧</span>효모 넣기!</button>`);
+  $("#tools").appendChild(t);
+  t.addEventListener("click", ()=>{
+    t.classList.add("used");
+    say("<b>부아아아~!</b> 🐘 거품이 코끼리 치약처럼 솟구쳐 오른다!!");
+    let h=0;
+    const iv = setInterval(()=>{
+      h += 18;
+      $("#foamcol").style.height = h+"px";
+      for(let i=0;i<5;i++){ const s=6+Math.random()*12; const f=el(`<span class="foam" style="width:${s}px;height:${s}px;left:${16+Math.random()*20}px;bottom:${h-10}px;background:${['#fff','#FDE8EE','#FFF3D8'][i%3]};--dx:${(Math.random()-.5)*60}px;--dy:${-30-Math.random()*40}px;animation-duration:1s"></span>`); wrap.appendChild(f); setTimeout(()=>f.remove(),1200); }
+      if(h>150){ clearInterval(iv); say("어마어마하지? 이렇게 빨리 거품이 난 비결이 뭘까? 퀴즈!"); setTimeout(()=>askQuiz(currentLv),1400); }
+    }, 260);
+  });
+};
+
+/* ================= Lv.10 물 위의 마법 (후추 도망) ================= */
+RUN[10] = function(){
+  say("물 위에 <b>후추</b>를 솔솔 뿌렸어. 여기에 세제 묻힌 손가락을 <b>콕</b> 대면? 후추가 도망갈걸!");
+  const wrap = stageAdd(`<div style="position:relative;z-index:2;margin-bottom:20px">
+    <div id="water" style="width:200px;height:150px;border-radius:14px;background:rgba(126,200,240,.35);border:3px solid #A6BFCD;position:relative;overflow:hidden"></div>
+    <div class="label">후추 뿌린 물</div></div>`);
+  const water = wrap.querySelector("#water");
+  const peppers = [];
+  for(let i=0;i<40;i++){
+    const p = el(`<div style="position:absolute;width:4px;height:4px;border-radius:50%;background:#2E2A26;left:${20+Math.random()*160}px;top:${20+Math.random()*110}px;transition:all 1.1s ease-out"></div>`);
+    water.appendChild(p); peppers.push(p);
+  }
+  const t = el(`<button class="tool hot"><span class="em">🫧</span>세제 손가락 콕!</button>`);
+  $("#tools").appendChild(t);
+  t.addEventListener("click", ()=>{
+    t.classList.add("used");
+    const cx=100, cy=75;
+    const finger = el(`<div style="position:absolute;left:${cx-12}px;top:${cy-12}px;font-size:26px;z-index:5;animation:pop .3s both">👆</div>`);
+    water.appendChild(finger);
+    say("<b>쫘아악!</b> 후추가 가장자리로 우르르 도망쳤어! 물의 팽팽함이 풀린 거야~");
+    peppers.forEach(p=>{
+      const x=parseFloat(p.style.left), y=parseFloat(p.style.top);
+      const dx=x-cx, dy=y-cy, d=Math.hypot(dx,dy)||1;
+      p.style.left = (x+dx/d*90)+"px"; p.style.top = (y+dy/d*70)+"px";
+    });
+    setTimeout(()=>{ finger.remove(); say("후추가 왜 도망갔을까? 마지막 퀴즈, 정답을 맞혀 명예 연구원이 되자!"); askQuiz(currentLv); }, 1600);
+  });
+};
+
+/* ================= 부팅 (방어적: 렌더 먼저, 저장은 나중) ================= */
+window.addEventListener("error", (e)=>{
+  log("🔴 전역 오류: " + e.message + " (줄 " + e.lineno + ")");
+  const bar = document.createElement("div");
+  bar.style.cssText = "position:fixed;top:0;left:0;right:0;background:#E4574B;color:#fff;padding:10px 14px;font-size:12px;z-index:999;font-family:monospace;white-space:pre-wrap";
+  bar.textContent = "⚠ 오류: " + e.message + " (line " + e.lineno + ")";
+  document.body.appendChild(bar);
+});
+log("renderHome 호출 직전");
+renderHome(); // 저장 여부와 무관하게 화면부터 그린다
+log("renderHome 호출 완료, 부팅 끝");
+(function(){
+  try{
+    const raw = localStorage.getItem("chemlab-save");
+    if(raw){ SAVE = JSON.parse(raw); renderHome(); }
+  }catch(e){ /* 저장된 기록 없음 - 새 화면 유지 */ }
+})();
+</script>
+<noscript>
+  <div style="padding:40px;text-align:center;font-family:sans-serif;color:#2E4057">
+    이 실험실은 자바스크립트가 필요해요.<br/>
+    Chrome, Safari 같은 <b>실제 브라우저 앱</b>에서 열어 주세요.<br/>
+    (파일 미리보기 앱이 아니라, 주소창이 있는 브라우저요!)
+  </div>
+</noscript>
+
+<div id="restyart-legal-bar" data-resty-legal="1" style="margin-top:auto;border-top:1px solid #e5e7eb;background:#f9fafb;color:#4b5563;font-size:12px;line-height:1.6;">
+  <div style="max-width:1200px;margin:0 auto;padding:16px 20px;">
+    <p style="margin:0 0 8px;font-weight:600;color:#374151;">리스티아트</p>
+    <p style="margin:0 0 4px;">경기도 성남시 분당구 대왕판교로 645번길 12, 7·9층 145호</p>
+    <p style="margin:0 0 4px;">사업자등록번호 3961701077</p>
+    <p style="margin:0 0 8px;">문의: <a href="mailto:bloodjino1@gmail.com" style="color:#2563eb;text-decoration:none;">bloodjino1@gmail.com</a></p>
+    <p style="margin:0 0 8px;font-size:11px;color:#6b7280;">개인정보 보호책임자: 배진호 (개인정보보호책임자) · bloodjino1@gmail.com</p>
+    <p style="margin:0;padding:10px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:6px;color:#6b7280;">
+      <strong style="color:#374151;">AI 이용 안내</strong> — 본 서비스의 일부 콘텐츠·응답·추천·이미지 등은 인공지능(AI) 기술을 활용하여 생성될 수 있으며, AI 생성 결과는 참고용이며 정확성·완전성을 보장하지 않습니다.
+    </p>
+<div data-resty-funnel="1" style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;">
+  <p style="margin:0 0 6px;font-weight:600;color:#374151;font-size:11px;">연관 서비스</p>
+  <p style="margin:0;line-height:1.8;font-size:11px;"><a href="https://growup.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">그로우맘</a><a href="https://physics.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">물리</a><a href="https://library.restyart.com" target="_blank" rel="noopener noreferrer" style="color:#2563eb;text-decoration:none;margin-right:12px;white-space:nowrap;">AI 백과</a></p>
+</div>
+    <p style="margin:8px 0 0;font-size:11px;color:#9ca3af;">&copy; 2026 리스티아트. All rights reserved.</p>
+  </div>
+</div>
+<script id="restyart-legal-bar-pin">(function(){
+  function pin(){
+    var el = document.getElementById('restyart-legal-bar');
+    if (!el || !el.parentNode || el.parentNode.lastElementChild === el) return;
+    el.parentNode.appendChild(el);
+  }
+  pin();
+  window.addEventListener('load', pin);
+  new MutationObserver(pin).observe(document.body, { childList: true });
+})();</script>
+</body>
+</html>

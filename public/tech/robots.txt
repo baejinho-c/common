@@ -5,12 +5,5 @@ Disallow: /api/
 Disallow: /auth/
 Disallow: /_next/
 Disallow: /dashboard/
-Disallow: /editor/
-Disallow: /write/
-Disallow: /admin/
-Disallow: /api/
-Disallow: /auth/
-Disallow: /_next/
-Disallow: /dashboard/
 
 Sitemap: https://tech.restyart.com/sitemap.xml

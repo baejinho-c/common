@@ -1,0 +1,3 @@
+{
+  "/api/brush-games/[gameKey]/route": "app/api/brush-games/[gameKey]/route.js"
+}

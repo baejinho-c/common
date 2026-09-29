@@ -3,5 +3,7 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 Disallow: /privacy-data/
+Disallow: /test
+Disallow: /content-api-test
 
 Sitemap: https://mind.restyart.com/sitemap.xml

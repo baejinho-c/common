@@ -1,25 +1,25 @@
 {
-  "name": "Storyflow AI - AI 기반 스토리보드 플랫폼",
-  "short_name": "Storyflow AI",
-  "description": "AI 기술로 창의적인 스토리보드를 만들어보세요",
+  "name": "STORYFLOW - AI 스토리보드 플랫폼",
+  "short_name": "STORYFLOW",
+  "description": "AI 기술로 아이디어를 시각화하고 스토리보드를 제작하세요",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#7c3aed",
   "orientation": "portrait-primary",
   "categories": ["productivity", "entertainment", "education"],
   "lang": "ko",
   "dir": "ltr",
   "icons": [
     {
-      "src": "/icon.png",
-      "sizes": "192x192",
+      "src": "/logo-mark.png",
+      "sizes": "362x386",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/apple-icon.png",
-      "sizes": "180x180",
+      "src": "/apple-touch-icon.png",
+      "sizes": "362x386",
       "type": "image/png"
     }
   ],
