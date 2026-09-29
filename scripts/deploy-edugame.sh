@@ -35,33 +35,69 @@ STANDALONE="$APP_DIR/.next/standalone"
 
 echo "[rsync] standalone -> $HOST:$REMOTE_APP"
 RSYNC_OPTS=(-az -e "ssh -i $KEY -o StrictHostKeyChecking=accept-new")
+STANDALONE_EXCLUDES=(
+  --exclude='public/minigames/malang-bowling/_sheet.png'
+  --exclude='public/minigames/malang-bowling/images/_ball_catalog/'
+  --exclude='public/minigames/malang-bowling/images/_pin_catalog/'
+  --exclude='public/minigames/soft-bingsu/_sheet-source.png'
+)
 ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" "mkdir -p $REMOTE_APP"
-rsync "${RSYNC_OPTS[@]}" --delete \
+rsync "${RSYNC_OPTS[@]}" --delete --delete-excluded "${STANDALONE_EXCLUDES[@]}" \
   "$STANDALONE/" "$HOST:$REMOTE_APP/"
 rsync "${RSYNC_OPTS[@]}" \
   "$APP_DIR/.next/static/" "$HOST:$REMOTE_APP/.next/static/"
 if [ -d "$APP_DIR/public" ]; then
-  rsync "${RSYNC_OPTS[@]}" \
+  # Source/reference sheets stay in the workspace but are not needed at runtime.
+  PUBLIC_EXCLUDES=(
+    --exclude='minigames/malang-bowling/_sheet.png'
+    --exclude='minigames/malang-bowling/images/_ball_catalog/'
+    --exclude='minigames/malang-bowling/images/_pin_catalog/'
+    --exclude='minigames/soft-bingsu/_sheet-source.png'
+  )
+  rsync "${RSYNC_OPTS[@]}" "${PUBLIC_EXCLUDES[@]}" \
     "$APP_DIR/public/" "$HOST:$REMOTE_APP/public/"
 fi
 rsync "${RSYNC_OPTS[@]}" \
   "$APP_DIR/Dockerfile" "$HOST:$REMOTE_APP/Dockerfile"
 
 echo "[docker] build & run edugame on :$REMOTE_PORT"
+# Persist uploaded games outside the container; keep admin token stable across deploys
+UGC_HOST_DIR="${EDUGAME_UGC_HOST_DIR:-/opt/resty-gateway/data/edugame-ugc}"
+BATCHIM_HOST_DIR="${EDUGAME_BATCHIM_HOST_DIR:-/opt/resty-gateway/data/edugame-batchim}"
+DICTIONARY_HOST_DIR="${EDUGAME_DICTIONARY_HOST_DIR:-/opt/resty-gateway/data/edugame-dictionary}"
+LEADERBOARD_HOST_DIR="${EDUGAME_LEADERBOARD_HOST_DIR:-/opt/resty-gateway/data/edugame-leaderboard}"
+ADMIN_TOKEN_FILE="${EDUGAME_ADMIN_TOKEN_FILE:-/opt/resty-gateway/data/edugame-admin.token}"
 ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" \
-  "REMOTE_APP='$REMOTE_APP' REMOTE_PORT='$REMOTE_PORT' bash -s" <<'EOF'
+  "REMOTE_APP='$REMOTE_APP' REMOTE_PORT='$REMOTE_PORT' UGC_HOST_DIR='$UGC_HOST_DIR' BATCHIM_HOST_DIR='$BATCHIM_HOST_DIR' DICTIONARY_HOST_DIR='$DICTIONARY_HOST_DIR' LEADERBOARD_HOST_DIR='$LEADERBOARD_HOST_DIR' ADMIN_TOKEN_FILE='$ADMIN_TOKEN_FILE' bash -s" <<'EOF'
 set -euo pipefail
 cd "$REMOTE_APP"
+mkdir -p "$UGC_HOST_DIR" "$BATCHIM_HOST_DIR" "$DICTIONARY_HOST_DIR" "$LEADERBOARD_HOST_DIR" "$(dirname "$ADMIN_TOKEN_FILE")"
+if [ ! -f "$ADMIN_TOKEN_FILE" ]; then
+  python3 -c 'import secrets; open("'"$ADMIN_TOKEN_FILE"'","w").write(secrets.token_hex(16))'
+  chmod 600 "$ADMIN_TOKEN_FILE"
+  echo "[admin] created token file $ADMIN_TOKEN_FILE"
+fi
+ADMIN_TOKEN="$(python3 -c 'print(open("'"$ADMIN_TOKEN_FILE"'").read().strip())')"
 docker build -t edugame-app .
 docker rm -f edugame 2>/dev/null || true
 docker run -d --name edugame --restart unless-stopped \
   -p "127.0.0.1:${REMOTE_PORT}:${REMOTE_PORT}" \
   -e "PORT=${REMOTE_PORT}" \
   -e HOSTNAME=0.0.0.0 \
+  -e "EDUGAME_UGC_DIR=/data/ugc" \
+  -e "EDUGAME_BATCHIM_DIR=/data/batchim" \
+  -e "EDUGAME_DICTIONARY_DIR=/data/dictionary" \
+  -e "EDUGAME_LEADERBOARD_DIR=/data/leaderboard" \
+  -e "EDUGAME_ADMIN_TOKEN=${ADMIN_TOKEN}" \
+  -v "${UGC_HOST_DIR}:/data/ugc" \
+  -v "${BATCHIM_HOST_DIR}:/data/batchim" \
+  -v "${DICTIONARY_HOST_DIR}:/data/dictionary" \
+  -v "${LEADERBOARD_HOST_DIR}:/data/leaderboard" \
   edugame-app
 docker ps --filter name=edugame
 sleep 2
 curl -sS -o /dev/null -w "local %{http_code}\n" "http://127.0.0.1:${REMOTE_PORT}/" || true
+echo "[admin] token is in ${ADMIN_TOKEN_FILE} on the server (use it on /admin)"
 EOF
 
 echo "[nginx] $DOMAIN -> 127.0.0.1:$REMOTE_PORT"
@@ -76,6 +112,65 @@ server {
     listen 80;
     listen [::]:80;
     server_name ${DOMAIN};
+    client_max_body_size 4m;
+
+    location ^~ /_next/static/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+    }
+
+    location ^~ /icons/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=604800, stale-while-revalidate=86400" always;
+    }
+
+    location ^~ /catalog-icons/ {
+        alias /opt/resty-gateway/data/edugame-icons/;
+        expires 7d;
+        add_header Cache-Control "public, max-age=604800" always;
+    }
+
+    location ^~ /minigames/sparkle/_next/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+    }
+
+    location ^~ /sparkle-assets/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=2592000, immutable" always;
+    }
+
+    location ~* ^/minigames/.+\.(?:png|jpe?g|webp|gif|svg|woff2?|mp3|wav|ogg)$ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=604800, stale-while-revalidate=86400" always;
+    }
+
+    location = /sw.js {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-cache, no-store, must-revalidate" always;
+    }
+
+    location ^~ /api/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-store" always;
+    }
 
     location / {
         proxy_pass http://127.0.0.1:${REMOTE_PORT};
@@ -87,6 +182,8 @@ server {
         proxy_buffer_size 512k;
         proxy_buffers 16 256k;
         proxy_busy_buffers_size 512k;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-cache, must-revalidate" always;
     }
 }
 EOF
@@ -100,11 +197,70 @@ server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
     server_name ${DOMAIN};
+    client_max_body_size 4m;
 
     ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location ^~ /_next/static/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+    }
+
+    location ^~ /icons/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=604800, stale-while-revalidate=86400" always;
+    }
+
+    location ^~ /catalog-icons/ {
+        alias /opt/resty-gateway/data/edugame-icons/;
+        expires 7d;
+        add_header Cache-Control "public, max-age=604800" always;
+    }
+
+    location ^~ /minigames/sparkle/_next/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=31536000, immutable" always;
+    }
+
+    location ^~ /sparkle-assets/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=2592000, immutable" always;
+    }
+
+    location ~* ^/minigames/.+\.(?:png|jpe?g|webp|gif|svg|woff2?|mp3|wav|ogg)$ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "public, max-age=604800, stale-while-revalidate=86400" always;
+    }
+
+    location = /sw.js {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-cache, no-store, must-revalidate" always;
+    }
+
+    location ^~ /api/ {
+        proxy_pass http://127.0.0.1:${REMOTE_PORT};
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-store" always;
+    }
 
     location / {
         proxy_pass http://127.0.0.1:${REMOTE_PORT};
@@ -116,6 +272,8 @@ server {
         proxy_buffer_size 512k;
         proxy_buffers 16 256k;
         proxy_busy_buffers_size 512k;
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-cache, must-revalidate" always;
     }
 }
 

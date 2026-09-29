@@ -32,7 +32,14 @@ function prefixUrl(url) {
   return prefix + url
 }
 
-function rewriteHtml(html) {
+function isStandaloneMinigameHtml(filePath, html) {
+  const normalized = String(filePath).replace(/\\/g, '/').toLowerCase()
+  if (!normalized.includes('/minigames/')) return false
+  if (normalized.includes('/minigames/sparkle/')) return false
+  return /(?:src|href)=(?:['"])\.\//i.test(html) || /(?:src|href)=(?:['"])\.\/assets\//i.test(html)
+}
+
+function rewriteHtml(html, filePath = '') {
   html = html.replace(/(src|href)=(["'])\/(?!\/|https?:)([^"']*)\2/gi, (m, attr, q, p) => {
     const fullPath = '/' + p
     if (!shouldPrefix(fullPath)) return m
@@ -44,6 +51,10 @@ function rewriteHtml(html) {
     if (!shouldPrefix(fullPath)) return m
     return `url(${q}${prefix}/${p}${q})`
   })
+
+  if (isStandaloneMinigameHtml(filePath, html)) {
+    return html.replace(/<base[^>]*>/i, '')
+  }
 
   const baseHref = `${prefix}/`
   if (!/<base[^>]*href=/i.test(html)) {
@@ -67,7 +78,7 @@ function walk(dir) {
       count += walk(full)
     } else if (ent.name.endsWith('.html') || ent.name.endsWith('.htm')) {
       const raw = fs.readFileSync(full, 'utf8')
-      fs.writeFileSync(full, rewriteHtml(raw), 'utf8')
+      fs.writeFileSync(full, rewriteHtml(raw, full), 'utf8')
       count += 1
     }
   }

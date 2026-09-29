@@ -20,7 +20,8 @@ fi
 echo "[rsync] $APP_DIR -> $HOST:$REMOTE_WWW"
 ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" "sudo mkdir -p '$REMOTE_WWW' && sudo chown ec2-user:ec2-user '$REMOTE_WWW'"
 rsync -az -e "ssh -i $KEY -o StrictHostKeyChecking=accept-new" \
-  "$APP_DIR/index.html" "$HOST:$REMOTE_WWW/index.html"
+  "$APP_DIR/index.html" "$APP_DIR/mole-good.png" "$APP_DIR/icon.png" \
+  "$HOST:$REMOTE_WWW/"
 
 echo "[nginx] $DOMAIN"
 ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" \

@@ -8,7 +8,7 @@ const path = require('path')
 const WORKDIR = path.join(__dirname, '..')
 
 /** 독립 사이트 — 리스티아트 legal bar 전혀 미주입 */
-const LEGAL_SKIP_TENANTS = new Set(['wookwang', 'portfolio', 'goodprice', 'clef'])
+const LEGAL_SKIP_TENANTS = new Set(['wookwang', 'portfolio', 'goodprice', 'clef', 'brush'])
 
 function layoutHasTenantFooter(content) {
   return (

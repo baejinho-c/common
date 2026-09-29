@@ -38,6 +38,16 @@ function walk(dir) {
         }
         continue
       }
+      // WonderTale /game — 모바일 연속 학습(iframe)용, 푸터 불필요
+      if (/^game\.html$/i.test(ent.name) && tenant === 'wonder') {
+        const raw = fs.readFileSync(full, 'utf8')
+        const next = stripLegalHtml(raw)
+        if (next !== raw) {
+          fs.writeFileSync(full, next, 'utf8')
+          count += 1
+        }
+        continue
+      }
       const raw = fs.readFileSync(full, 'utf8')
       const next = injectLegalHtml(raw, tenant)
       if (next !== raw) {

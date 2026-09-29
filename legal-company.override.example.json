@@ -1,0 +1,8 @@
+{
+  "_comment": "이 파일을 legal-company.override.json 으로 복사한 뒤 값을 채우고 node common/scripts/apply-legal-company.mjs 를 실행하세요.",
+  "privacyOfficerName": "홍길동",
+  "privacyOfficerTitle": "개인정보보호책임자",
+  "privacyOfficerPhone": "010-0000-0000",
+  "privacyOfficerEmail": "privacy@example.com",
+  "pgProvider": "토스페이먼츠"
+}

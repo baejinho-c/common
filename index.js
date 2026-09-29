@@ -69,6 +69,8 @@ function needsSecurityHeaders(host) {
 const EDUGAME_EMBED_HOSTS = new Set([
   'chemistry.restyart.com',
   'physics.restyart.com',
+  'wonder.restyart.com',
+  'meteor.restyart.com',
 ])
 
 /** dashboard.restyart.com Basic Auth — DASHBOARD_BASIC_AUTH=user:pass 또는 USER/PASS */
@@ -110,11 +112,14 @@ app.use((req, res, next) => {
   if (needsSecurityHeaders(req.headers.host)) {
     const host = hostWithoutPort(req.headers.host)
     const embedInEdugame = EDUGAME_EMBED_HOSTS.has(host)
-    const frameAncestors = embedInEdugame
+    const makerPreview = req.path.startsWith('/api/maker/previews/')
+    const frameAncestors = makerPreview
+      ? "frame-ancestors 'self' https://maker.restyart.com"
+      : embedInEdugame
       ? "frame-ancestors 'self' https://edugame.restyart.com"
       : "frame-ancestors 'none'"
     res.setHeader('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
-    if (!embedInEdugame) {
+    if (!embedInEdugame && !makerPreview) {
       res.setHeader('X-Frame-Options', 'DENY')
     }
     res.setHeader('X-Content-Type-Options', 'nosniff')
@@ -832,6 +837,45 @@ if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
     )
     proxyReq.on('error', (err) => {
       console.error('arc api proxy error', err)
+      if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
+    })
+    if (body) proxyReq.write(body)
+    proxyReq.end()
+  })
+}
+
+// 연상 강화 연구소 (brain.restyart.com)
+if (USE_RESTY_API_PROXY && RESTY_API_BACKEND) {
+  app.use('/api/brain', (req, res) => {
+    let targetUrl
+    try {
+      targetUrl = new URL(req.originalUrl, RESTY_API_BACKEND)
+    } catch (e) {
+      return res.status(500).json({ message: '잘못된 API URL', success: false })
+    }
+    const lib = targetUrl.protocol === 'https:' ? https : http
+    const body =
+      req.method !== 'GET' && req.method !== 'HEAD' ? JSON.stringify(req.body || {}) : null
+    const headers = { ...req.headers, host: targetUrl.host }
+    if (body) {
+      headers['content-type'] = 'application/json'
+      headers['content-length'] = Buffer.byteLength(body)
+    }
+    const proxyReq = lib.request(
+      {
+        hostname: targetUrl.hostname,
+        port: targetUrl.port || (targetUrl.protocol === 'https:' ? 443 : 80),
+        path: targetUrl.pathname + targetUrl.search,
+        method: req.method,
+        headers,
+      },
+      (proxyRes) => {
+        res.writeHead(proxyRes.statusCode || 502, proxyRes.headers)
+        proxyRes.pipe(res)
+      },
+    )
+    proxyReq.on('error', (err) => {
+      console.error('brain api proxy error', err)
       if (!res.headersSent) res.status(502).json({ message: 'API 서버 연결 실패', success: false })
     })
     if (body) proxyReq.write(body)
@@ -1570,6 +1614,9 @@ app.use('/projects/assembled/:name', (req, res, next) => {
   }
   return next()
 })
+
+const edugameMinigamesDir = path.join(PUBLIC_DIR, 'edugame', 'minigames')
+app.use(['/minigames', '/edugame/minigames', '/edugame/public/minigames'], express.static(edugameMinigamesDir))
 
 app.use(express.static(PUBLIC_DIR))
 

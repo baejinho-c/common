@@ -36,17 +36,28 @@ rsync "${RSYNC_OPTS[@]}" \
   "$APP_DIR/Dockerfile" "$HOST:$REMOTE_APP/Dockerfile"
 
 echo "[docker] build & run admin on :$REMOTE_PORT"
-ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" bash -s <<EOF
+ssh -i "$KEY" -o StrictHostKeyChecking=accept-new "$HOST" \
+  "REMOTE_APP='$REMOTE_APP' REMOTE_PORT='$REMOTE_PORT' bash -s" <<'EOF'
 set -euo pipefail
-cd $REMOTE_APP
+cd "$REMOTE_APP"
 ENV_FILE="/opt/common/.env"
-ENV_ARGS=""
-if [ -f "\$ENV_FILE" ]; then
-  ENV_ARGS="--env-file \$ENV_FILE"
+ENV_ARGS=()
+if [ -f "$ENV_FILE" ]; then
+  ENV_ARGS+=(--env-file "$ENV_FILE")
+fi
+# Share edugame UGC admin token so /api/edugame-ugc can approve/delete
+EDUGAME_TOKEN_FILE="/opt/resty-gateway/data/edugame-admin.token"
+if [ -f "$EDUGAME_TOKEN_FILE" ]; then
+  EDUGAME_TOKEN="$(python3 -c "import pathlib; print(pathlib.Path('$EDUGAME_TOKEN_FILE').read_text().strip())")"
+  ENV_ARGS+=(-e "EDUGAME_ADMIN_TOKEN=$EDUGAME_TOKEN")
+  ENV_ARGS+=(-e "EDUGAME_ORIGIN=https://edugame.restyart.com")
 fi
 docker build -t admin-app .
 docker rm -f admin 2>/dev/null || true
-docker run -d --name admin --restart unless-stopped -p 127.0.0.1:$REMOTE_PORT:3022 \$ENV_ARGS admin-app
+docker run -d --name admin --restart unless-stopped \
+  -p "127.0.0.1:${REMOTE_PORT}:3022" \
+  "${ENV_ARGS[@]}" \
+  admin-app
 docker ps --filter name=admin
 EOF
 

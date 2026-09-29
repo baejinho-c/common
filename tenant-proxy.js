@@ -11,6 +11,27 @@ const {
   tenantUsesServiceFooter,
 } = require('./legal-info')
 
+const HOME_NAV_LOADER = '<script src="https://edugame.restyart.com/edugame-home-nav.js?v=20260821e"></script>'
+const HOME_NAV_MARKER = 'edugame-home-nav.js'
+const EDUGAME_HOME_NAV_TENANTS = (() => {
+  try {
+    return new Set(
+      fs.readFileSync(path.join(__dirname, 'edugame-home-nav-hosts.txt'), 'utf8')
+        .split(/\r?\n/)
+        .map((host) => host.trim().toLowerCase().split('.')[0])
+        .filter(Boolean),
+    )
+  } catch (_) {
+    return new Set()
+  }
+})()
+
+function injectEdugameHomeNav(html, name) {
+  if (!EDUGAME_HOME_NAV_TENANTS.has(String(name || '').toLowerCase()) || html.includes(HOME_NAV_MARKER)) return html
+  if (/<\/head\s*>/i.test(html)) return html.replace(/<\/head\s*>/i, `\n${HOME_NAV_LOADER}\n</head>`)
+  return `${html}\n${HOME_NAV_LOADER}\n`
+}
+
 function maybeInjectLegal(html, name, fileHint) {
   if (LEGAL_SKIP_TENANTS.has(name) || tenantUsesServiceFooter(name)) {
     return stripLegalHtml(html)
@@ -22,6 +43,7 @@ function maybeInjectLegal(html, name, fileHint) {
   // iframe/임베드·풀스크린 맵은 부모와 푸터가 겹치므로 주입하지 않음
   if (
     base === 'gonchung-nara.html' ||
+    base === 'game.html' ||
     ((base === 'map.html' || base === 'explore.html') && name === 'insect') ||
     /data-resty-embed=["']1["']/i.test(html || '')
   ) {
@@ -478,6 +500,7 @@ function prepareHtml(html, name, prefixStyle, fileHint) {
     } else {
       html = html.replace(/<head([^>]*)>/i, `<head$1>\n<base href="/">`)
     }
+    html = injectEdugameHomeNav(html, name)
     html = maybeInjectLegal(html, name, fileHint)
     return html
   }
@@ -500,6 +523,7 @@ function prepareHtml(html, name, prefixStyle, fileHint) {
   }
 
   html = injectClientPrefixScript(html, name, prefixStyle)
+  html = injectEdugameHomeNav(html, name)
   html = maybeInjectLegal(html, name, fileHint)
   return html
 }
@@ -507,7 +531,7 @@ function prepareHtml(html, name, prefixStyle, fileHint) {
 function buildLightCsp(nonce) {
   return [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}' https://www.googletagmanager.com https://www.google-analytics.com`,
+    `script-src 'self' 'nonce-${nonce}' https://edugame.restyart.com https://www.googletagmanager.com https://www.google-analytics.com`,
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https:",
     "font-src 'self' data:",

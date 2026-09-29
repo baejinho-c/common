@@ -199,14 +199,18 @@ function ensureSeoTags(text, filePath) {
 
   const hasJsonLd = /type=["']application\/ld\+json["']/i.test(out)
   if (!hasJsonLd) {
-    const titleMatch = out.match(/<title[^>]*>([^<]+)<\/title>/i)
-    const pageName = (titleMatch?.[1] || tenant).trim()
+    const siteName =
+      tenant === "wonder"
+        ? "WonderTale"
+        : tenant === "arc"
+          ? "인사이트 아크"
+          : tenant
     const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: pageName,
-      url: canonicalUrl || `${siteBase}/`,
-      inLanguage: 'ko-KR',
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: siteName,
+      url: `${siteBase}/`,
+      inLanguage: "ko-KR",
     }
     out = injectIntoHead(
       out,
