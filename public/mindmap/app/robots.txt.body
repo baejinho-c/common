@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://mindmap.restyart.com
-Sitemap: https://mindmap.restyart.com/sitemap.xml

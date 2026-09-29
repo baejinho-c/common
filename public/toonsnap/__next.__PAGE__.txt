@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:I[2376,["2","static/chunks/2-39dc0db19ed91291.js","352","static/chunks/352-e18e2664e4f3ab61.js","964","static/chunks/964-dfc9bd27e80b88fa.js","974","static/chunks/app/page-aadc06367d11876f.js"],"ToonApp"]
-3:I[4626,[],"OutletBoundary"]
-4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"min-h-dvh bg-background","children":["$","div",null,{"className":"mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6","children":["$","$L2",null,{}]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"XJG2Pm35H3n8laHpAerTk"}
-5:null

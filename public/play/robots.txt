@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://play.restyart.com/sitemap.xml

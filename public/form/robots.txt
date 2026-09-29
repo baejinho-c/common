@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /share/
-Disallow: /admin/
-
-Sitemap: https://form.restyart.com/sitemap.xml

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://poster.restyart.com/sitemap.xml

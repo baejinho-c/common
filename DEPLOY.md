@@ -37,6 +37,11 @@ cd ~/Documents/resty/common
 
 서버에서는 **게이트웨이만** 설치하고 `public/` 동기화.
 
+> **`public/`은 git에서 관리하지 않습니다** (`.gitignore`, 2026-09-29부터). 빌드 결과물은 rsync로만 서버에 올립니다.
+> 2026-09-29 이전에 clone한 서버의 `/opt/resty-gateway/common`에서 `git pull`을 하면 추적 해제된 `public/` 파일이 삭제되어 사이트가 내려갑니다.
+> 서버에서 pull이 필요하면 먼저 `public/`을 백업하거나, pull 직후 `./scripts/rsync-to-server.sh`로 다시 올리세요.
+> 새로 clone한 서버에는 `public/`이 없으므로 설치 후 반드시 rsync를 실행합니다.
+
 ### B. 서버에서 pull + publish (디스크 15GB+ 여유 필요)
 
 ```bash

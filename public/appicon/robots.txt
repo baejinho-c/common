@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
-
-Sitemap: https://appicon.restyart.com/sitemap.xml

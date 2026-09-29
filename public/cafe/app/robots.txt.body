@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://cafe.restyart.com
-Sitemap: https://cafe.restyart.com/sitemap.xml

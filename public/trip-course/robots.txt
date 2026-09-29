@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://trip-course.restyart.com/sitemap.xml

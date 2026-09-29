@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:I[7030,["2","static/chunks/2-39dc0db19ed91291.js","352","static/chunks/352-e18e2664e4f3ab61.js","30","static/chunks/30-56afa58e3b4f650d.js","983","static/chunks/app/auth/register/page-78a484c945122f31.js"],"RestyAccountPanel"]
-3:I[4626,[],"OutletBoundary"]
-4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"min-h-dvh bg-background px-4 py-10","children":["$","div",null,{"className":"mx-auto w-full max-w-xl","children":["$","$L2",null,{}]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"XJG2Pm35H3n8laHpAerTk"}
-5:null

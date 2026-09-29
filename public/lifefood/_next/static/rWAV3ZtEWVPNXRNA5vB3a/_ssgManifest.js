@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002Flists\u002F[id]","\u002Fu\u002F[handle]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /
-
-Sitemap: https://admin.restyart.com/sitemap.xml

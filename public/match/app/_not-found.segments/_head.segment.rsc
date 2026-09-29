@@ -1,5 +1,0 @@
-1:"$Sreact.fragment"
-2:I[76779,["/_next/static/chunks/0nshso65r2q.5.js","/_next/static/chunks/0-lzz0e34d4br.js"],"ViewportBoundary"]
-3:I[76779,["/_next/static/chunks/0nshso65r2q.5.js","/_next/static/chunks/0-lzz0e34d4br.js"],"MetadataBoundary"]
-4:"$Sreact.suspense"
-0:{"rsc":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1, user-scalable=no"}],["$","meta","2",{"name":"theme-color","content":"#ffffff"}],["$","meta","3",{"name":"color-scheme","content":"light"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"동네알바 · 지역 기반 구인구직"}],["$","meta","1",{"name":"description","content":"우리 동네에서 딱 맞는 알바를 찾고, 사람을 구하세요. 지역 기반 구인구직 서비스."}],["$","meta","2",{"name":"generator","content":"v0.app"}]]}]}]}],null]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"Nv1D2F7wux59SOCjSWYEY"}

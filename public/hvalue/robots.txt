@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://hvalue.restyart.com/sitemap.xml

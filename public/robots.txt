@@ -1,3 +1,0 @@
-# Internal ops dashboard — do not index
-User-agent: *
-Disallow: /

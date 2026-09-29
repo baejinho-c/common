@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://chemistry.restyart.com
-Sitemap: https://chemistry.restyart.com/sitemap.xml

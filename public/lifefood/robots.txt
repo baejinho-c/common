@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://lifefood.restyart.com/sitemap.xml

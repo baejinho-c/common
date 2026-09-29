@@ -1,8 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
-
-Host: https://seo-foundry.restyart.com
-Sitemap: https://seo-foundry.restyart.com/sitemap.xml

@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://english.restyart.com
-Sitemap: https://english.restyart.com/sitemap.xml

@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://secu-scan.restyart.com/sitemap.xml

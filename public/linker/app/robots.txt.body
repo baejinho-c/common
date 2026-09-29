@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://linker.restyart.com
-Sitemap: https://linker.restyart.com/sitemap.xml

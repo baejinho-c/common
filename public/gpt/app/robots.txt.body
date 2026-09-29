@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /dashboard/
-Disallow: /auth/
-
-Sitemap: https://gpt.restyart.com/sitemap.xml

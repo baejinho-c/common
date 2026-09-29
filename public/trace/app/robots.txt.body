@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://trace.restyart.com
-Sitemap: https://trace.restyart.com/sitemap.xml

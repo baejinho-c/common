@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://story.restyart.com
-Sitemap: https://story.restyart.com/sitemap.xml

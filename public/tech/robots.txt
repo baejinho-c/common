@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /api/
-Disallow: /auth/
-Disallow: /_next/
-Disallow: /dashboard/
-
-Sitemap: https://tech.restyart.com/sitemap.xml

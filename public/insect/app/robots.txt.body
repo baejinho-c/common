@@ -1,7 +1,0 @@
-User-Agent: *
-Allow: /
-Disallow: /api/
-Disallow: /admin/
-
-Host: https://insect.restyart.com
-Sitemap: https://insect.restyart.com/sitemap.xml

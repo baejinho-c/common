@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://photo.restyart.com/sitemap.xml
